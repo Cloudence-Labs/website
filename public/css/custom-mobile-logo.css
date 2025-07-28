@@ -1,0 +1,38 @@
+/* Custom mobile logo styling to remove unwanted width and height */
+
+/* Override the default mobile logo styling */
+header .navbar-brand .mobile-logo {
+    width: 150px !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+}
+
+/* Ensure the mobile logo maintains the same styling as other logos */
+@media (max-width: 991px) {
+    header .navbar-brand .mobile-logo {
+        width: 150px !important;
+        height: auto !important;
+        max-width: none !important;
+        max-height: none !important;
+    }
+}
+
+/* Override any responsive width/height settings */
+@media (max-width: 767px) {
+    header .navbar-brand .mobile-logo {
+        width: 150px !important;
+        height: auto !important;
+        max-width: none !important;
+        max-height: none !important;
+    }
+}
+
+@media (max-width: 575px) {
+    header .navbar-brand .mobile-logo {
+        width: 150px !important;
+        height: auto !important;
+        max-width: none !important;
+        max-height: none !important;
+    }
+} 

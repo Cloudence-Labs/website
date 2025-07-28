@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="{{ asset('css/style.min.css') }}"/>
         <link rel="stylesheet" href="{{ asset('css/responsive.min.css') }}"/>
         <link rel="stylesheet" href="{{ asset('css/web-agency.css') }}" /> 
+        <link rel="stylesheet" href="{{ asset('css/custom-mobile-logo.css') }}" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -214,7 +215,7 @@
                     <div class="col-auto col-lg-2 text-end">
                         <div class="header-icon"> 
                             <div class="header-button">
-                                <a href="demo-web-agency-about.html" class="btn btn-rounded btn-dark-gray btn-medium btn-switch-text btn-box-shadow text-transform-none">
+                                <a href="#" class="btn btn-rounded btn-dark-gray btn-medium btn-switch-text btn-box-shadow text-transform-none">
                                     <span>
                                         <span class="btn-double-text" data-text="Hire agency">Contact Us</span>
                                         <span><i class="fa-solid fa-arrow-right"></i></span>
