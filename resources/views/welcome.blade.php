@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="{{ asset('css/icon.min.css') }}"/>
         <link rel="stylesheet" href="{{ asset('css/style.min.css') }}"/>
         <link rel="stylesheet" href="{{ asset('css/responsive.min.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('css/web-agency.css') }}" /> 
+        <link rel="stylesheet" href="{{ asset('css/web-agency.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/custom-mobile-logo.css') }}" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,9 +55,9 @@
         </style>
 
     </head>
-    <body data-mobile-nav-style="classic" class="background-position-center-top" style="background-image: url(images/vertical-line-bg-small-medium-gray.svg)"> 
+    <body data-mobile-nav-style="classic" class="background-position-center-top" style="background-image: url(images/vertical-line-bg-small-medium-gray.svg)">
         <!-- start header -->
-        <header> 
+        <header>
             <!-- start navigation -->
             <nav class="navbar navbar-expand-lg header-light header-transparent bg-transparent disable-fixed">
                 <div class="container-fluid">
@@ -65,7 +65,7 @@
                         <a class="navbar-brand" href="#">
                             <img src="{{ asset('images/main/logo.png') }}" data-at2x="{{ asset('images/main/logo.png') }}" alt="" class="default-logo" style="width:150px; height:auto !important">
                             <img src="{{ asset('images/main/logo.png') }}" data-at2x="{{ asset('images/main/logo.png') }}" alt="" class="alt-logo" style="width:150px; height:auto !important">
-                            <img src="{{ asset('images/main/logo.png') }}" data-at2x="{{ asset('images/main/logo.png') }}" alt="" class="mobile-logo" style="width:150px; height:auto !important"> 
+                            <img src="{{ asset('images/main/logo.png') }}" data-at2x="{{ asset('images/main/logo.png') }}" alt="" class="mobile-logo" style="width:150px; height:auto !important">
                         </a>
                     </div>
                     <div class="col-auto col-lg-8 menu-order position-static">
@@ -75,13 +75,13 @@
                             <span class="navbar-toggler-line"></span>
                             <span class="navbar-toggler-line"></span>
                         </button>
-                        <div class="collapse navbar-collapse justify-content-center" id="navbarNav"> 
-                            <ul class="navbar-nav"> 
+                        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                            <ul class="navbar-nav">
                                 <li class="nav-item"><a href="#" class="nav-link outfit-regular">Home</a></li>
                                 <li class="nav-item dropdown dropdown-with-icon">
                                     <a href="#" class="nav-link outfit-regular">Company</a>
                                     <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> 
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                         <li>
                                             <a href="#">
                                                 <div class="submenu-icon-content">
@@ -157,7 +157,7 @@
                                 <li class="nav-item dropdown dropdown-with-icon">
                                     <a href="#" class="nav-link outfit-regular">Industries</a>
                                     <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> 
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                         <li>
                                             <a href="#">
                                                 <div class="submenu-icon-content">
@@ -191,7 +191,7 @@
                                 <li class="nav-item dropdown dropdown-with-icon">
                                     <a href="#" class="nav-link outfit-regular">Media</a>
                                     <i class="fa-solid fa-angle-down dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> 
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                         <li>
                                             <a href="#">
                                                 <div class="submenu-icon-content">
@@ -208,12 +208,12 @@
                                         </li>
                                     </ul>
                                 </li>
-                                
+
                             </ul>
                         </div>
                     </div>
                     <div class="col-auto col-lg-2 text-end">
-                        <div class="header-icon"> 
+                        <div class="header-icon">
                             <div class="header-button">
                                 <a href="#" class="btn btn-rounded btn-dark-gray btn-medium btn-switch-text btn-box-shadow text-transform-none">
                                     <span>
@@ -222,7 +222,7 @@
                                     </span>
                                 </a>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -237,7 +237,7 @@
             <div class="container h-100 position-relative">
                 <div class="row align-items-center justify-content-center h-100">
                     <div class="col-12 text-center">
-                        <div class="fs-120 lh-110 sm-fs-100 text-dark-gray fw-600 ls-minus-4px outfit-bold" data-anime='{ "el": "lines", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 500, "staggervalue": 300, "easing": "easeOutQuad" }'>Empowering Growth Through Smart Technology</div>
+                        <div class="fs-120 lh-110 sm-fs-100 text-dark-gray fw-600 ls-minus-4px outfit-bold" data-anime='{ "el": "lines", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay": 500, "staggervalue": 300, "easing": "easeOutQuad" }'>Empowering growth through smart technology</div>
                     </div>
                 </div>
             </div>
@@ -305,7 +305,7 @@
                     <div class="col-lg-5 offset-lg-1 z-index-9 md-mt-35px" data-anime='{ "el": "childs", "translateX": [15, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
                         <h1 class="text-dark-gray fw-600 mb-40px md-mb-25px outside-box-left-15 md-outside-box-left-0 ls-minus-3px word-break-normal text-shadow-double-large outfit-bold" style="color:orange">We are your digital partner to business growth.</h1>
                         <p class="lh-34 w-95 mb-30px lg-w-100 outfit-regular">At Cloudence, we specialize in delivering innovative and reliable ICT solutions that empower businesses and government institutions to scale with confidence. From infrastructure development to enterprise software, we work closely with our clients to understand their unique needs and provide tailored technology that drives efficiency, productivity, and sustainable growth. With a focus on trust, excellence, and innovation, Cloudence is more than a service provider — we’re your strategic partner in digital transformation.</p>
-                        
+
                         <div class="outside-box-right-30 position-absolute right-0px bottom-minus-50px xl-outside-box-right-25 md-outside-box-right-0 d-none d-md-inline-block">
                             <div class="fs-300 xl-fs-250 lg-fs-200 text-base-color fw-600 ls-minus-20px word-break-normal" data-bottom-top="transform:scale(1, 1) translate3d(0px, 0px, 0px);" data-top-bottom="transform:scale(1, 1) translate3d(-100px, 0px, 0px);">about</div>
                         </div>
@@ -315,7 +315,7 @@
         </section>
         <!-- end section -->
         <!-- start section -->
-        <section class="p-0"> 
+        <section class="p-0">
             <div class="container">
                 <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 m-0 justify-content-center" data-anime='{ "el": "childs", "translateY": [40, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
                     <!-- start process step item -->
@@ -329,7 +329,7 @@
                             <a href="#" class="hover-content d-flex justify-content-center align-items-center icon-box w-45px h-45px rounded-circle bg-base-color border-2"><i class="feather icon-feather-arrow-right text-dark-gray icon-small"></i></a>
                         </div>
                     </div>
-                    <!-- end process step item --> 
+                    <!-- end process step item -->
                     <!-- start process step item -->
                     <div class="col process-step-style-10 ps-5 pe-5 pt-3 pb-3 sm-mb-20px position-relative mt-40px md-mt-0 hover-box">
                         <div class="process-step-icon-box position-absolute top-minus-15px left-25px md-left-0px">
@@ -341,7 +341,7 @@
                             <a href="demo-web-agency-expertise.html" class="hover-content d-flex justify-content-center align-items-center icon-box w-45px h-45px rounded-circle bg-base-color border-2"><i class="feather icon-feather-arrow-right text-dark-gray icon-small"></i></a>
                         </div>
                     </div>
-                    <!-- end process step item --> 
+                    <!-- end process step item -->
                     <!-- start process step item -->
                     <div class="col process-step-style-10 ps-5 pe-5 pt-3 pb-3 sm-mb-20px position-relative hover-box">
                         <div class="process-step-icon-box position-absolute top-minus-15px left-25px md-left-0px">
@@ -353,8 +353,8 @@
                             <a href="demo-web-agency-expertise.html" class="hover-content d-flex justify-content-center align-items-center icon-box w-45px h-45px rounded-circle bg-base-color border-2"><i class="feather icon-feather-arrow-right text-dark-gray icon-small"></i></a>
                         </div>
                     </div>
-                    <!-- end process step item --> 
-                </div> 
+                    <!-- end process step item -->
+                </div>
             </div>
         </section>
         <!-- end section -->
@@ -377,7 +377,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid"> 
+            <div class="container-fluid">
                 <div class="row justify-content-center m-md-0">
                     <div class="col-12 filter-content">
                         <ul class="portfolio-simple portfolio-wrapper grid-loading grid grid-4col xxl-grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large text-center">
@@ -466,8 +466,8 @@
                                 </div>
                             </li>
                             <!-- end portfolio item -->
-                           
-                            
+
+
                         </ul>
                     </div>
                 </div>
@@ -492,7 +492,7 @@
                             <div class="col-2 text-center align-self-center">
                                 <span class="text-dark-gray fs-14 fw-600">9X</span>
                             </div>
-                            <div class="col-8 last-paragraph-no-margin ps-30px pe-30px pt-15px pb-15px border-start border-color-dark-gray"> 
+                            <div class="col-8 last-paragraph-no-margin ps-30px pe-30px pt-15px pb-15px border-start border-color-dark-gray">
                                 <p class="ls-minus-05px">Site of the day - <span class="fw-600 text-dark-gray">Awwwards</span></p>
                             </div>
                             <div class="col-2 align-self-center text-center">
@@ -503,7 +503,7 @@
                             <div class="col-2 text-center align-self-center">
                                 <span class="text-dark-gray fs-14 fw-600">2X</span>
                             </div>
-                            <div class="col-8 last-paragraph-no-margin ps-30px pe-30px pt-15px pb-15px border-start border-color-dark-gray"> 
+                            <div class="col-8 last-paragraph-no-margin ps-30px pe-30px pt-15px pb-15px border-start border-color-dark-gray">
                                 <p class="ls-minus-05px">Site of the day - <span class="fw-600 text-dark-gray">CSS Design Awards</span></p>
                             </div>
                             <div class="col-2 align-self-center text-center">
@@ -514,7 +514,7 @@
                             <div class="col-2 text-center align-self-center">
                                 <span class="text-dark-gray fs-14 fw-600">4X</span>
                             </div>
-                            <div class="col-8 last-paragraph-no-margin ps-30px pe-30px pt-15px pb-15px border-start border-color-dark-gray"> 
+                            <div class="col-8 last-paragraph-no-margin ps-30px pe-30px pt-15px pb-15px border-start border-color-dark-gray">
                                 <p class="ls-minus-05px">Site of the month - <span class="fw-600 text-dark-gray">Awwwards</span></p>
                             </div>
                             <div class="col-2 align-self-center text-center">
@@ -525,7 +525,7 @@
                             <div class="col-2 text-center align-self-center">
                                 <span class="text-dark-gray fs-14 fw-600">3X</span>
                             </div>
-                            <div class="col-8 last-paragraph-no-margin ps-30px pe-30px pt-15px pb-15px border-start border-color-dark-gray"> 
+                            <div class="col-8 last-paragraph-no-margin ps-30px pe-30px pt-15px pb-15px border-start border-color-dark-gray">
                                 <p class="ls-minus-05px">Site of the day - <span class="fw-600 text-dark-gray">The portfolio</span></p>
                             </div>
                             <div class="col-2 align-self-center text-center">
@@ -550,11 +550,11 @@
         <!-- end section -->
 
         <!-- start section -->
-        {{-- <section class="pb-4 lg-pb-6 sm-pb-50px position-relative bg-dark-gray section-dark"> 
+        {{-- <section class="pb-4 lg-pb-6 sm-pb-50px position-relative bg-dark-gray section-dark">
             <div class="cover-background position-absolute h-100 w-100 left-0px top-0px" style="background-image: url('images/demo-web-agency-bg-01.png')"></div>
             <div class="container position-relative">
                 <div class="row justify-content-center align-items-center mb-9 xl-mb-5 sm-mb-30px" data-anime='{ "el": "childs", "translateX": [15, 0], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                    <div class="col-lg-5"> 
+                    <div class="col-lg-5">
                         <div class="mb-15 d-flex align-items-center md-mb-30px">
                             <div class="fw-700 fs-80 text-white me-10px">4.82</div>
                             <div class="text-center">
@@ -566,8 +566,8 @@
                                     <i class="bi bi-star-fill"></i>
                                 </div>
                                 <span class="text-white fs-13 fw-500 text-uppercase">Clutch review</span>
-                            </div> 
-                        </div> 
+                            </div>
+                        </div>
                         <div class="d-flex md-mb-25px">
                             <!-- start slider navigation -->
                             <div class="slider-one-slide-prev-1 bg-sherpa-blue text-white swiper-button-prev slider-navigation-style-04 w-60px h-60px"><i class="fa-solid fa-arrow-left"></i></div>
@@ -575,29 +575,29 @@
                             <!-- end slider navigation -->
                         </div>
                     </div>
-                    <div class="col-xl-6 col-lg-7 overflow-hidden offset-xl-1"> 
+                    <div class="col-xl-6 col-lg-7 overflow-hidden offset-xl-1">
                         <div class="swiper magic-cursor light" data-slider-options='{ "slidesPerView": 1, "spaceBetween": 40, "loop": true, "autoplay": { "delay": 3000, "disableOnInteraction": false }, "navigation": { "nextEl": ".slider-one-slide-next-1", "prevEl": ".slider-one-slide-prev-1" }, "keyboard": { "enabled": true, "onlyInViewport": true }, "breakpoints": { "992": { "slidesPerView": 1 }, "768": { "slidesPerView":1 }, "320": { "slidesPerView": 1 } }, "effect": "slide" }'>
-                            <div class="swiper-wrapper"> 
+                            <div class="swiper-wrapper">
                                 <!-- start review item -->
                                 <div class="swiper-slide">
                                     <h5 class="text-white mb-20px w-90 xl-w-100 lh-42 fw-400">The <span class="text-decoration-line-bottom-medium">wonderful</span> services you offer locally are great for our community. People are tired of having to travel out of town for things.</h5>
-                                    <span class="text-base-color fw-600 d-block fs-15 text-uppercase lh-22 ls-2px">@Herman miller</span> 
+                                    <span class="text-base-color fw-600 d-block fs-15 text-uppercase lh-22 ls-2px">@Herman miller</span>
                                 </div>
                                 <!-- end review item -->
                                 <!-- start review item -->
                                 <div class="swiper-slide">
                                     <h5 class="text-white mb-20px w-90 xl-w-100 lh-42 fw-400">Absolutely amazing theme and <span class="text-decoration-line-bottom-medium">awesome</span> design with possibilities. It's so very easy to use and to customize everything.</h5>
-                                    <span class="text-base-color fw-600 d-block fs-15 text-uppercase lh-22 ls-2px">@Alexander Harad</span> 
+                                    <span class="text-base-color fw-600 d-block fs-15 text-uppercase lh-22 ls-2px">@Alexander Harad</span>
                                 </div>
                                 <!-- end review item -->
                                 <!-- start review item -->
                                 <div class="swiper-slide">
                                     <h5 class="text-white mb-20px w-90 xl-w-100 lh-42 fw-400">There are design companies and then there are user <span class="text-decoration-line-bottom-medium">experience.</span> Simply the great designs and best theme for fast loading.</h5>
-                                    <span class="text-base-color fw-600 d-block fs-15 text-uppercase lh-22 ls-2px">@Jacob Kalling</span> 
+                                    <span class="text-base-color fw-600 d-block fs-15 text-uppercase lh-22 ls-2px">@Jacob Kalling</span>
                                 </div>
                                 <!-- end review item -->
-                            </div>  
-                        </div> 
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -624,12 +624,12 @@
                     <!-- start client item -->
                     <div class="col client-box text-center sm-mb-40px">
                         <a href="demo-web-agency.html#"><img src="images/logo-yahoo-white.svg" class="h-35px" alt=""></a>
-                    </div> 
+                    </div>
                     <!-- end client item -->
                     <!-- start client item -->
                     <div class="col client-box text-center">
                         <a href="demo-web-agency.html#"><img src="images/logo-amazon-white.svg" class="h-35px" alt=""></a>
-                    </div> 
+                    </div>
                     <!-- end client item -->
                 </div>
             </div>
@@ -663,7 +663,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <!-- end blog item --> 
+                            <!-- end blog item -->
                             <!-- start blog item -->
                             <li class="grid-item">
                                 <div class="card bg-transparent border-0 h-100">
@@ -676,7 +676,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <!-- end blog item --> 
+                            <!-- end blog item -->
                             <!-- start blog item -->
                             <li class="grid-item">
                                 <div class="card bg-transparent border-0 h-100">
@@ -724,7 +724,7 @@
                             <div class="fs-350 xl-fs-250 lg-fs-200 md-fs-170 sm-fs-100 text-base-color fw-600 ls-minus-20px position-relative d-inline-block word-break-normal">Partner
                                 {{-- <div class="position-absolute left-minus-140px top-minus-140px z-index-9 xl-left-minus-110px top-minus-140px xl-top-minus-100px md-top-minus-90px z-index-9 xl-w-230px md-w-200px d-none d-md-block" data-anime='{ "translateY": [-15, 0], "scale": [0.5, 1], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
                                     <img src="images/demo-web-agency-05.png" class="animation-rotation" alt="">
-                                    <div class="absolute-middle-center w-100 z-index-minus-1"><img src="images/demo-web-agency-04.png" alt=""></div> 
+                                    <div class="absolute-middle-center w-100 z-index-minus-1"><img src="images/demo-web-agency-04.png" alt=""></div>
                                 </div> --}}
                             </div>
                         </div>
@@ -740,15 +740,15 @@
                     <div class="col-md-10 col-sm-8 text-center text-sm-start xs-mb-25px">
                         <h5 class="mb-0 text-dark-gray fw-400 ls-minus-1px outfit-semi-bold">Ready to create impactful solutions together? <a href="#" class="text-decoration-line-bottom-medium fw-600 text-dark-gray text-dark-gray-hover outfit-bold">Contact Us</a></h5>
                     </div>
-                    
-                </div> 
-                <div class="row align-items-end mb-6 sm-mb-40px"> 
+
+                </div>
+                <div class="row align-items-end mb-6 sm-mb-40px">
                     <!-- start footer column -->
                     <div class="col-lg-3 col-sm-4 text-center text-sm-start xs-mb-25px last-paragraph-no-margin">
                         <span class="d-block text-dark-gray ls-minus-05px mb-5px fw-600 outfit-semi-bold">Cloudence - Abuja</span>
                         <p class="w-80 lg-w-100 text-medium-gray fs-15 lh-28 outfit-regular">FHA Apo-Guzape Estate, Guzape Hills, Abuja</p>
                     </div>
-                    <!-- end footer column -->  
+                    <!-- end footer column -->
                     <!-- start footer column -->
                     <div class="col-lg-3 col-sm-4 text-center text-sm-start xs-mb-25px last-paragraph-no-margin">
                         <span class="d-block text-dark-gray ls-minus-05px mb-5px fw-600 outfit-semi-bold">Cloudence - Calabar</span>
@@ -756,28 +756,28 @@
                     </div>
                     <!-- end footer column -->
                     <!-- start footer column -->
-                    <div class="col-md-3 col-sm-4 last-paragraph-no-margin ms-auto text-center text-sm-end"> 
+                    <div class="col-md-3 col-sm-4 last-paragraph-no-margin ms-auto text-center text-sm-end">
                         <a href="tel:1235678901" class="text-dark-gray d-block lh-18 text-dark-gray-hover outfit-regular">+23480 6229 5588</a>
                         <a href="#" class="text-dark-gray text-dark-gray-hover fw-600 text-decoration-line-bottom outfit-regular">hello@cloudence.com.ng</a>
                     </div>
                     <!-- end footer column -->
                 </div>
-            </div> 
+            </div>
             <div class="footer-bottom pt-25px pb-25px border-top border-color-charcoal-grey">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col-lg-7 text-center text-lg-start md-mb-10px"> 
-                            <ul class="footer-navbar fw-600 fs-16"> 
+                        <div class="col-lg-7 text-center text-lg-start md-mb-10px">
+                            <ul class="footer-navbar fw-600 fs-16">
                                 <li class="nav-item active"><a href="{{ url('/') }}" class="nav-link outfit-regular">Home</a></li>
                                 <li class="nav-item"><a href="#" class="nav-link outfit-regular">Why Cloudence</a></li>
                                 <li class="nav-item"><a href="#" class="nav-link outfit-regular">Our Products</a></li>
                                 <li class="nav-item"><a href="#" class="nav-link outfit-regular">Our Services</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link outfit-regular">News</a></li> 
-                                <li class="nav-item"><a href="#" class="nav-link outfit-regular">Blog</a></li>  
+                                <li class="nav-item"><a href="#" class="nav-link outfit-regular">News</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link outfit-regular">Blog</a></li>
                                 <li class="nav-item"><a href="#" class="nav-link outfit-regular">Contact</a></li>
                             </ul>
-                        </div>   
-                        <div class="col-lg-5 text-center text-lg-end"> 
+                        </div>
+                        <div class="col-lg-5 text-center text-lg-end">
                             <span class="fs-15 outfit-regular">&copy; 2025 Cloudence Nig Ltd </span>
                         </div>
                     </div>
@@ -785,8 +785,8 @@
             </div>
         </footer>
         <!-- end footer -->
-        
-        
+
+
         <!-- start scroll progress -->
         <div class="scroll-progress d-none d-xxl-block">
             <a href="#" class="scroll-top" aria-label="scroll">
@@ -797,6 +797,6 @@
         <!-- javascript libraries -->
         <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/vendors.min.js"></script>
-        <script type="text/javascript" src="js/main.js"></script> 
+        <script type="text/javascript" src="js/main.js"></script>
     </body>
 </html>
