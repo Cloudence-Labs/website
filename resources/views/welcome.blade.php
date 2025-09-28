@@ -338,7 +338,7 @@
                         <span class="fs-19 fw-600 text-dark-gray mb-5px d-block position-relative outfit-bold">Development & Testing</span>
                         <div class="position-relative pb-60px last-paragraph-no-margin">
                             <p class="lh-30 w-90 sm-w-100 outfit-regular">We assess your needs, define clear goals, and create a strategic roadmap to guide the development process from day one.</p>
-                            <a href="demo-web-agency-expertise.html" class="hover-content d-flex justify-content-center align-items-center icon-box w-45px h-45px rounded-circle bg-base-color border-2"><i class="feather icon-feather-arrow-right text-dark-gray icon-small"></i></a>
+                            <a href="#" class="hover-content d-flex justify-content-center align-items-center icon-box w-45px h-45px rounded-circle bg-base-color border-2"><i class="feather icon-feather-arrow-right text-dark-gray icon-small"></i></a>
                         </div>
                     </div>
                     <!-- end process step item -->
@@ -350,7 +350,7 @@
                         <span class="fs-19 fw-600 text-dark-gray mb-5px d-block position-relative outfit-bold">Launch & Support</span>
                         <div class="position-relative pb-60px last-paragraph-no-margin">
                             <p class="lh-30 w-90 sm-w-100 outfit-regular">We ensure a smooth product launch and continue to provide ongoing support, updates, and maintenance to keep your solution running at its best.</p>
-                            <a href="demo-web-agency-expertise.html" class="hover-content d-flex justify-content-center align-items-center icon-box w-45px h-45px rounded-circle bg-base-color border-2"><i class="feather icon-feather-arrow-right text-dark-gray icon-small"></i></a>
+                            <a href="#" class="hover-content d-flex justify-content-center align-items-center icon-box w-45px h-45px rounded-circle bg-base-color border-2"><i class="feather icon-feather-arrow-right text-dark-gray icon-small"></i></a>
                         </div>
                     </div>
                     <!-- end process step item -->
