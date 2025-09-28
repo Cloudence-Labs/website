@@ -4,10 +4,10 @@
 /* font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 /* variable */
-:root {     
-    --base-color: #f7c568;
+:root {
+    --base-color: #f7c56829;
     --medium-gray:#6F7071;
-    --dark-gray:#1C1D1F; 
+    --dark-gray:#1C1D1F;
     --alt-font: 'Inter', sans-serif;
     --primary-font: 'Inter', sans-serif;
 }
@@ -37,7 +37,7 @@ header .btn.btn-switch-text.btn-medium > span {
     color: var(--dark-gray);
 }
 .btn.btn-box-shadow.btn-base-color:hover, .btn.btn-box-shadow.btn-base-color:active {
-    color: var(--dark-gray);   
+    color: var(--dark-gray);
 }
 /* letter spacing */
 .bg-base-color-transparent {

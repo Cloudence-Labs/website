@@ -217,7 +217,7 @@
                             <div class="header-button">
                                 <a href="#" class="btn btn-rounded btn-dark-gray btn-medium btn-switch-text btn-box-shadow text-transform-none">
                                     <span>
-                                        <span class="btn-double-text" data-text="Hire agency">Contact Us</span>
+                                        <span class="btn-double-text" data-text="Contact Us">Contact Us</span>
                                         <span><i class="fa-solid fa-arrow-right"></i></span>
                                     </span>
                                 </a>
@@ -358,122 +358,161 @@
             </div>
         </section>
         <!-- end section -->
-        <!-- start Projects section -->
-        <section class="pb-0 pt-0 ps-2 pe-2 lg-pt-3 md-pt-7 sm-p-0">
+
+        <!-- start section -->
+        <section class="position-relative">
             <div class="container">
-                <div class="row align-items-end mb-6">
-                    <div class="col-lg-9 col-md-8 d-none d-md-flex">
+                <div class="row align-items-center mb-4" data-anime='{ "el": "childs", "translateY": [30, 0], "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                    <div class="col-xl-5 lg-mb-30px text-center text-xl-start">
                         <div class="outside-box-left-25 md-outside-box-left-50">
                             <div class="fs-350 xl-fs-300 lg-fs-250 text-base-color fw-600 ls-minus-20px position-relative d-inline-block word-break-normal" data-bottom-top="transform:scale(1, 1) translate3d(0px, 0px, 0px);" data-top-bottom="transform:scale(1, 1) translate3d(-100px, 0px, 0px);">projects
                                 <div class="position-absolute right-minus-100px top-minus-120px z-index-9 md-w-200px d-none d-md-block" data-anime='{ "translateY": [0, 0], "scale": [0.7, 1], "opacity": [0,1], "duration": 800, "delay": 200, "staggervalue": 300, "easing": "easeOutQuad" }'>
-                                    {{-- <img src="images/demo-web-agency-03.png" class="animation-rotation" alt=""> --}}
-                                    {{-- <div class="absolute-middle-center w-100 z-index-minus-1"><img src="images/demo-web-agency-02.png" alt=""></div>  --}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-4 text-start text-md-end">
-                        <a href="demo-web-agency-projects.html" class="btn btn-large btn-expand-ltr text-dark-gray btn-rounded fw-700 mb-50px sm-mb-0"><span class="bg-base-color"></span>Latest Projects we've worked on</a>
+                    <div class="col-xl-7 tab-style-04 text-center text-xl-end">
+                        <!-- filter navigation -->
+                        <ul class="portfolio-filter nav nav-tabs justify-content-center justify-content-xl-end border-0 fw-500">
+                            <li class="nav active outfit-semi-bold"><a data-filter="*" href="#">All</a></li>
+                            <li class="nav outfit-semi-bold"><a data-filter=".education" href="#">Education</a></li>
+                            <li class="nav outfit-semi-bold"><a data-filter=".fintech" href="#">Fintech/Banking</a></li>
+                            <li class="nav outfit-semi-bold"><a data-filter=".digital" href="#">Digital Payments</a></li>
+                            <li class="nav outfit-semi-bold"><a data-filter=".others" href="#">Others</a></li>
+                        </ul>
+                        <!-- end filter navigation -->
                     </div>
                 </div>
-            </div>
-            <div class="container-fluid">
-                <div class="row justify-content-center m-md-0">
-                    <div class="col-12 filter-content">
-                        <ul class="portfolio-simple portfolio-wrapper grid-loading grid grid-4col xxl-grid-4col xl-grid-4col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large text-center">
+                <div class="row" data-anime='{  "opacity": [0,1], "duration": 600, "delay":0, "staggervalue": 300, "easing": "easeOutQuad" }'>
+                    <div class="col-12 filter-content p-md-0">
+                        <ul class="portfolio-modern portfolio-wrapper grid-loading grid grid-3col xxl-grid-3col xl-grid-3col lg-grid-3col md-grid-2col sm-grid-2col xs-grid-1col gutter-extra-large">
                             <li class="grid-sizer"></li>
                             <!-- start portfolio item -->
+                            <li class="grid-item education transition-inner-all">
+                                <a href="https://uee-akamkpa.edu.ng" target="_blank">
+                                    <div class="portfolio-box">
+                                        <div class="portfolio-image border-radius-4px">
+                                            <img src="{{ asset('images/main/clients/uee.png') }}" alt="" style="border: 1px solid #ccc; border-radius:4px" />
+                                        </div>
+                                        <div class="portfolio-hover box-shadow-extra-large">
+                                            <div class="bg-white d-flex align-items-center align-self-end text-start border-radius-4px ps-30px pe-30px pt-20px pb-20px lg-p-20px w-100">
+                                                <div class="me-auto">
+                                                    <div class="fs-12 fw-500 text-medium-gray text-uppercase lh-24 outfit-regular">Education</div>
+                                                    <div class="fw-700 text-dark-gray text-uppercase lh-initial outfit-semi-bold">University of Education & Entreprenueship, Akamkpa</div>
+                                                </div>
+                                                <div class="ms-auto"><i class="feather icon-feather-plus icon-extra-medium text-dark-gray lh-36"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <!-- end portfolio item -->
+                            <!-- start portfolio item -->
+                            <li class="grid-item fintech transition-inner-all">
+                                <a href="https://topratepay.com" target="_blank">
+                                    <div class="portfolio-box">
+                                        <div class="portfolio-image border-radius-6px">
+                                            <img src="{{ asset('images/main/clients/topratepay.png') }}" alt="" style="border: 1px solid #eee; border-radius:4px" />
+                                        </div>
+                                        <div class="portfolio-hover box-shadow-extra-large">
+                                            <div class="bg-white d-flex align-items-center align-self-end text-start border-radius-4px ps-30px pe-30px pt-20px pb-20px lg-p-20px w-100">
+                                                <div class="me-auto">
+                                                    <div class="fs-12 fw-500 text-medium-gray text-uppercase lh-24 outfit-regular">Fintech</div>
+                                                    <div class="fw-700 text-dark-gray text-uppercase lh-initial outfit-semi-bold">Toprate Pay</div>
+                                                </div>
+                                                <div class="ms-auto"><i class="feather icon-feather-plus icon-extra-medium text-dark-gray lh-36"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <!-- end portfolio item -->
+                            <!-- start portfolio item -->
+                            <li class="grid-item digital transition-inner-all">
+                                <a href="https://billerhub.ng" target="_blank">
+                                    <div class="portfolio-box">
+                                        <div class="portfolio-image border-radius-6px">
+                                            <img src="{{ asset('images/main/clients/billerhub.png') }}" alt="" style="border: 1px solid #eee; border-radius:4px" />
+                                        </div>
+                                        <div class="portfolio-hover box-shadow-extra-large">
+                                            <div class="bg-white d-flex align-items-center align-self-end text-start border-radius-4px ps-30px pe-30px pt-20px pb-20px lg-p-20px w-100">
+                                                <div class="me-auto">
+                                                    <div class="fs-12 fw-500 text-medium-gray text-uppercase lh-24 outfit-regular"> Digital Payments</div>
+                                                    <div class="fw-700 text-dark-gray text-uppercase lh-initial outfit-semi-bold">Billerhub</div>
+                                                </div>
+                                                <div class="ms-auto"><i class="feather icon-feather-plus icon-extra-medium text-dark-gray lh-36"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <!-- end portfolio item -->
+                            <!-- start portfolio item -->
+                            <li class="grid-item fintech digital transition-inner-all">
+                                <a href="https://topratemfbank.com.ng" target="_blank">
+                                    <div class="portfolio-box">
+                                        <div class="portfolio-image border-radius-6px">
+                                            <img src="{{ asset('images/main/clients/toprate-bank.png') }}" alt="" style="border: 1px solid #eee; border-radius:4px"  />
+                                        </div>
+                                        <div class="portfolio-hover box-shadow-extra-large">
+                                            <div class="bg-white d-flex align-items-center align-self-end text-start border-radius-4px ps-30px pe-30px pt-20px pb-20px lg-p-20px w-100">
+                                                <div class="me-auto">
+                                                    <div class="fs-12 fw-500 text-medium-gray text-uppercase lh-24 outfit-regular">Banking</div>
+                                                    <div class="fw-700 text-dark-gray text-uppercase lh-initial outfit-semi-bold">Toprate Microfinance Bank</div>
+                                                </div>
+                                                <div class="ms-auto"><i class="feather icon-feather-plus icon-extra-medium text-dark-gray lh-36"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <!-- end portfolio item -->
+                            <!-- start portfolio item -->
                             <li class="grid-item selected digital transition-inner-all">
-                                <div class="portfolio-box" data-bottom-top="transform: translateY(40px)" data-top-bottom="transform: translateY(-40px)">
-                                    <div class="portfolio-image bg-medium-gray border-radius-6px">
-                                        <a href="https://uee-akamkpa.edu.ng" target="_blank"><img src="{{ asset('images/main/clients/uee.png') }}" alt="" /></a>
+                                <a href="https://rechargefusion.com" target="_blank">
+                                    <div class="portfolio-box">
+                                        <div class="portfolio-image border-radius-6px">
+                                            <img src="{{ asset('images/main/clients/rechargefusion.png') }}" alt="" style="border: 1px solid #eee; border-radius:4px"/>
+                                        </div>
+                                        <div class="portfolio-hover box-shadow-extra-large">
+                                            <div class="bg-white d-flex align-items-center align-self-end text-start border-radius-4px ps-30px pe-30px pt-20px pb-20px lg-p-20px w-100">
+                                                <div class="me-auto">
+                                                    <div class="fs-12 fw-500 text-medium-gray text-uppercase lh-24 outfit-regular">Digital Payments</div>
+                                                    <div class="fw-700 text-dark-gray text-uppercase lh-initial outfit-semi-bold">Recharge Fusion</div>
+                                                </div>
+                                                <div class="ms-auto"><i class="feather icon-feather-plus icon-extra-medium text-dark-gray lh-36"></i></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="portfolio-caption pt-35px pb-35px md-pt-25px md-pb-25px">
-                                        <a href="https://uee-akamkpa.edu.ng" target="_blank" class="text-dark-gray text-dark-gray-hover fw-600 outfit-semi-bold">University of Education & Entreprenueship, Akamkpa</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block outfit-regular">Education</div>
-                                    </div>
-                                </div>
+                                </a>
                             </li>
                             <!-- end portfolio item -->
                             <!-- start portfolio item -->
-                            <li class="grid-item web selected branding transition-inner-all">
-                                <div class="portfolio-box" data-bottom-top="transform: translateY(-40px)" data-top-bottom="transform: translateY(40px)">
-                                    <div class="portfolio-image bg-medium-gray border-radius-6px">
-                                        <a href="https://topratepay.com" target="_blank"><img src="{{ asset('images/main/clients/topratepay.png') }}" alt="" /></a>
+                            <li class="grid-item others web transition-inner-all">
+                                <a href="https://e-hs.com.ng" target="_blank">
+                                    <div class="portfolio-box">
+                                        <div class="portfolio-image border-radius-6px">
+                                            <img src="{{ asset('images/main/clients/ehs.png') }}" alt="" style="border: 1px solid #eee; border-radius:4px"/>
+                                        </div>
+                                        <div class="portfolio-hover box-shadow-extra-large">
+                                            <div class="bg-white d-flex align-items-center align-self-end text-start border-radius-4px ps-30px pe-30px pt-20px pb-20px lg-p-20px w-100">
+                                                <div class="me-auto">
+                                                    <div class="fs-12 fw-500 text-medium-gray text-uppercase lh-24 outfit-regular">Logistics & Transport</div>
+                                                    <div class="fw-700 text-dark-gray text-uppercase lh-initial outfit-semi-bold">Emmanuel Haulage Services</div>
+                                                </div>
+                                                <div class="ms-auto"><i class="feather icon-feather-plus icon-extra-medium text-dark-gray lh-36"></i></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="portfolio-caption pt-35px pb-35px md-pt-25px md-pb-25px">
-                                        <a href="https://topratepay.com" target="_blank" class="text-dark-gray text-dark-gray-hover fw-600 outfit-semi-bold">Topratepay</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block outfit-regular">Fintech</div>
-                                    </div>
-                                </div>
+                                </a>
                             </li>
                             <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item web digital selected branding transition-inner-all">
-                                <div class="portfolio-box" data-bottom-top="transform: translateY(40px)" data-top-bottom="transform: translateY(-40px)">
-                                    <div class="portfolio-image bg-medium-gray border-radius-6px">
-                                        <a href="https://e-hs.com.ng" target="_blank"><img src="{{ asset('images/main/clients/ehs.png') }}" alt="" /></a>
-                                    </div>
-                                    <div class="portfolio-caption pt-35px pb-35px md-pt-25px md-pb-25px">
-                                        <a href="{{ asset('images/main/clients/ehs.png') }}" target="_blank" class="text-dark-gray text-dark-gray-hover fw-600 outfit-semi-bold">Emmanuel Haulage Services</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block outfit-regular">Logistics & Transportation</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item web selected digital transition-inner-all">
-                                <div class="portfolio-box" data-bottom-top="transform: translateY(-40px)" data-top-bottom="transform: translateY(40px)">
-                                    <div class="portfolio-image bg-medium-gray border-radius-6px">
-                                        <a href="https://topratemfbank.com.ng" target="_blank"><img src="{{ asset('images/main/clients/toprate-mf-bank.png') }}" alt="" /></a>
-                                    </div>
-                                    <div class="portfolio-caption pt-35px pb-35px md-pt-25px md-pb-25px">
-                                        <a href="https://topratemfbank.com.ng" target="_blank" class="text-dark-gray text-dark-gray-hover fw-600 outfit-semi-bold">Toprate Microfinance Bank</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block outfit-regular">Banking</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item web branding transition-inner-all">
-                                <div class="portfolio-box" data-bottom-top="transform: translateY(-20px)" data-top-bottom="transform: translateY(-80px)">
-                                    <div class="portfolio-image bg-medium-gray border-radius-6px">
-                                        <a href="https://billerhub.ng" target="_blank"><img src="{{ asset('images/main/clients/billerhub.png') }}" alt="" /></a>
-                                    </div>
-                                    <div class="portfolio-caption pt-35px pb-35px md-pt-25px md-pb-25px">
-                                        <a href="https://billerhub.ng" target="_blank" class="text-dark-gray text-dark-gray-hover fw-600 outfit-semi-bold">Billerhub</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block outfit-regular">Digital Payments</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- end portfolio item -->
-                            <!-- start portfolio item -->
-                            <li class="grid-item web selected digital transition-inner-all">
-                                <div class="portfolio-box" data-bottom-top="transform: translateY(-40px)" data-top-bottom="transform: translateY(40px)">
-                                    <div class="portfolio-image bg-medium-gray border-radius-6px">
-                                        <a href="https://rechargefusion.com" target="_blank"><img src="{{ asset('images/main/clients/rechargefusion.png') }}" alt="" /></a>
-                                    </div>
-                                    <div class="portfolio-caption pt-35px pb-35px md-pt-25px md-pb-25px">
-                                        <a href="https://rechargefusion.com" target="_blank" class="text-dark-gray text-dark-gray-hover fw-600 outfit-semi-bold">Recharge Fusion</a>
-                                        <span class="d-inline-block align-middle w-10px separator-line-1px bg-light-gray ms-10px me-10px"></span>
-                                        <div class="d-inline-block outfit-regular">Digital Payments</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- end portfolio item -->
-
-
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- end Projects section -->
+        <!-- end section -->
 
         <!-- start section -->
         {{-- <section>
@@ -772,8 +811,6 @@
                                 <li class="nav-item"><a href="#" class="nav-link outfit-regular">Why Cloudence</a></li>
                                 <li class="nav-item"><a href="#" class="nav-link outfit-regular">Our Products</a></li>
                                 <li class="nav-item"><a href="#" class="nav-link outfit-regular">Our Services</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link outfit-regular">News</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link outfit-regular">Blog</a></li>
                                 <li class="nav-item"><a href="#" class="nav-link outfit-regular">Contact</a></li>
                             </ul>
                         </div>
