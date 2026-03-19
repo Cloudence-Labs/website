@@ -796,7 +796,7 @@
                     <!-- end footer column -->
                     <!-- start footer column -->
                     <div class="col-md-3 col-sm-4 last-paragraph-no-margin ms-auto text-center text-sm-end">
-                        <a href="tel:1235678901" class="text-dark-gray d-block lh-18 text-dark-gray-hover outfit-regular">+23480 6229 5588</a>
+                        <a href="tel:1235678901" class="text-dark-gray d-block lh-18 text-dark-gray-hover outfit-regular">+234 806 229 5588, +234 903 714 5361</a>
                         <a href="#" class="text-dark-gray text-dark-gray-hover fw-600 text-decoration-line-bottom outfit-regular">hello@cloudence.com.ng</a>
                     </div>
                     <!-- end footer column -->
