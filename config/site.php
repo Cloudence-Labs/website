@@ -12,6 +12,8 @@
 | Service lines. Drives the Services dropdown, the footer column and the
 | homepage grid — add or reorder here and every surface follows.
 */
+$products = require __DIR__ . '/products.php';
+
 $services = [
     ['slug' => 'enterprise-software',    'icon' => 'terminal',           'short' => 'Enterprise software',    'label' => 'Enterprise software development', 'blurb' => 'Custom platforms for institutions', 'description' => 'Custom platforms for institutions that have outgrown off-the-shelf software — payments, records, billing, reporting, and integration with what you already run.'],
     ['slug' => 'web-development',        'icon' => 'language',           'short' => 'Web development',        'label' => 'Web development',                 'blurb' => 'Sites, portals and web apps', 'description' => 'Corporate sites, portals and web applications, built to be fast, accessible and maintainable by your own team.'],
@@ -61,13 +63,16 @@ return [
             ['url' => '/industries/hospitality',        'label' => 'Hospitality',        'icon' => 'hotel',            'blurb' => 'Hotels and estates'],
             ['url' => '/industries/media',              'label' => 'Media',              'icon' => 'podcasts',         'blurb' => 'Broadcasters and publishers'],
         ]],
-        ['url' => '/insights', 'label' => 'Insights'],
+        ['url' => '/products', 'label' => 'Products', 'children' => array_map(fn ($slug, $p) => [
+            'url' => '/products/' . $slug, 'label' => $p['name'], 'icon' => $p['icon'], 'blurb' => $p['blurb'], 'group' => $p['category'],
+        ], array_keys($products), $products)],
         ['url' => '/contact',  'label' => 'Contact'],
     ],
 
     'footer' => [
         'Company' => [
             ['url' => '/about',            'label' => 'About us'],
+            ['url' => '/products',         'label' => 'Products'],
             ['url' => '/about#values',     'label' => 'Our values'],
             ['url' => '/insights',         'label' => 'Insights'],
             ['url' => '/contact',          'label' => 'Contact'],

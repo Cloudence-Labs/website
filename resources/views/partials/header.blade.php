@@ -28,10 +28,20 @@
                           group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
                           group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0
                           transition-all duration-300 ease-out">
-                @php $twoCol = count($subs) > 3; @endphp
-                <div class="{{ $twoCol ? 'w-[640px]' : 'w-[340px]' }} rounded-[22px] border border-mist bg-paper p-3 shadow-[0_30px_80px_-30px_rgba(20,20,20,.3)]">
+                @php
+                  $grouped = collect($subs)->contains(fn ($x) => ! empty($x['group']));
+                  $twoCol  = ! $grouped && count($subs) > 3;
+                @endphp
+                <div class="{{ $twoCol ? 'w-[640px]' : ($grouped ? 'w-[380px]' : 'w-[340px]') }} rounded-[22px] border border-mist bg-paper p-3 shadow-[0_30px_80px_-30px_rgba(20,20,20,.3)]">
                   <div class="grid {{ $twoCol ? 'grid-cols-2' : 'grid-cols-1' }} gap-1">
+                    @php $lastGroup = null; @endphp
                     @foreach ($subs as $sub)
+                      @if ($grouped && ($sub['group'] ?? null) !== $lastGroup)
+                        @php $lastGroup = $sub['group'] ?? null; @endphp
+                        <div class="px-3.5 {{ $loop->first ? 'pt-2' : 'pt-4 mt-1 border-t border-mist' }} pb-1.5 flex items-center gap-2">
+                          <span class="eyebrow text-graphite/70">{{ $lastGroup }}</span>
+                        </div>
+                      @endif
                       <a href="{{ url($sub['url']) }}"
                          class="flex items-center gap-3.5 rounded-2xl px-3.5 py-3 hover:bg-ivory transition-colors">
                         <span class="w-10 h-10 shrink-0 rounded-xl bg-accent/10 flex items-center justify-center text-accent">
@@ -102,7 +112,12 @@
               </button>
             </div>
             <div id="mobileSub{{ $i }}" class="hidden pb-5 pl-9 grid gap-1">
+              @php $lastGroup = null; @endphp
               @foreach ($subs as $sub)
+                @if (!empty($sub['group']) && $sub['group'] !== $lastGroup)
+                  @php $lastGroup = $sub['group']; @endphp
+                  <div class="eyebrow text-graphite/70 {{ $loop->first ? '' : 'pt-3' }}">{{ $lastGroup }}</div>
+                @endif
                 <a href="{{ url($sub['url']) }}" class="mobile-link flex items-center gap-3 py-1.5 text-[15px] font-medium text-ink">
                   <span class="material-symbols-outlined text-[19px] text-accent">{{ $sub['icon'] }}</span>
                   {{ $sub['label'] }}

@@ -34,6 +34,17 @@ Route::get('/industries/{slug}', function (string $slug) {
     return view('pages.industry', ['slug' => $slug, 'industry' => $industry]);
 })->name('industry');
 
+Route::get('/products', function () {
+    return view('pages.products');
+})->name('products');
+
+Route::get('/products/{slug}', function (string $slug) {
+    $product = config('products.' . $slug);
+    abort_unless($product, 404);
+
+    return view('pages.product', ['slug' => $slug, 'product' => $product]);
+})->name('product');
+
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
@@ -50,6 +61,10 @@ Route::get('/sitemap.xml', function () {
     }
     foreach (array_keys(config('industries')) as $slug) {
         $urls[] = ['loc' => url('/industries/' . $slug), 'priority' => '0.7', 'changefreq' => 'monthly'];
+    }
+    $urls[] = ['loc' => url('/products'), 'priority' => '0.9', 'changefreq' => 'monthly'];
+    foreach (array_keys(config('products', [])) as $slug) {
+        $urls[] = ['loc' => url('/products/' . $slug), 'priority' => '0.9', 'changefreq' => 'monthly'];
     }
 
     $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n"

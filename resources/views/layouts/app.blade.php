@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 @php
-  $seoTitle       = trim($__env->yieldContent('title', config('site.name') . ' — ICT solutions for business and government'));
-  $seoDescription = trim($__env->yieldContent('description', 'Cloudence builds enterprise software, networks and ICT infrastructure for businesses and government institutions across Nigeria. Offices in Abuja and Calabar.'));
+  // Sections arrive already HTML-escaped; decode once so the {{ }} below escapes exactly once.
+  $seoTitle       = html_entity_decode(trim($__env->yieldContent('title', config('site.name') . ' — ICT solutions for business and government')), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+  $seoDescription = html_entity_decode(trim($__env->yieldContent('description', 'Cloudence builds enterprise software, networks and ICT infrastructure for businesses and government institutions across Nigeria. Offices in Abuja and Calabar.')), ENT_QUOTES | ENT_HTML5, 'UTF-8');
   $seoImage       = trim($__env->yieldContent('og_image', asset('images/og-default.png')));
   $seoCanonical   = trim($__env->yieldContent('canonical', url()->current()));
   $seoRobots      = trim($__env->yieldContent('robots', 'index, follow, max-image-preview:large'));

@@ -14,6 +14,7 @@
   $services = collect(config('site.services'))->keyBy('slug');
   $others   = array_filter($all, fn ($k) => $k !== $slug, ARRAY_FILTER_USE_KEY);
   $n        = str_pad(array_search($slug, array_keys($all)) + 1, 2, '0', STR_PAD_LEFT);
+  $sectorProducts = array_filter(config('products', []), fn ($p) => ($p['industry'] ?? null) === $slug);
   $waAsk    = config('site.whatsapp') . '?text=' . rawurlencode("Hello Cloudence, I'd like to talk about ICT solutions for " . strtolower($industry['label']) . ".");
 @endphp
 
@@ -129,6 +130,55 @@
       </div>
     </div>
   </section>
+
+  <!-- ═══════════════ READY-MADE PRODUCTS ═══════════════ -->
+  @if ($sectorProducts)
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
+          <div class="max-w-2xl">
+            <div class="flex items-center gap-3 text-graphite">
+              <span class="w-9 rule"></span><span class="eyebrow">Ready-made for {{ strtolower($industry['short']) }}</span>
+            </div>
+            <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
+              Products you can <span class="serif-it font-normal text-[1.06em] text-accent">run this quarter.</span>
+            </h2>
+          </div>
+          <a href="{{ url('/products') }}" class="group shrink-0 inline-flex items-center gap-2 text-[15px] font-semibold text-ink">
+            <span class="link-underline">All products</span>
+            <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-x-1">arrow_forward</span>
+          </a>
+        </div>
+        <div class="mt-14 grid md:grid-cols-2 gap-5">
+          @foreach ($sectorProducts as $k => $p)
+            <a href="{{ url('/products/' . $k) }}"
+               class="reveal group flex flex-col rounded-[22px] border border-mist bg-paper overflow-hidden transition-all duration-500 hover:border-ink/25 hover:-translate-y-1 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
+               style="transition-delay:{{ $loop->index * 0.06 }}s">
+              @if (!empty($p['shots'][0]['file']))
+                <div class="relative aspect-[16/9] overflow-hidden border-b border-mist bg-ivory">
+                  <img src="{{ asset('images/products/' . $k . '/' . $p['shots'][0]['file']) }}" alt="{{ $p['name'] }}" loading="lazy"
+                       class="absolute inset-0 w-full h-full object-cover object-left-top transition-transform duration-700 group-hover:scale-[1.03]">
+                </div>
+              @endif
+              <div class="p-7 lg:p-8 flex flex-col flex-1">
+                <div class="flex items-center gap-3">
+                  <span class="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent">
+                    <span class="material-symbols-outlined text-[20px]">{{ $p['icon'] }}</span>
+                  </span>
+                  <h3 class="text-[22px] leading-snug tracking-tightest font-bold">{{ $p['name'] }}</h3>
+                </div>
+                <p class="mt-4 text-[14.5px] leading-relaxed text-graphite flex-1">{{ $p['summary'] }}</p>
+                <span class="mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-ink">
+                  <span class="link-underline">Explore {{ $p['name'] }}</span>
+                  <span class="material-symbols-outlined text-[18px] text-accent transition-transform group-hover:translate-x-1">arrow_forward</span>
+                </span>
+              </div>
+            </a>
+          @endforeach
+        </div>
+      </div>
+    </section>
+  @endif
 
   <!-- ═══════════════ SERVICE LINES / OUTCOMES ═══════════════ -->
   <section class="py-24 lg:py-32 bg-paper border-y border-mist">
