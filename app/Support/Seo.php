@@ -36,7 +36,7 @@ class Seo
             'url'         => url('/'),
             'logo'        => asset('images/main/logo.png'),
             'image'       => asset('images/og-default.png'),
-            'description' => 'ICT solutions for businesses and government institutions across Nigeria: enterprise software, web and mobile development, networks, CCTV, IT consulting, hardware and training.',
+            'description' => 'ICT solutions for businesses and government institutions across Nigeria: enterprise software, web and mobile development, networks, CCTV, hardware and training.',
             'email'       => $site['mail'],
             'telephone'   => $site['phone1'],
             'areaServed'  => ['@type' => 'Country', 'name' => 'Nigeria'],

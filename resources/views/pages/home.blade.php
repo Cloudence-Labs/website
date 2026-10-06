@@ -53,6 +53,11 @@
     fn ($s, $i) => [sprintf('%02d', $i + 1), $s['icon'], $s['label'], $s['slug'], $s['description']],
     config('site.services'), array_keys(config('site.services'))
   ));
+  $serviceWords = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+  $serviceCount = $serviceWords[count($services)] ?? count($services);
+  // The featured card takes two cells; stretch the last card to fill any gap in the three-column row.
+  $gridRemainder = (count($services) + 1) % 3;
+  $lastSpan      = $gridRemainder ? 'lg:col-span-' . (3 - $gridRemainder + 1) : '';
 
   $projects = [
     ['uee.png',           'University of Education & Entrepreneurship, Akamkpa', 'Portals and campus systems',     'Education'],
@@ -226,7 +231,7 @@
             <span class="w-9 rule"></span><span class="eyebrow">What we do</span>
           </div>
           <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            Eight service lines. One <span class="serif-it font-normal text-[1.06em]">accountable team.</span>
+            {{ $serviceCount }} service lines. One <span class="serif-it font-normal text-[1.06em]">accountable team.</span>
           </h2>
         </div>
         <div class="lg:col-span-5 lg:pb-1.5">
@@ -268,7 +273,7 @@
             </a>
           @else
             <a href="{{ url('/services/' . $s[3]) }}"
-               class="reveal group flex flex-col rounded-[22px] border border-mist bg-paper p-7 transition-all duration-500 hover:border-ink/25 hover:-translate-y-1 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
+               class="reveal group flex flex-col rounded-[22px] border border-mist bg-paper p-7 transition-all duration-500 hover:border-ink/25 hover:-translate-y-1 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)] {{ $loop->last ? $lastSpan : '' }}"
                style="transition-delay:{{ ($i % 3) * 0.06 }}s">
               <div class="flex items-start justify-between">
                 <span class="w-11 h-11 rounded-xl bg-accent/10 flex items-center justify-center text-accent transition-colors group-hover:bg-accent group-hover:text-ivory">
@@ -577,6 +582,9 @@
                 </span>
                 <div>
                   <a href="mailto:{{ $mail }}" class="link-underline text-[16px] font-semibold tracking-tight">{{ $mail }}</a>
+                  @if (config('site.mail2'))
+                    <div class="mt-1"><a href="mailto:{{ config('site.mail2') }}" class="link-underline text-[14px] text-graphite">{{ config('site.mail2') }}</a></div>
+                  @endif
                   <div class="mt-1 text-[13.5px] text-graphite">We reply within one working day</div>
                 </div>
               </div>

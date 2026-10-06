@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Services — Cloudence')
-@section('description', 'Enterprise software, web and mobile development, networks, CCTV, IT consulting, hardware supply and training — delivered in-house by one accountable team across Nigeria.')
+@section('description', 'Enterprise software, web and mobile development, networks, CCTV, hardware supply and training — delivered in-house by one accountable team across Nigeria.')
 
 @push('head')
   {!! \App\Support\Seo::breadcrumbs([['Home', '/'], ['Services', '/services']]) !!}

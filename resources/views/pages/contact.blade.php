@@ -58,6 +58,9 @@
               <span class="min-w-0">
                 <span class="block eyebrow text-graphite/70">Email</span>
                 <span class="block mt-1 text-[16px] font-semibold tracking-tight text-ink truncate">{{ $mail }}</span>
+                @if (config('site.mail2'))
+                  <span class="block text-[13px] text-graphite truncate">or {{ config('site.mail2') }}</span>
+                @endif
                 <span class="block text-[13px] text-graphite">We reply within one working day</span>
               </span>
             </a>

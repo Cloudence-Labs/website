@@ -64,6 +64,9 @@
         </div>
         <ul class="mt-2 space-y-1.5 text-[13.5px] text-ivory/55">
           <li><a href="mailto:{{ $mail }}" class="link-underline hover:text-ivory transition-colors">{{ $mail }}</a></li>
+          @if (config('site.mail2'))
+            <li><a href="mailto:{{ config('site.mail2') }}" class="link-underline hover:text-ivory transition-colors">{{ config('site.mail2') }}</a></li>
+          @endif
           <li>
             <a href="tel:{{ str_replace(' ', '', $phone1) }}" class="link-underline hover:text-ivory transition-colors">{{ $phone1 }}</a>,
             <a href="tel:{{ str_replace(' ', '', $phone2) }}" class="link-underline hover:text-ivory transition-colors">{{ $phone2 }}</a>

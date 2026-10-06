@@ -20,7 +20,8 @@ $services = [
     ['slug' => 'mobile-development',     'icon' => 'smartphone',         'short' => 'Mobile development',     'label' => 'Mobile development',              'blurb' => 'Android and iOS applications', 'description' => 'Android and iOS applications for customers and field staff, released and supported properly.'],
     ['slug' => 'cctv-installation',      'icon' => 'videocam',           'short' => 'CCTV & surveillance',    'label' => 'CCTV installation',               'blurb' => 'Surveillance design and install', 'description' => 'Surveillance design and installation for offices, estates and public facilities, with recording and remote access configured.'],
     ['slug' => 'network-implementation', 'icon' => 'lan',                'short' => 'Network implementation', 'label' => 'Network implementation',          'blurb' => 'Cabling, wireless and routing', 'description' => 'Structured cabling, wireless coverage, switching and routing — specified, installed and documented.'],
-    ['slug' => 'it-consulting',          'icon' => 'insights',           'short' => 'IT consulting',          'label' => 'IT consulting',                   'blurb' => 'Assessment, strategy and procurement', 'description' => 'Assessment, strategy and procurement advice for organisations deciding what to build, buy or replace.'],
+    // Temporarily hidden — remove the leading // on the next line to bring IT consulting back.
+    // ['slug' => 'it-consulting',          'icon' => 'insights',           'short' => 'IT consulting',          'label' => 'IT consulting',                   'blurb' => 'Assessment, strategy and procurement', 'description' => 'Assessment, strategy and procurement advice for organisations deciding what to build, buy or replace.'],
     ['slug' => 'installation-supplies',  'icon' => 'inventory_2',        'short' => 'Installation & supplies','label' => 'Installation & supplies',         'blurb' => 'Hardware from a single vendor', 'description' => 'Sourcing and installing the hardware behind all of the above, from one vendor with a single point of contact.'],
     ['slug' => 'training',               'icon' => 'cast_for_education', 'short' => 'Training',               'label' => 'Training & capacity building',    'blurb' => 'Courses and skills for your team', 'description' => 'Hands-on training for your people — end-user onboarding, administrator courses and ICT skills programmes, delivered on site or online.'],
 ];
@@ -35,11 +36,12 @@ return [
     'phone1'  => '+234 806 229 5588',
     'phone2'  => '+234 903 714 5361',
     'mail'    => 'hello@cloudence.com.ng',
+    'mail2'   => 'cloudenceltd@gmail.com',
     'whatsapp' => 'https://wa.me/2348062295588',
 
     'offices' => [
         ['city' => 'Abuja',   'address' => 'FHA Apo-Guzape Estate, Guzape Hills, Abuja', 'phone' => '+234 806 229 5588'],
-        ['city' => 'Calabar', 'address' => '105 IBB Way, Calabar, Cross River State',    'phone' => '+234 903 714 5361'],
+        ['city' => 'Calabar', 'address' => '1, Elder Chief Effiom Edem Orok, Off Jehovah Witness Road, Calabar, Cross River State, Nigeria', 'phone' => '+234 903 714 5361'],
     ],
 
     // Primary navigation — every page now lives at its own URL.
