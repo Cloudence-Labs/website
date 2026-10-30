@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.v3')
 
 @section('title', $service['label'] . ' — Cloudence')
 @section('description', $service['description'])
@@ -10,220 +10,188 @@
 @endpush
 
 @php
-  $all     = config('site.services');
-  $index   = array_search($service['slug'], array_column($all, 'slug'));
-  $n       = str_pad($index + 1, 2, '0', STR_PAD_LEFT);
-  $others  = array_values(array_filter($all, fn ($s) => $s['slug'] !== $service['slug']));
-  $wa      = config('site.whatsapp');
-  $waAsk   = $wa . '?text=' . rawurlencode("Hello Cloudence, I'd like to talk about " . strtolower($service['label']) . ".");
+  $all    = config('site.services');
+  $index  = array_search($service['slug'], array_column($all, 'slug'));
+  $n      = sprintf('%02d', $index + 1);
+  $others = array_values(array_filter($all, fn ($s) => $s['slug'] !== $service['slug']));
+  $wa     = config('site.whatsapp');
+  $waAsk  = $wa . '?text=' . rawurlencode("Hello Cloudence, I'd like to talk about " . strtolower($service['label']) . ".");
+  $words  = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'];
+  $arrow  = '<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>';
 @endphp
 
-@section('content')
+@section('page')
 
-  <!-- ═══════════════ HERO ═══════════════ -->
-  <section class="relative grain overflow-hidden pt-32 pb-20 lg:pt-36 lg:pb-24">
-    <div class="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-      <nav class="reveal flex items-center gap-2 text-[13px] text-graphite" aria-label="Breadcrumb">
-        <a href="{{ url('/services') }}" class="link-underline hover:text-ink transition-colors">Services</a>
-        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-        <span class="text-ink font-medium">{{ $service['short'] }}</span>
-      </nav>
+{{-- ── Hero ─────────────────────────────────────────────── --}}
+<section class="v3-hero v3-wrap pb-12 pt-14 lg:pb-16 lg:pt-24">
+  <nav aria-label="Breadcrumb" class="flex flex-wrap items-center gap-2 text-sm font-medium text-neutral-500">
+    <a href="{{ url('/services') }}" class="hover:text-[var(--blue)]">Services</a>
+    <span aria-hidden="true" class="text-neutral-300">/</span>
+    <span>Service {{ $n }}</span>
+  </nav>
+  <div class="mt-10 flex items-center gap-4">
+    <span class="v3-icon"><span class="material-symbols-outlined">{{ $service['icon'] }}</span></span>
+    <span class="v3-eyebrow">{{ $service['label'] }}</span>
+  </div>
+  <h1 class="v3-h1 mt-6 max-w-4xl">
+    {{ $details['heading'] }} <span class="v3-accent">{{ $details['accent'] }}</span>
+  </h1>
+  <p class="v3-lead mt-8 max-w-2xl">{{ $details['lead'] }}</p>
+  <div class="mt-10 flex flex-wrap items-center gap-3">
+    <a href="{{ $waAsk }}" target="_blank" rel="noopener" class="v3-btn v3-btn-dark">
+      Talk to us about this {!! $arrow !!}
+    </a>
+    <a href="{{ url('/contact') }}" class="v3-btn v3-btn-line">Contact us</a>
+  </div>
+</section>
 
-      <div class="mt-10 grid lg:grid-cols-12 gap-12 lg:gap-8 items-end">
-        <div class="lg:col-span-8 reveal">
-          <div class="flex items-center gap-4">
-            <span class="w-12 h-12 rounded-xl bg-accent flex items-center justify-center text-ivory">
-              <span class="material-symbols-outlined text-[22px]">{{ $service['icon'] }}</span>
-            </span>
-            <span class="eyebrow text-graphite">Service {{ $n }} &nbsp;·&nbsp; {{ $service['label'] }}</span>
-          </div>
-          <h1 class="mt-7 text-[clamp(2.2rem,5.2vw,4.1rem)] leading-[1.04] tracking-tightest font-bold">
-            {{ $details['heading'] }}<br>
-            <span class="serif-it font-normal text-[1.06em] text-accent">{{ $details['accent'] }}</span>
-          </h1>
-          <p class="mt-7 max-w-2xl text-[17px] leading-relaxed text-graphite">{{ $details['lead'] }}</p>
-          <div class="mt-9 flex flex-wrap items-center gap-3">
-            <a href="{{ $waAsk }}" target="_blank" rel="noopener"
-               class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ivory bg-ink hover:bg-black px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-              Talk to us about this
-              <span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-            </a>
-            <a href="{{ url('/work') }}"
-               class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ink border border-mist bg-paper hover:border-ink/40 px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-              See related work
-              <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-            </a>
-          </div>
-        </div>
+{{-- ── Photo ────────────────────────────────────────────── --}}
+<div class="v3-wrap pb-20 lg:pb-28">
+  <img src="{{ asset('images/services/' . $service['slug'] . '.jpg') }}" alt="{{ $service['label'] }}" decoding="async" class="aspect-[4/3] w-full bg-neutral-100 object-cover sm:aspect-[21/9]">
+</div>
+
+{{-- ── What's included ──────────────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-2xl">
+        <p class="v3-eyebrow">What's included</p>
+        <h2 class="v3-h2 mt-4">Everything the engagement <span class="v3-accent">covers.</span></h2>
       </div>
+      <p class="v3-muted max-w-sm text-[15px] leading-relaxed">{{ $service['description'] }}</p>
     </div>
-  </section>
-
-  <!-- ═══════════════ WHAT'S INCLUDED ═══════════════ -->
-  <section class="py-24 lg:py-32 bg-paper border-y border-mist">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="reveal max-w-2xl">
-        <div class="flex items-center gap-3 text-graphite">
-          <span class="w-9 rule"></span><span class="eyebrow">What's included</span>
-        </div>
-        <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-          Everything the engagement <span class="serif-it font-normal text-[1.06em] text-accent">covers.</span>
-        </h2>
-      </div>
-      <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        @foreach ($details['includes'] as $i => $inc)
-          <div class="reveal group rounded-[22px] border border-mist bg-ivory p-7 flex flex-col transition-all duration-500 hover:border-ink/25 hover:-translate-y-1 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
-               style="transition-delay:{{ ($i % 3) * 0.06 }}s">
-            <span class="w-11 h-11 rounded-full bg-paper border border-mist flex items-center justify-center text-ink transition-colors group-hover:bg-ink group-hover:text-ivory group-hover:border-ink">
-              <span class="material-symbols-outlined text-[20px]">{{ $inc[0] }}</span>
-            </span>
-            <h3 class="mt-7 text-[17px] font-bold tracking-tight">{{ $inc[1] }}</h3>
-            <p class="mt-2.5 text-[14.5px] leading-relaxed text-graphite">{{ $inc[2] }}</p>
+    <div class="mt-14 grid gap-6 md:grid-cols-2 lg:mt-16 lg:grid-cols-3">
+      @foreach ($details['includes'] as $i => $inc)
+        <div class="v3-card reveal flex flex-col p-7 lg:p-8" style="--d:{{ ($i % 3) * 0.06 }}s">
+          <div class="flex items-start justify-between">
+            <span class="v3-icon"><span class="material-symbols-outlined">{{ $inc[0] }}</span></span>
+            <span class="text-xs font-medium tabular-nums text-neutral-400">{{ sprintf('%02d', $i + 1) }}</span>
           </div>
-        @endforeach
-      </div>
+          <h3 class="v3-h3 mt-8">{{ $inc[1] }}</h3>
+          <p class="mt-3 text-[15px] leading-relaxed text-neutral-500">{{ $inc[2] }}</p>
+        </div>
+      @endforeach
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══════════════ WHO IT'S FOR / OUTCOMES ═══════════════ -->
-  <section class="py-24 lg:py-32">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-2 gap-5">
-        <div class="reveal rounded-[22px] border border-mist bg-paper p-8 lg:p-10">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Who it's for</span>
-          </div>
-          <h2 class="mt-6 text-[clamp(1.5rem,2.4vw,1.9rem)] leading-tight tracking-tightest font-bold">
-            Typically <span class="serif-it font-normal text-[1.06em] text-accent">commissioned by</span>
-          </h2>
-          <ul class="mt-7 space-y-3.5">
-            @foreach ($details['for'] as $f)
-              <li class="flex items-start gap-3 text-[15.5px] leading-relaxed text-graphite">
-                <span class="mt-2 w-1.5 h-1.5 shrink-0 rounded-full bg-accent"></span>{{ $f }}
-              </li>
-            @endforeach
-          </ul>
-        </div>
-        <div class="reveal rounded-[22px] bg-ink text-ivory p-8 lg:p-10 relative grain overflow-hidden" style="transition-delay:.08s">
-          <div class="relative">
-            <div class="flex items-center gap-3 text-ivory/50">
-              <span class="w-9 h-px bg-ivory/25"></span><span class="eyebrow">What you walk away with</span>
-            </div>
-            <h2 class="mt-6 text-[clamp(1.5rem,2.4vw,1.9rem)] leading-tight tracking-tightest font-bold">
-              The <span class="serif-it font-normal text-[1.06em] text-accent">outcomes.</span>
-            </h2>
-            <ul class="mt-7 space-y-3.5">
-              @foreach ($details['outcomes'] as $o)
-                <li class="flex items-start gap-3 text-[15.5px] leading-relaxed text-ivory/75">
-                  <span class="material-symbols-outlined text-[20px] text-accent shrink-0">check_circle</span>{{ $o }}
-                </li>
-              @endforeach
-            </ul>
-          </div>
-        </div>
+{{-- ── Who it's for / outcomes ──────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="grid gap-16 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-5">
+        <p class="v3-eyebrow">Who it's for</p>
+        <h2 class="v3-h2 mt-4">Typically <span class="v3-accent">commissioned by</span></h2>
+        <ul class="mt-10 border-t border-neutral-200">
+          @foreach ($details['for'] as $i => $f)
+            <li class="flex items-start gap-5 border-b border-neutral-100 py-5">
+              <span class="pt-1 text-xs font-medium tabular-nums text-neutral-400">0{{ $i + 1 }}</span>
+              <span class="text-base font-bold leading-snug tracking-tight">{{ $f }}</span>
+            </li>
+          @endforeach
+        </ul>
       </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ PROCESS ═══════════════ -->
-  <section class="py-24 lg:py-32 bg-paper border-y border-mist">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8">
-        <div class="lg:col-span-4 reveal">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">How it works</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            Three stages, no <span class="serif-it font-normal text-[1.06em] text-accent">surprises.</span>
-          </h2>
-        </div>
-        <div class="lg:col-span-8 grid md:grid-cols-3 gap-5">
-          @foreach ($details['process'] as $i => $p)
-            <div class="reveal rounded-[22px] border border-mist bg-ivory p-7 flex flex-col" style="transition-delay:{{ $i * 0.08 }}s">
-              <div class="flex items-center justify-between">
-                <span class="text-[2.2rem] leading-none font-bold tracking-tightest text-accent">0{{ $i + 1 }}</span>
-                <span class="w-12 rule"></span>
-              </div>
-              <h3 class="mt-7 text-[18px] font-bold tracking-tight">{{ $p[0] }}</h3>
-              <p class="mt-3 text-[14.5px] leading-relaxed text-graphite">{{ $p[1] }}</p>
+      <div class="reveal lg:col-span-7" style="--d:.1s">
+        <p class="v3-eyebrow">What you walk away with</p>
+        <h2 class="v3-h2 mt-4">The <span class="v3-accent">outcomes.</span></h2>
+        <div class="mt-10 grid gap-4 sm:grid-cols-2">
+          @foreach ($details['outcomes'] as $o)
+            <div class="v3-card flex items-start gap-4 p-6 lg:p-7">
+              <span class="material-symbols-outlined shrink-0 text-[24px] text-[var(--blue)]">task_alt</span>
+              <p class="text-base font-bold leading-snug tracking-tight">{{ $o }}</p>
             </div>
           @endforeach
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══════════════ FAQ ═══════════════ -->
-  <section class="py-24 lg:py-32">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8">
-        <div class="lg:col-span-4 reveal">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Common questions</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            Before you <span class="serif-it font-normal text-[1.06em] text-accent">ask.</span>
-          </h2>
-          <p class="mt-7 text-[15.5px] leading-relaxed text-graphite max-w-sm">
-            Anything else, <a href="{{ $waAsk }}" target="_blank" rel="noopener" class="link-underline font-semibold text-ink">message us on WhatsApp</a> and a person will reply.
-          </p>
-        </div>
-        <div class="lg:col-span-8 reveal">
-          <div class="divide-y divide-mist border-y border-mist">
-            @foreach ($details['faqs'] as $f)
-              <details class="group py-5">
-                <summary class="flex items-center justify-between gap-6 cursor-pointer list-none text-[17px] font-bold tracking-tight">
-                  {{ $f[0] }}
-                  <span class="w-9 h-9 shrink-0 rounded-full border border-mist flex items-center justify-center text-ink transition-all group-open:bg-ink group-open:text-ivory group-open:rotate-45">
-                    <span class="material-symbols-outlined text-[18px]">add</span>
-                  </span>
-                </summary>
-                <p class="mt-4 max-w-2xl text-[15px] leading-relaxed text-graphite">{{ $f[1] }}</p>
-              </details>
-            @endforeach
-          </div>
+{{-- ── Process ──────────────────────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-5">
+        <p class="v3-eyebrow">How it works</p>
+        <h2 class="v3-h2 mt-4">{{ $words[count($details['process'])] ?? count($details['process']) }} stages, <span class="v3-accent">no surprises.</span></h2>
+        <p class="v3-lead mt-7 max-w-md">A written scope, visible progress, and support that does not end at handover.</p>
+      </div>
+      <div class="reveal lg:col-span-7" style="--d:.1s">
+        <ol class="border-t border-neutral-200">
+          @foreach ($details['process'] as $i => $step)
+            <li class="grid gap-2 border-b border-neutral-100 py-7 sm:grid-cols-12 sm:gap-6 lg:py-8">
+              <span class="text-xs font-medium tabular-nums text-neutral-400 sm:col-span-1 sm:pt-1.5">0{{ $i + 1 }}</span>
+              <div class="sm:col-span-11">
+                <h3 class="text-xl font-bold leading-tight tracking-tight sm:text-[22px]">{{ $step[0] }}</h3>
+                <p class="mt-2.5 max-w-xl text-[15px] leading-relaxed text-neutral-500">{{ $step[1] }}</p>
+              </div>
+            </li>
+          @endforeach
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{-- ── FAQ ──────────────────────────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-5">
+        <p class="v3-eyebrow">Common questions</p>
+        <h2 class="v3-h2 mt-4">Before you <span class="v3-accent">ask.</span></h2>
+        <p class="mt-7 max-w-sm text-[15px] leading-relaxed text-neutral-500">
+          Anything else, <a href="{{ $waAsk }}" target="_blank" rel="noopener" class="font-medium text-[var(--ink)] underline decoration-neutral-300 underline-offset-4 hover:text-neutral-500 hover:decoration-[var(--blue)]">message us on WhatsApp</a> and a person will reply.
+        </p>
+      </div>
+      <div class="reveal lg:col-span-7" style="--d:.1s">
+        <div class="border-t border-neutral-200">
+          @foreach ($details['faqs'] as $f)
+            <details class="group border-b border-neutral-100">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-[17px] font-bold tracking-tight hover:text-neutral-500 [&::-webkit-details-marker]:hidden">
+                {{ $f[0] }}
+                <span class="material-symbols-outlined shrink-0 text-[22px] text-neutral-400 transition-transform duration-300 group-open:rotate-180">expand_more</span>
+              </summary>
+              <p class="max-w-2xl pb-6 text-[15px] leading-relaxed text-neutral-500">{{ $f[1] }}</p>
+            </details>
+          @endforeach
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══════════════ OTHER SERVICES ═══════════════ -->
-  <section class="py-24 lg:py-32 bg-paper border-y border-mist">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
-        <div class="max-w-2xl">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Other services</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            Usually paired <span class="serif-it font-normal text-[1.06em] text-accent">with this.</span>
-          </h2>
-        </div>
-        <a href="{{ url('/services') }}" class="group shrink-0 inline-flex items-center gap-2 text-[15px] font-semibold text-ink">
-          <span class="link-underline">All services</span>
-          <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-x-1">arrow_forward</span>
+{{-- ── Other services ───────────────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-2xl">
+        <p class="v3-eyebrow">Other services</p>
+        <h2 class="v3-h2 mt-4">Usually paired <span class="v3-accent">with this.</span></h2>
+      </div>
+      <a href="{{ url('/services') }}" class="inline-flex shrink-0 items-center gap-2 self-start border-b border-neutral-950 pb-1 text-sm font-medium hover:border-neutral-500 hover:text-neutral-500 lg:self-auto">
+        All services {!! $arrow !!}
+      </a>
+    </div>
+    <div class="mt-12 border-t border-neutral-200">
+      @foreach ($others as $o)
+        <a href="{{ url('/services/' . $o['slug']) }}" class="group grid grid-cols-[auto_1fr_auto] items-center gap-4 border-b border-neutral-100 py-5 sm:gap-6 lg:grid-cols-[2.5rem_6rem_1fr_1fr_auto]">
+          <span class="hidden text-xs font-medium tabular-nums text-neutral-400 lg:block">{{ sprintf('%02d', $loop->iteration) }}</span>
+          <span class="relative block h-12 w-16 overflow-hidden bg-neutral-100 sm:h-14 sm:w-20 lg:h-16 lg:w-24">
+            <img src="{{ asset('images/services/' . $o['slug'] . '.jpg') }}" alt="" loading="lazy" decoding="async" class="v3-photo absolute inset-0 h-full w-full object-cover">
+          </span>
+          <span class="min-w-0">
+            <span class="flex items-center gap-2.5 text-[17px] font-bold leading-snug tracking-tight group-hover:text-neutral-500 sm:text-[19px]">
+              <span class="material-symbols-outlined hidden text-[22px] text-[var(--blue)] sm:inline">{{ $o['icon'] }}</span>{{ $o['label'] }}
+            </span>
+            <span class="mt-0.5 block text-[13.5px] leading-snug text-neutral-500 lg:hidden">{{ $o['blurb'] }}</span>
+          </span>
+          <span class="hidden text-sm leading-snug text-neutral-500 lg:block">{{ $o['blurb'] }}</span>
+          <span class="flex h-8 w-8 items-center justify-center border border-neutral-200 transition-colors group-hover:border-neutral-500 group-hover:bg-[var(--blue)] group-hover:text-white">{!! $arrow !!}</span>
         </a>
-      </div>
-      <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        @foreach (array_slice($others, 0, 4) as $i => $o)
-          <a href="{{ url('/services/' . $o['slug']) }}"
-             class="reveal group flex flex-col rounded-[22px] border border-mist bg-ivory p-7 transition-all duration-500 hover:border-ink/25 hover:-translate-y-1 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
-             style="transition-delay:{{ $i * 0.06 }}s">
-            <span class="w-11 h-11 rounded-xl bg-accent/10 flex items-center justify-center text-accent transition-colors group-hover:bg-accent group-hover:text-ivory">
-              <span class="material-symbols-outlined text-[21px]">{{ $o['icon'] }}</span>
-            </span>
-            <h3 class="mt-7 text-[17px] leading-snug tracking-tight font-bold">{{ $o['label'] }}</h3>
-            <p class="mt-2.5 text-[13.5px] leading-relaxed text-graphite flex-1">{{ $o['blurb'] }}</p>
-            <span class="mt-6 inline-flex items-center gap-2 text-[13.5px] font-semibold text-ink">
-              <span class="link-underline">Learn more</span>
-              <span class="material-symbols-outlined text-[16px] text-graphite transition-transform group-hover:translate-x-1">arrow_forward</span>
-            </span>
-          </a>
-        @endforeach
-      </div>
+      @endforeach
     </div>
-  </section>
-
-  @include('partials.cta')
+  </div>
+</section>
 
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.v3')
 
 @section('title', 'About Cloudence — Your digital partner to business growth')
 @section('description', 'Cloudence is an ICT company with offices in Abuja and Calabar, delivering enterprise software, networks and infrastructure for businesses and government institutions across Nigeria.')
@@ -42,231 +42,205 @@
   ];
 @endphp
 
-@section('content')
+@section('page')
 
-  <!-- ═══════════════ HERO ═══════════════ -->
-  <section class="relative grain overflow-hidden pt-32 pb-20 lg:pt-36 lg:pb-24">
-    <div class="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-end">
-        <div class="lg:col-span-8 reveal">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span>
-            <span class="eyebrow">About Cloudence</span>
-          </div>
+@php
+  $arrow = '<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>';
+@endphp
 
-          <h1 class="mt-7 text-[clamp(2.4rem,5.9vw,4.5rem)] leading-[1.02] tracking-tightest font-bold">
-            Your digital partner to<br>
-            <span class="serif-it font-normal text-[1.06em] text-accent">business growth.</span>
-          </h1>
+{{-- ── Hero ─────────────────────────────────────────────── --}}
+<section class="v3-hero v3-wrap pb-14 pt-14 lg:pb-20 lg:pt-24">
+  <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-neutral-400">
+    <a href="{{ url('/') }}" class="transition-colors hover:text-[var(--ink)]">Home</a>
+    <span aria-hidden="true">/</span>
+    <span class="text-[var(--blue)]">About Cloudence</span>
+  </nav>
+  <h1 class="v3-h1 reveal mt-6 max-w-5xl">
+    Your digital partner to <span class="v3-accent">business growth.</span>
+  </h1>
+  <div class="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-12 lg:gap-16">
+    <p class="v3-lead reveal max-w-2xl lg:col-span-8" style="--d:.2s">
+      Cloudence delivers innovative, reliable ICT solutions that let businesses and government
+      institutions scale with confidence. From infrastructure to enterprise software, we work
+      closely with each client to understand what they actually need, then build technology
+      around it — efficient, productive, and sustainable well past handover.
+    </p>
+    <div class="reveal flex flex-wrap items-end gap-3 lg:col-span-4 lg:justify-end" style="--d:.3s">
+      <a href="{{ $waBook }}" target="_blank" rel="noopener" class="v3-btn v3-btn-dark">
+        Book a consultation {!! $arrow !!}
+      </a>
+      <a href="{{ url('/services') }}" class="v3-btn v3-btn-line">Explore our services</a>
+    </div>
+  </div>
+</section>
 
-          <p class="mt-7 max-w-xl text-[17px] leading-relaxed text-graphite">
-            Cloudence delivers innovative, reliable ICT solutions that let businesses and government
-            institutions scale with confidence. From infrastructure to enterprise software, we work
-            closely with each client to understand what they actually need, then build technology
-            around it — efficient, productive, and sustainable well past handover.
+{{-- ── Photo ────────────────────────────────────────────── --}}
+<section class="v3-wrap">
+  <figure class="group relative aspect-[4/3] overflow-hidden bg-neutral-900 sm:aspect-[16/9] lg:aspect-[21/9]">
+    <img src="{{ asset('images/main/about-team.jpg') }}" alt="A Cloudence team meeting with a client" loading="eager" decoding="async"
+         class="v3-photo absolute inset-0 h-full w-full object-cover">
+    <figcaption class="absolute bottom-0 left-0 bg-[var(--blue)] px-5 py-4 text-white">
+      <span class="block text-[11px] font-medium uppercase tracking-wider text-white/70">{{ config('site.name') }}</span>
+      <span class="mt-0.5 block text-sm font-bold">{{ collect(config('site.offices'))->pluck('city')->join(' & ') }}</span>
+    </figcaption>
+  </figure>
+</section>
+
+{{-- ── Stats (PLACEHOLDER figures, see top of file) ─────── --}}
+<section class="v3-wrap py-14 lg:py-20">
+  <div class="reveal grid grid-cols-2 border-t border-neutral-200 lg:grid-cols-4">
+    @foreach ($stats as $i => $s)
+      <div class="border-b border-[#f0f0f2] py-8 pr-4 {{ $i % 2 ? 'pl-6 border-l' : '' }} lg:border-b-0 lg:px-8 {{ $i ? 'lg:border-l lg:pl-8' : 'lg:pl-0' }}">
+        <div class="v3-num text-[clamp(2.4rem,5vw,3.75rem)] leading-none">
+          <span class="counter" data-target="{{ $s['value'] }}">0</span><span>{{ $s['suffix'] }}</span>
+        </div>
+        <div class="mt-3 max-w-[10rem] text-sm leading-relaxed text-neutral-500">{{ $s['label'] }}</div>
+      </div>
+    @endforeach
+  </div>
+</section>
+
+{{-- ── Mission & vision ─────────────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-5">
+        <p class="v3-eyebrow">Mission &amp; vision</p>
+        <h2 class="v3-h2 mt-4">More than a service provider.</h2>
+        <p class="v3-lead mt-6 max-w-md">
+          With a focus on trust, excellence and innovation, we set out to be a strategic partner in
+          digital transformation — not just the vendor on the last purchase order.
+        </p>
+      </div>
+
+      <div class="grid gap-px bg-[#f0f0f2] md:grid-cols-2 lg:col-span-7 border border-[#f0f0f2]">
+        <div class="reveal flex flex-col bg-white p-8 lg:p-10">
+          <span class="v3-icon"><span class="material-symbols-outlined">flag</span></span>
+          <p class="v3-eyebrow mt-8">Our mission</p>
+          <p class="mt-3 text-xl font-bold leading-snug tracking-tight">
+            To deliver innovative, reliable ICT solutions that let businesses and government
+            institutions scale with confidence.
           </p>
-
-          <div class="mt-9 flex flex-wrap items-center gap-3">
-            <a href="{{ $waBook }}" target="_blank" rel="noopener"
-               class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ivory bg-ink hover:bg-black px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-              Book a consultation
-              <span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-            </a>
-            <a href="{{ url('/work') }}"
-               class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ink border border-mist bg-paper hover:border-ink/40 px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-              See our work
-              <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ STATS ═══════════════ -->
-  <section class="py-20 lg:py-24 border-y border-mist bg-paper">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="reveal grid grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-8 divide-mist lg:divide-x">
-        @foreach ($stats as $s)
-          <div class="lg:px-10 lg:first:pl-0">
-            <div class="text-[clamp(2.6rem,5vw,3.75rem)] leading-none font-bold tracking-tightest">
-              <span class="counter" data-target="{{ $s['value'] }}">0</span>{{ $s['suffix'] }}
-            </div>
-            <div class="mt-4 text-[13.5px] leading-relaxed text-graphite max-w-[10rem]">{{ $s['label'] }}</div>
-          </div>
-        @endforeach
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ MISSION & VISION ═══════════════ -->
-  <section class="py-24 lg:py-32">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8">
-        <div class="lg:col-span-4 reveal">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Mission &amp; vision</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            More than a <span class="serif-it font-normal text-[1.06em] text-accent">service provider.</span>
-          </h2>
-          <p class="mt-7 text-[16px] leading-relaxed text-graphite max-w-sm">
-            With a focus on trust, excellence and innovation, we set out to be a strategic partner in
-            digital transformation — not just the vendor on the last purchase order.
+          <p class="mt-4 text-[15px] leading-relaxed text-neutral-500">
+            Technology that drives efficiency, productivity and sustainable growth — specified
+            honestly, built properly, and supported for as long as it is in use.
           </p>
         </div>
-
-        <div class="lg:col-span-8 grid md:grid-cols-2 gap-5">
-          <div class="reveal rounded-[22px] bg-ink text-ivory p-8 lg:p-9 relative overflow-hidden grain">
-            <div class="relative">
-              <span class="w-11 h-11 rounded-full bg-ivory/10 border border-ivory/15 flex items-center justify-center">
-                <span class="material-symbols-outlined text-[20px]">flag</span>
-              </span>
-              <div class="mt-7 eyebrow text-ivory/45">Our mission</div>
-              <p class="mt-3 text-[20px] leading-snug font-semibold tracking-tight">
-                To deliver innovative, reliable ICT solutions that let businesses and government
-                institutions scale with confidence.
-              </p>
-              <p class="mt-4 text-[14.5px] leading-relaxed text-ivory/60">
-                Technology that drives efficiency, productivity and sustainable growth — specified
-                honestly, built properly, and supported for as long as it is in use.
-              </p>
-            </div>
-          </div>
-          <div class="reveal rounded-[22px] border border-mist bg-paper p-8 lg:p-9" style="transition-delay:.08s">
-            <span class="w-11 h-11 rounded-full bg-ivory border border-mist flex items-center justify-center text-ink">
-              <span class="material-symbols-outlined text-[20px]">visibility</span>
-            </span>
-            <div class="mt-7 eyebrow text-graphite">Our vision</div>
-            <p class="mt-3 text-[20px] leading-snug font-semibold tracking-tight">
-              To be the technology partner that institutions across Nigeria trust to build and run
-              the systems they depend on.
-            </p>
-            <p class="mt-4 text-[14.5px] leading-relaxed text-graphite">
-              One accountable team for software and infrastructure, known for work that survives
-              procurement, audit and the years after launch.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ VALUES ═══════════════ -->
-  <section id="values" class="py-24 lg:py-32 bg-paper border-y border-mist scroll-mt-24">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="reveal max-w-2xl">
-        <div class="flex items-center gap-3 text-graphite">
-          <span class="w-9 rule"></span><span class="eyebrow">Our values</span>
-        </div>
-        <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-          What we hold <span class="serif-it font-normal text-[1.06em] text-accent">ourselves to.</span>
-        </h2>
-      </div>
-
-      <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        @foreach ($values as $i => $v)
-          <div class="reveal group rounded-[22px] border border-mist bg-ivory p-8 flex flex-col transition-all duration-500 hover:border-ink/25 hover:-translate-y-1 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
-               style="transition-delay:{{ $i * 0.07 }}s">
-            <div class="flex items-center justify-between">
-              <span class="text-[2.2rem] leading-none font-bold tracking-tightest text-accent">{{ $v[0] }}</span>
-              <span class="w-11 h-11 rounded-full bg-paper border border-mist flex items-center justify-center text-ink transition-colors group-hover:bg-ink group-hover:text-ivory group-hover:border-ink">
-                <span class="material-symbols-outlined text-[20px]">{{ $v[1] }}</span>
-              </span>
-            </div>
-            <h3 class="mt-8 text-[19px] font-bold tracking-tight">{{ $v[2] }}</h3>
-            <p class="mt-3 text-[14.5px] leading-relaxed text-graphite">{{ $v[3] }}</p>
-          </div>
-        @endforeach
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ WHY CLOUDENCE ═══════════════ -->
-  <section class="py-24 lg:py-32">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-start">
-        <div class="lg:col-span-5 reveal lg:sticky lg:top-32">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Why Cloudence</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            One team, <span class="serif-it font-normal text-[1.06em] text-accent">accountable.</span>
-          </h2>
-          <p class="mt-7 text-[16px] leading-relaxed text-graphite max-w-md">
-            Most ICT projects fail in the gaps between suppliers. We removed the gaps. The people who
-            design your software are the same people who specify the network it runs on and answer
-            the phone after launch.
+        <div class="reveal flex flex-col bg-white p-8 lg:p-10" style="--d:.08s">
+          <span class="v3-icon"><span class="material-symbols-outlined">visibility</span></span>
+          <p class="v3-eyebrow mt-8">Our vision</p>
+          <p class="mt-3 text-xl font-bold leading-snug tracking-tight">
+            To be the technology partner that institutions across Nigeria trust to build and run
+            the systems they depend on.
           </p>
-          <a href="{{ url('/services') }}" class="group mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-ink">
-            <span class="link-underline">Explore our services</span>
-            <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-x-1">arrow_forward</span>
-          </a>
-        </div>
-
-        <div class="lg:col-span-7 grid gap-4">
-          @foreach ($differences as $i => $d)
-            <div class="reveal flex items-start gap-6 rounded-[22px] border border-mist bg-paper p-7 lg:p-8" style="transition-delay:{{ $i * 0.07 }}s">
-              <span class="w-12 h-12 shrink-0 rounded-full bg-ivory border border-mist flex items-center justify-center text-ink">
-                <span class="material-symbols-outlined text-[22px]">{{ $d[0] }}</span>
-              </span>
-              <div>
-                <h3 class="text-[18px] font-bold tracking-tight">{{ $d[1] }}</h3>
-                <p class="mt-2 text-[15px] leading-relaxed text-graphite">{{ $d[2] }}</p>
-              </div>
-            </div>
-          @endforeach
+          <p class="mt-4 text-[15px] leading-relaxed text-neutral-500">
+            One accountable team for software and infrastructure, known for work that survives
+            procurement, audit and the years after launch.
+          </p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══════════════ OFFICES ═══════════════ -->
-  <section class="py-24 lg:py-32">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
-        <div class="max-w-2xl">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Where we are</span>
+{{-- ── Values ───────────────────────────────────────────── --}}
+<section id="values" class="v3-rule scroll-mt-24">
+  <div class="v3-wrap v3-section">
+    <div class="reveal grid items-end gap-8 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-7">
+        <p class="v3-eyebrow">Our values</p>
+        <h2 class="v3-h2 mt-4">What we hold ourselves to.</h2>
+      </div>
+      <div class="lg:col-span-5">
+        <p class="max-w-md text-[15px] leading-relaxed text-neutral-500">Four things we are measured against on every engagement, whether the client is a two-person business or a federal agency.</p>
+      </div>
+    </div>
+
+    <ol class="reveal mt-14 border-t border-neutral-200" style="--d:.1s">
+      @foreach ($values as $v)
+        <li class="grid gap-3 border-b border-[#f0f0f2] py-8 sm:grid-cols-12 sm:gap-6">
+          <span class="text-xs font-medium tabular-nums text-neutral-400 sm:col-span-1 sm:pt-2">{{ $v[0] }}</span>
+          <div class="flex items-center gap-4 sm:col-span-4">
+            <span class="v3-icon"><span class="material-symbols-outlined">{{ $v[1] }}</span></span>
+            <h3 class="v3-h3">{{ $v[2] }}</h3>
           </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            Two offices, <span class="serif-it font-normal text-[1.06em] text-accent">one team.</span>
-          </h2>
-        </div>
-        <a href="{{ url('/contact') }}" class="group shrink-0 inline-flex items-center gap-2 text-[15px] font-semibold text-ink">
-          <span class="link-underline">Get in touch</span>
-          <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-x-1">arrow_forward</span>
+          <p class="text-[15px] leading-relaxed text-neutral-500 sm:col-span-7 sm:pt-1">{{ $v[3] }}</p>
+        </li>
+      @endforeach
+    </ol>
+  </div>
+</section>
+
+{{-- ── Why Cloudence ────────────────────────────────────── --}}
+<section class="v3-rule bg-neutral-50">
+  <div class="v3-wrap v3-section">
+    <div class="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:sticky lg:top-32 lg:col-span-5">
+        <p class="v3-eyebrow">Why Cloudence</p>
+        <h2 class="v3-h2 mt-4">One team, accountable.</h2>
+        <p class="v3-lead mt-6 max-w-md">
+          Most ICT projects fail in the gaps between suppliers. We removed the gaps. The people who
+          design your software are the same people who specify the network it runs on and answer
+          the phone after launch.
+        </p>
+        <a href="{{ url('/services') }}" class="mt-8 inline-flex items-center gap-2 border-b border-neutral-950 pb-1 text-sm font-medium hover:border-neutral-500 hover:text-neutral-500">
+          Explore our services {!! $arrow !!}
         </a>
       </div>
 
-      <div class="mt-16 grid md:grid-cols-2 gap-5">
-        @foreach (config('site.offices') as $i => $o)
-          <div class="reveal rounded-[22px] border border-mist bg-paper p-8 lg:p-9 flex flex-col" style="transition-delay:{{ $i * 0.08 }}s">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2 text-accent">
-                <span class="material-symbols-outlined text-[20px]">location_on</span>
-                <span class="text-[22px] font-bold tracking-tight text-ink">{{ $o['city'] }}</span>
-              </div>
-              <span class="eyebrow text-graphite/60">{{ $i === 0 ? 'Head office' : 'Regional office' }}</span>
-            </div>
-            <p class="mt-5 text-[16px] leading-relaxed text-graphite">{{ $o['address'] }}</p>
-            <div class="mt-7 pt-6 border-t border-mist flex flex-wrap items-center gap-x-6 gap-y-3 text-[14px]">
-              <a href="tel:{{ str_replace(' ', '', $o['phone']) }}" class="inline-flex items-center gap-2 font-semibold text-ink">
-                <span class="material-symbols-outlined text-[18px] text-graphite">call</span>
-                <span class="link-underline">{{ $o['phone'] }}</span>
-              </a>
-              <a href="mailto:{{ $mail }}" class="inline-flex items-center gap-2 font-semibold text-ink">
-                <span class="material-symbols-outlined text-[18px] text-graphite">mail</span>
-                <span class="link-underline">{{ $mail }}</span>
-              </a>
+      <div class="grid gap-4 lg:col-span-7">
+        @foreach ($differences as $i => $d)
+          <div class="v3-card reveal flex items-start gap-6 p-7 lg:p-8" style="--d:{{ $i * 0.08 }}s">
+            <span class="v3-icon"><span class="material-symbols-outlined">{{ $d[0] }}</span></span>
+            <div>
+              <h3 class="v3-h3 text-lg">{{ $d[1] }}</h3>
+              <p class="mt-2 text-[15px] leading-relaxed text-neutral-500">{{ $d[2] }}</p>
             </div>
           </div>
         @endforeach
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  @include('partials.cta')
+{{-- ── Offices ──────────────────────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="reveal flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-2xl">
+        <p class="v3-eyebrow">Where we are</p>
+        <h2 class="v3-h2 mt-4">Two offices, one team.</h2>
+      </div>
+      <a href="{{ url('/contact') }}" class="inline-flex shrink-0 items-center gap-2 self-start border-b border-neutral-950 pb-1 text-sm font-medium hover:border-neutral-500 hover:text-neutral-500 lg:self-auto">
+        Get in touch {!! $arrow !!}
+      </a>
+    </div>
+
+    <div class="mt-14 grid gap-4 md:grid-cols-2">
+      @foreach (config('site.offices') as $i => $o)
+        <div class="v3-card reveal flex flex-col p-8 lg:p-10" style="--d:{{ $i * 0.08 }}s">
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <span class="v3-icon"><span class="material-symbols-outlined">location_on</span></span>
+              <span class="text-2xl font-black tracking-[-0.02em]">{{ $o['city'] }}</span>
+            </div>
+            <span class="text-xs font-medium uppercase tracking-wider text-neutral-400">{{ $i === 0 ? 'Head office' : 'Regional office' }}</span>
+          </div>
+          <p class="mt-6 flex-1 text-base leading-relaxed text-neutral-500">{{ $o['address'] }}</p>
+          <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[#f0f0f2] pt-6 text-sm">
+            <a href="tel:{{ str_replace(' ', '', $o['phone']) }}" class="inline-flex items-center gap-2 font-medium transition-colors hover:text-neutral-500">
+              <span class="material-symbols-outlined text-[18px] text-neutral-400">call</span>
+              {{ $o['phone'] }}
+            </a>
+            <a href="mailto:{{ $mail }}" class="inline-flex min-w-0 items-center gap-2 font-medium transition-colors hover:text-neutral-500">
+              <span class="material-symbols-outlined text-[18px] text-neutral-400">mail</span>
+              <span class="break-all">{{ $mail }}</span>
+            </a>
+          </div>
+        </div>
+      @endforeach
+    </div>
+  </div>
+</section>
 
 @endsection

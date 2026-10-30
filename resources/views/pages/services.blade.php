@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.v3')
 
 @section('title', 'Services — Cloudence')
 @section('description', 'Enterprise software, web and mobile development, networks, CCTV, hardware supply and training — delivered in-house by one accountable team across Nigeria.')
@@ -15,127 +15,133 @@
   $waBook   = $wa . '?text=' . rawurlencode("Hello Cloudence, I'd like to book a consultation.");
   $count    = count($services);
   $words    = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+  // Desktop (3 columns): the first card spans two; if the rest leave a gap at the end, the last spans two as well.
+  $lastWide = $count > 1 && (($count - 2) % 3) === 2;
+  // Tablet (2 columns): the first card is single width, so an odd count leaves the last one alone; let it span both.
+  $lastWideMd = $count % 2 === 1;
+  $process  = [
+    ['Consultation & planning', 'We start by understanding your goals and constraints, then set out a clear plan that ties the technology to the outcome you are paying for.'],
+    ['Delivery & testing',      'We build or install against the agreed scope and test as we go, with checkpoints where you see progress rather than hear about it.'],
+    ['Launch & support',        'We handle deployment, train your people, and stay on for updates and maintenance so the system keeps earning its keep.'],
+  ];
+  $arrow = '<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>';
 @endphp
 
-@section('content')
+@section('page')
 
-  <!-- ═══════════════ HERO ═══════════════ -->
-  <section class="relative grain overflow-hidden pt-32 pb-20 lg:pt-36 lg:pb-24">
-    <div class="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-end">
-        <div class="lg:col-span-8 reveal">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span>
-            <span class="eyebrow">What we do</span>
-          </div>
-          <h1 class="mt-7 text-[clamp(2.4rem,5.9vw,4.5rem)] leading-[1.02] tracking-tightest font-bold">
-            {{ $words[$count] ?? $count }} service lines.<br>
-            <span class="serif-it font-normal text-[1.06em] text-accent">One accountable team.</span>
-          </h1>
-          <p class="mt-7 max-w-xl text-[17px] leading-relaxed text-graphite">
-            Most clients start with one engagement and keep us on for the rest. Everything below is
-            delivered in-house, by the same people who planned it — software, the infrastructure it
-            runs on, and the people who will use it.
-          </p>
-          <div class="mt-9 flex flex-wrap items-center gap-3">
-            <a href="{{ $waBook }}" target="_blank" rel="noopener"
-               class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ivory bg-ink hover:bg-black px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-              Book a consultation
-              <span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-            </a>
-            <a href="#services"
-               class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ink border border-mist bg-paper hover:border-ink/40 px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-              Browse services
-              <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-y-0.5">arrow_downward</span>
-            </a>
-          </div>
-        </div>
+{{-- ── Hero ─────────────────────────────────────────────── --}}
+<section class="v3-hero v3-wrap pb-16 pt-14 lg:pb-24 lg:pt-24">
+  <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm font-medium text-neutral-500">
+    <a href="{{ url('/') }}" class="hover:text-[var(--blue)]">Home</a>
+    <span aria-hidden="true" class="text-neutral-300">/</span>
+    <span class="text-[var(--ink)]">Services</span>
+  </nav>
+  <p class="v3-eyebrow mt-10">What we do</p>
+  <h1 class="v3-h1 mt-4 max-w-4xl">
+    {{ $words[$count] ?? $count }} service lines. <span class="v3-accent">One accountable team.</span>
+  </h1>
+  <p class="v3-lead mt-8 max-w-xl">
+    Most clients start with one engagement and keep us on for the rest. Everything below is
+    delivered in-house, by the same people who planned it — software, the infrastructure it
+    runs on, and the people who will use it.
+  </p>
+  <div class="mt-10 flex flex-wrap items-center gap-3">
+    <a href="{{ $waBook }}" target="_blank" rel="noopener" class="v3-btn v3-btn-dark">
+      Book a consultation {!! $arrow !!}
+    </a>
+    <a href="{{ url('/contact') }}" class="v3-btn v3-btn-line">Contact us</a>
+  </div>
+</section>
+
+{{-- ── Service grid ─────────────────────────────────────── --}}
+<section id="services" class="v3-rule scroll-mt-24">
+  <div class="v3-wrap v3-section">
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-2xl">
+        <p class="v3-eyebrow">Service lines</p>
+        <h2 class="v3-h2 mt-4">Everything we deliver, <span class="v3-accent whitespace-nowrap">in-house.</span></h2>
       </div>
+      <p class="v3-muted max-w-sm text-[15px] leading-relaxed">Each line links to a page covering what is included, who it is for and the questions clients usually ask first.</p>
     </div>
-  </section>
 
-  <!-- ═══════════════ SERVICE LIST ═══════════════ -->
-  <section id="services" class="py-24 lg:py-32 bg-paper border-y border-mist scroll-mt-24">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid gap-5">
-        @foreach ($services as $i => $s)
-          @php $d = config('service-details.' . $s['slug']); $n = str_pad($i + 1, 2, '0', STR_PAD_LEFT); @endphp
-          <a href="{{ url('/services/' . $s['slug']) }}"
-             class="reveal group grid lg:grid-cols-12 gap-8 lg:gap-6 items-start rounded-[22px] border border-mist bg-ivory p-7 lg:p-9 transition-all duration-500 hover:border-ink/25 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
-             style="transition-delay:{{ ($i % 2) * 0.06 }}s">
-            <div class="lg:col-span-4 flex items-start gap-5">
-              <span class="w-12 h-12 shrink-0 rounded-xl bg-accent/10 flex items-center justify-center text-accent transition-colors group-hover:bg-accent group-hover:text-ivory">
-                <span class="material-symbols-outlined text-[22px]">{{ $s['icon'] }}</span>
-              </span>
-              <div>
-                <span class="eyebrow text-graphite/50">{{ $n }}</span>
-                <h2 class="mt-2 text-[clamp(1.35rem,2vw,1.6rem)] leading-tight tracking-tightest font-bold">{{ $s['label'] }}</h2>
-              </div>
-            </div>
-            <div class="lg:col-span-5">
-              <p class="text-[15px] leading-relaxed text-graphite">{{ $s['description'] }}</p>
-              @if ($d)
-                <div class="mt-5 flex flex-wrap gap-2">
-                  @foreach (array_slice($d['includes'], 0, 4) as $inc)
-                    <span class="text-[12px] font-semibold tracking-wide border border-mist bg-paper rounded-full px-3 py-1.5 text-ink/75">{{ $inc[1] }}</span>
-                  @endforeach
-                </div>
-              @endif
-            </div>
-            <div class="lg:col-span-3 lg:pl-6 lg:border-l border-mist flex lg:flex-col lg:items-start justify-between lg:justify-start gap-4">
-              @if ($d)
-                <div class="text-[13px] text-graphite">
-                  <span class="eyebrow text-graphite/60">Typically for</span>
-                  <div class="mt-2 leading-relaxed">{{ $d['for'][0] }}</div>
-                </div>
-              @endif
-              <span class="inline-flex items-center gap-2 text-[14px] font-semibold text-ink lg:mt-auto lg:pt-6">
-                <span class="link-underline">Learn more</span>
-                <span class="material-symbols-outlined text-[18px] text-accent transition-transform group-hover:translate-x-1">arrow_forward</span>
-              </span>
-            </div>
-          </a>
-        @endforeach
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ HOW WE WORK ═══════════════ -->
-  <section class="py-24 lg:py-32">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8">
-        <div class="lg:col-span-4 reveal">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">How we work</span>
+    <div class="mt-14 grid gap-6 md:grid-cols-2 lg:mt-16 lg:grid-cols-3">
+      @foreach ($services as $i => $s)
+        @php
+          $d      = config('service-details.' . $s['slug']);
+          $n      = sprintf('%02d', $i + 1);
+          $isLast = $i === $count - 1;
+          $wideLg = $i === 0 || ($lastWide && $isLast);
+          $wideMd = $lastWideMd && $isLast;
+          $span   = trim(($wideMd ? 'md:col-span-2 ' : '') . ($wideLg ? 'lg:col-span-2' : ($wideMd ? 'lg:col-span-1' : '')));
+          // Wide cards sit photo-left / text-right at the breakpoint where they span two columns.
+          $split  = $wideMd ? 'md:grid md:grid-cols-2' : '';
+          if ($wideLg) { $split .= ' lg:grid lg:grid-cols-2'; }
+          if ($wideMd && !$wideLg) { $split .= ' lg:flex'; }
+          $photoAuto = ($wideMd ? 'md:aspect-auto md:min-h-[360px] ' : '') . ($wideLg ? 'lg:aspect-auto lg:min-h-[360px]' : ($wideMd ? 'lg:aspect-[16/10] lg:min-h-0' : ''));
+        @endphp
+        <a href="{{ url('/services/' . $s['slug']) }}" class="v3-card reveal group flex flex-col overflow-hidden {{ $span }} {{ $split }}" style="--d:{{ ($i % 3) * 0.06 }}s">
+          <div class="relative aspect-[16/10] overflow-hidden bg-neutral-100 {{ $photoAuto }}">
+            <img src="{{ asset('images/services/' . $s['slug'] . '.jpg') }}" alt="" loading="lazy" decoding="async" class="v3-photo absolute inset-0 h-full w-full object-cover group-hover:scale-[1.03]">
+            <span class="absolute left-0 top-0 bg-white px-3 py-2 text-xs font-medium tabular-nums text-neutral-400">{{ $n }}</span>
           </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            Three stages, no <span class="serif-it font-normal text-[1.06em] text-accent">surprises.</span>
-          </h2>
-          <p class="mt-7 text-[16px] leading-relaxed text-graphite max-w-sm">
-            Whatever the service, the shape of the engagement is the same: a written scope, visible
-            progress, and support that does not end at handover.
-          </p>
-        </div>
-        <div class="lg:col-span-8 grid md:grid-cols-3 gap-5">
-          @foreach ([
-            ['01', 'Consultation & planning', 'We start by understanding your goals and constraints, then set out a clear plan that ties the technology to the outcome you are paying for.'],
-            ['02', 'Delivery & testing',      'We build or install against the agreed scope and test as we go, with checkpoints where you see progress rather than hear about it.'],
-            ['03', 'Launch & support',        'We handle deployment, train your people, and stay on for updates and maintenance so the system keeps earning its keep.'],
-          ] as $i => $p)
-            <div class="reveal rounded-[22px] border border-mist bg-paper p-7 flex flex-col" style="transition-delay:{{ $i * 0.08 }}s">
-              <div class="flex items-center justify-between">
-                <span class="text-[2.2rem] leading-none font-bold tracking-tightest text-accent">{{ $p[0] }}</span>
-                <span class="w-12 rule"></span>
+          <div class="flex flex-1 flex-col p-7 lg:p-8">
+            <span class="v3-icon"><span class="material-symbols-outlined">{{ $s['icon'] }}</span></span>
+            <h3 class="v3-h3 mt-6 group-hover:text-neutral-500 {{ $wideLg ? 'lg:text-[1.6rem] lg:font-black lg:tracking-[-0.02em]' : '' }}">{{ $s['label'] }}</h3>
+            <p class="mt-3 text-[15px] leading-relaxed text-neutral-500">{{ $s['description'] }}</p>
+            @if ($d)
+              <ul class="mt-6 flex flex-wrap gap-2">
+                @foreach (array_slice($d['includes'], 0, $wideLg || $wideMd ? 4 : 3) as $inc)
+                  <li class="border border-neutral-200 px-2.5 py-1 text-xs font-medium text-neutral-600">{{ $inc[1] }}</li>
+                @endforeach
+              </ul>
+              <div class="mt-6 border-t border-neutral-100 pt-5">
+                <p class="text-xs font-medium uppercase tracking-wider text-neutral-400">Typically for</p>
+                @if ($wideLg || $wideMd)
+                  <ul class="mt-3 space-y-2">
+                    @foreach ($d['for'] as $f)
+                      <li class="flex items-start gap-2.5 text-sm leading-snug text-neutral-600"><span class="mt-[7px] h-1.5 w-1.5 shrink-0 bg-[var(--blue)]"></span>{{ $f }}</li>
+                    @endforeach
+                  </ul>
+                @else
+                  <p class="mt-2 text-sm leading-snug text-neutral-600">{{ $d['for'][0] }}</p>
+                @endif
               </div>
-              <h3 class="mt-7 text-[18px] font-bold tracking-tight">{{ $p[1] }}</h3>
-              <p class="mt-3 text-[14.5px] leading-relaxed text-graphite">{{ $p[2] }}</p>
-            </div>
+            @endif
+            <span class="mt-auto inline-flex items-center gap-2 pt-7 text-sm font-medium group-hover:text-neutral-500">Learn more {!! $arrow !!}</span>
+          </div>
+        </a>
+      @endforeach
+    </div>
+  </div>
+</section>
+
+{{-- ── How we work ──────────────────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-5">
+        <p class="v3-eyebrow">How we work</p>
+        <h2 class="v3-h2 mt-4">{{ $words[count($process)] }} stages, <span class="v3-accent">no surprises.</span></h2>
+        <p class="v3-lead mt-7 max-w-md">
+          Whatever the service, the shape of the engagement is the same: a written scope, visible
+          progress, and support that does not end at handover.
+        </p>
+      </div>
+      <div class="reveal lg:col-span-7" style="--d:.1s">
+        <ol class="border-t border-neutral-200">
+          @foreach ($process as $i => $step)
+            <li class="grid gap-2 border-b border-neutral-100 py-7 sm:grid-cols-12 sm:gap-6 lg:py-8">
+              <span class="text-xs font-medium tabular-nums text-neutral-400 sm:col-span-1 sm:pt-1.5">0{{ $i + 1 }}</span>
+              <div class="sm:col-span-11">
+                <h3 class="text-xl font-bold leading-tight tracking-tight sm:text-[22px]">{{ $step[0] }}</h3>
+                <p class="mt-2.5 max-w-xl text-[15px] leading-relaxed text-neutral-500">{{ $step[1] }}</p>
+              </div>
+            </li>
           @endforeach
-        </div>
+        </ol>
       </div>
     </div>
-  </section>
-
-  @include('partials.cta')
+  </div>
+</section>
 
 @endsection

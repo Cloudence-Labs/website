@@ -34,3 +34,25 @@
   font-display: swap;
   font-style: normal;
 }
+/* Italics (Fontshare, same licence), used for accent words */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('satoshi-400i.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('satoshi-500i.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('satoshi-700i.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+  font-style: italic;
+}

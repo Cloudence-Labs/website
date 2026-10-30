@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.v3')
 
 @section('title', $product['name'] . ' — ' . $product['tagline'] . ' — Cloudence')
 @section('description', $product['description'])
@@ -14,6 +14,30 @@
   $hero     = $product['shots'][0] ?? null;
   $tour     = array_slice($product['shots'] ?? [], 1);
   $waDemo   = config('site.whatsapp') . '?text=' . rawurlencode("Hello Cloudence, I'd like a demo of " . $product['name'] . ".");
+
+  // Aspect ratio of a shot, so gallery slides can share one height and take their width from the image.
+  $ratio = function (array $t) use ($slug) {
+      if (($t['frame'] ?? 'browser') === 'browser') return 1.6;
+      $d = @getimagesize(public_path('images/products/' . $slug . '/' . $t['file']));
+      return $d && $d[1] ? round($d[0] / $d[1], 3) : 1.6;
+  };
+
+  // Split a stat value into prefix / number / suffix when it is a plain figure (3, 100%, ₦0), else leave it as text.
+  $stat = function (string $v) {
+      if (preg_match('/^([^\d]*)(\d+(?:\.\d+)?)([^\d]*)$/u', $v, $m) && (float) $m[2] > 0 && $m[2][0] !== '0') {
+          return ['prefix' => $m[1], 'number' => $m[2], 'suffix' => $m[3]];
+      }
+      return null;
+  };
+
+  $delivery = [
+    ['tune',          'Configured to you',      'Your structure, your approval chains, your branding, set up before anyone logs in.'],
+    ['move_up',       'Data brought across',    'Existing records migrated from spreadsheets, paper registers or the system you are leaving.'],
+    ['school',        'People trained',         'Hands-on sessions for users and administrators, with guides they can return to.'],
+    ['support_agent', 'Supported after launch', 'A named contact, a response time in writing, and updates as your needs change.'],
+  ];
+
+  $arrow = '<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>';
 @endphp
 
 @push('head')
@@ -33,468 +57,415 @@
   {!! \App\Support\Seo::faq($product['faqs']) !!}
 @endpush
 
-@section('content')
+@push('head')
+<style>
+  /* Product tour: every slide shares one height; width follows the shot's aspect ratio (--r). */
+  .tour { --stage: 22rem; }
+  @media (min-width: 640px)  { .tour { --stage: 24rem; } }
+  @media (min-width: 1024px) { .tour { --stage: 31rem; } }
+  .tour-stage { height: var(--stage); }
+  .tour-slide { max-width: 100%; width: max(calc(var(--stage) * var(--r, 1.6)), 16rem); }
+  .tour-slide[data-frame="browser"] { width: calc((var(--stage) - 38px) * var(--r, 1.6)); }
+  .tour-slide[data-frame="wide"] { width: 100%; }
+  .faq-row summary::-webkit-details-marker { display: none; }
+</style>
+@endpush
 
-  <!-- ═══════════════ HERO ═══════════════ -->
-  <section class="relative grain overflow-hidden pt-32 lg:pt-36">
-    <div class="pointer-events-none absolute -top-40 right-[-10%] w-[46rem] h-[46rem] rounded-full bg-accent/10 blur-3xl"></div>
-    <div class="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-      <nav class="reveal flex items-center gap-2 text-[13px] text-graphite" aria-label="Breadcrumb">
-        <a href="{{ url('/products') }}" class="link-underline hover:text-ink transition-colors">Products</a>
-        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-        <span class="text-ink font-medium">{{ $product['name'] }}</span>
-      </nav>
+@section('page')
 
-      <div class="mt-10 max-w-4xl reveal">
-        <div class="flex flex-wrap items-center gap-3">
-          <span class="inline-flex items-center gap-2.5 rounded-full bg-ink text-ivory pl-2 pr-4 py-1.5">
-            <span class="w-7 h-7 rounded-full bg-accent flex items-center justify-center">
-              <span class="material-symbols-outlined text-[16px]">{{ $product['icon'] }}</span>
-            </span>
-            <span class="text-[13px] font-semibold tracking-tight">{{ $product['name'] }}</span>
-          </span>
-          <span class="eyebrow text-graphite">{{ $product['category'] }} &nbsp;·&nbsp; A Cloudence product</span>
-        </div>
+{{-- ── Hero ─────────────────────────────────────────────── --}}
+<section class="v3-hero v3-wrap pb-16 pt-14 lg:pb-24 lg:pt-24">
+  <nav class="flex items-center gap-1.5 text-sm text-neutral-500" aria-label="Breadcrumb">
+    <a href="{{ url('/products') }}" class="font-medium transition-colors hover:text-[var(--blue)]">Products</a>
+    <span class="material-symbols-outlined text-[16px] text-neutral-400">chevron_right</span>
+    <span class="font-medium text-[var(--ink)]">{{ $product['name'] }}</span>
+  </nav>
 
-        <h1 class="mt-8 text-[clamp(2.4rem,5.9vw,4.6rem)] leading-[1.02] tracking-tightest font-bold">
-          {{ $product['heading'] }}<br>
-          <span class="serif-it font-normal text-[1.06em] text-accent">{{ $product['accent'] }}</span>
-        </h1>
-        <p class="mt-7 max-w-2xl text-[17.5px] leading-relaxed text-graphite">{{ $product['lead'] }}</p>
-
-        <div class="mt-9 flex flex-wrap items-center gap-3">
-          <a href="{{ $waDemo }}" target="_blank" rel="noopener"
-             class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ivory bg-ink hover:bg-black px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-            Request a demo
-            <span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-          </a>
-          <a href="#features"
-             class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ink border border-mist bg-paper hover:border-ink/40 px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-            See what it does
-            <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-y-0.5">arrow_downward</span>
-          </a>
-        </div>
-
-        @if (!empty($product['proof']))
-          <ul class="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-[13.5px] text-graphite">
-            @foreach ($product['proof'] as $pf)
-              <li class="inline-flex items-center gap-2">
-                <span class="material-symbols-outlined text-[18px] text-accent">check_circle</span>{{ $pf }}
-              </li>
-            @endforeach
-          </ul>
-        @endif
-      </div>
-
-      @if ($hero)
-        <div class="relative mt-16 lg:mt-20 reveal reveal-fade" style="transition-delay:.12s">
-          @include('partials.browser-frame', ['src' => $shot($hero['file']), 'alt' => $product['name'] . ' — ' . $hero['title'], 'address' => $product['address'] ?? strtolower($product['name']), 'eager' => true])
-          <p class="mt-4 text-center text-[12.5px] text-graphite">Screens on this page show demonstration data.</p>
-        </div>
-      @endif
+  <div class="mt-10 max-w-5xl">
+    <div class="flex flex-wrap items-center gap-3">
+      <span class="v3-icon h-9 w-9"><span class="material-symbols-outlined !text-[19px]">{{ $product['icon'] }}</span></span>
+      <p class="v3-eyebrow">{{ $product['name'] }} &nbsp;·&nbsp; {{ $product['category'] }} &nbsp;·&nbsp; A Cloudence product</p>
     </div>
-    {{-- soft floor so the frame sits on the next band --}}
-    <div class="h-16 lg:h-24"></div>
-  </section>
 
-  <!-- ═══════════════ HIGHLIGHTS ═══════════════ -->
-  @if (!empty($product['stats']))
-    <section class="py-16 lg:py-20 bg-paper border-y border-mist">
-      <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-        <div class="reveal grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 divide-mist lg:divide-x">
-          @foreach ($product['stats'] as $st)
-            <div class="lg:px-10 lg:first:pl-0">
-              <div class="text-[clamp(2rem,3.6vw,2.9rem)] leading-none font-bold tracking-tightest">{{ $st[0] }}</div>
-              <div class="mt-3.5 text-[13.5px] leading-relaxed text-graphite max-w-[13rem]">{{ $st[1] }}</div>
-            </div>
-          @endforeach
-        </div>
-      </div>
-    </section>
-  @endif
+    <h1 class="mt-6 text-[2.5rem] font-black leading-[1.03] tracking-[-0.035em] sm:text-6xl lg:text-[min(4.75rem,5.2vw)]">
+      {{ $product['heading'] }} <span class="text-[var(--blue)]">{{ $product['accent'] }}</span>
+    </h1>
+    <p class="mt-8 max-w-2xl text-base leading-relaxed text-neutral-500 sm:text-lg">{{ $product['lead'] }}</p>
 
-  <!-- ═══════════════ BEFORE / AFTER ═══════════════ -->
-  <section class="py-24 lg:py-32">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="reveal max-w-3xl">
-        <div class="flex items-center gap-3 text-graphite">
-          <span class="w-9 rule"></span><span class="eyebrow">Why {{ $product['name'] }}</span>
-        </div>
-        <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-          {{ $product['why']['heading'] }} <span class="serif-it font-normal text-[1.06em] text-accent">{{ $product['why']['accent'] }}</span>
-        </h2>
-        <p class="mt-6 text-[16.5px] leading-relaxed text-graphite max-w-2xl">{{ $product['why']['body'] }}</p>
-      </div>
-
-      <div class="mt-14 grid lg:grid-cols-2 gap-5">
-        <div class="reveal rounded-[22px] border border-mist bg-paper p-8 lg:p-10">
-          <div class="eyebrow text-graphite/70">Without it</div>
-          <ul class="mt-6 space-y-4">
-            @foreach ($product['why']['before'] as $b)
-              <li class="flex items-start gap-3.5 text-[15.5px] leading-relaxed text-graphite">
-                <span class="mt-0.5 w-6 h-6 shrink-0 rounded-full border border-mist flex items-center justify-center text-graphite/70">
-                  <span class="material-symbols-outlined text-[15px]">close</span>
-                </span>{{ $b }}
-              </li>
-            @endforeach
-          </ul>
-        </div>
-        <div class="reveal rounded-[22px] bg-ink text-ivory p-8 lg:p-10 relative grain overflow-hidden" style="transition-delay:.08s">
-          <div class="pointer-events-none absolute -bottom-32 -right-20 w-80 h-80 rounded-full bg-accent/20 blur-3xl"></div>
-          <div class="relative">
-            <div class="eyebrow text-accent">With {{ $product['name'] }}</div>
-            <ul class="mt-6 space-y-4">
-              @foreach ($product['why']['after'] as $a)
-                <li class="flex items-start gap-3.5 text-[15.5px] leading-relaxed text-ivory/80">
-                  <span class="mt-0.5 w-6 h-6 shrink-0 rounded-full bg-accent flex items-center justify-center text-ivory">
-                    <span class="material-symbols-outlined text-[15px]">check</span>
-                  </span>{{ $a }}
-                </li>
-              @endforeach
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ FEATURES ═══════════════ -->
-  <section id="features" class="py-24 lg:py-32 bg-paper border-y border-mist scroll-mt-24">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
-        <div class="max-w-2xl">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">What it does</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            {{ $product['features_heading'] ?? 'Everything in one place,' }} <span class="serif-it font-normal text-[1.06em] text-accent">{{ $product['features_accent'] ?? 'nothing bolted on.' }}</span>
-          </h2>
-        </div>
-        @if (!empty($product['features_note']))
-          <p class="lg:max-w-sm text-[15px] leading-relaxed text-graphite">{{ $product['features_note'] }}</p>
-        @endif
-      </div>
-
-      <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        @foreach ($product['features'] as $i => $f)
-          <div class="reveal group rounded-[22px] border border-mist bg-ivory p-7 flex flex-col transition-all duration-500 hover:border-ink/25 hover:-translate-y-1 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
-               style="transition-delay:{{ ($i % 3) * 0.06 }}s">
-            <span class="w-11 h-11 rounded-xl bg-accent/10 flex items-center justify-center text-accent transition-colors group-hover:bg-accent group-hover:text-ivory">
-              <span class="material-symbols-outlined text-[21px]">{{ $f[0] }}</span>
-            </span>
-            <h3 class="mt-7 text-[17px] font-bold tracking-tight">{{ $f[1] }}</h3>
-            <p class="mt-2.5 text-[14.5px] leading-relaxed text-graphite">{{ $f[2] }}</p>
-          </div>
-        @endforeach
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ PRODUCT TOUR ═══════════════ -->
-  @if ($tour)
-    <section class="py-24 lg:py-32">
-      <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-        <div class="reveal max-w-2xl">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Inside the product</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            See it <span class="serif-it font-normal text-[1.06em] text-accent">at work.</span>
-          </h2>
-        </div>
-
-        <div class="mt-16 space-y-20 lg:space-y-28">
-          @foreach ($tour as $i => $t)
-            @if (($t['frame'] ?? null) === 'wide')
-              {{-- Wide diagrams read better at full width, with the copy above --}}
-              <div class="reveal">
-                <div class="grid lg:grid-cols-12 gap-6 lg:gap-12 items-end">
-                  <div class="lg:col-span-5">
-                    <span class="eyebrow text-accent">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }} &nbsp;·&nbsp; {{ $t['label'] ?? 'Screen' }}</span>
-                    <h3 class="mt-4 text-[clamp(1.5rem,2.4vw,1.95rem)] leading-tight tracking-tightest font-bold">{{ $t['title'] }}</h3>
-                  </div>
-                  <div class="lg:col-span-7">
-                    <p class="text-[15.5px] leading-relaxed text-graphite">{{ $t['body'] }}</p>
-                  </div>
-                </div>
-                <div class="mt-8 rounded-[22px] border border-mist bg-paper p-5 lg:p-10 shadow-[0_40px_90px_-55px_rgba(20,20,20,.45)]">
-                  <img src="{{ $shot($t['file']) }}" alt="{{ $product['name'] }} — {{ $t['title'] }}" loading="lazy" decoding="async" class="block w-full h-auto rounded-[12px]">
-                </div>
-                @if (!empty($t['points']))
-                  <ul class="mt-7 grid md:grid-cols-3 gap-x-8 gap-y-3">
-                    @foreach ($t['points'] as $pt)
-                      <li class="flex items-start gap-3 text-[14.5px] leading-relaxed text-ink/85">
-                        <span class="material-symbols-outlined text-[19px] text-accent shrink-0">check_circle</span>{{ $pt }}
-                      </li>
-                    @endforeach
-                  </ul>
-                @endif
-              </div>
-              @continue
-            @endif
-            <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-              <div class="lg:col-span-7 reveal {{ $i % 2 ? 'lg:order-2' : '' }}">
-                @php $frame = $t['frame'] ?? 'browser'; @endphp
-                @if ($frame === 'browser')
-                  @include('partials.browser-frame', ['src' => $shot($t['file']), 'alt' => $product['name'] . ' — ' . $t['title'], 'address' => ($product['address'] ?? strtolower($product['name'])) . ($t['path'] ?? '')])
-                @elseif ($frame === 'phone')
-                  <div class="relative rounded-[22px] border border-mist bg-paper grain overflow-hidden px-6 py-10 lg:py-14 flex justify-center">
-                    <div class="pointer-events-none absolute -bottom-24 -right-16 w-72 h-72 rounded-full bg-accent/15 blur-3xl"></div>
-                    <img src="{{ $shot($t['file']) }}" alt="{{ $product['name'] }} — {{ $t['title'] }}" loading="lazy" decoding="async"
-                         class="relative block w-full max-w-[300px] h-auto rounded-[26px] shadow-[0_40px_80px_-40px_rgba(20,20,20,.55)]">
-                  </div>
-                @else
-                  <div class="rounded-[22px] border border-mist bg-paper p-5 lg:p-8 shadow-[0_40px_90px_-55px_rgba(20,20,20,.45)]">
-                    <img src="{{ $shot($t['file']) }}" alt="{{ $product['name'] }} — {{ $t['title'] }}" loading="lazy" decoding="async"
-                         class="block w-full h-auto rounded-[12px]">
-                  </div>
-                @endif
-              </div>
-              <div class="lg:col-span-5 reveal {{ $i % 2 ? 'lg:order-1' : '' }}" style="transition-delay:.08s">
-                <span class="eyebrow text-accent">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }} &nbsp;·&nbsp; {{ $t['label'] ?? 'Screen' }}</span>
-                <h3 class="mt-4 text-[clamp(1.5rem,2.4vw,1.95rem)] leading-tight tracking-tightest font-bold">{{ $t['title'] }}</h3>
-                <p class="mt-4 text-[15.5px] leading-relaxed text-graphite">{{ $t['body'] }}</p>
-                @if (!empty($t['points']))
-                  <ul class="mt-6 space-y-3">
-                    @foreach ($t['points'] as $pt)
-                      <li class="flex items-start gap-3 text-[14.5px] leading-relaxed text-ink/85">
-                        <span class="material-symbols-outlined text-[19px] text-accent shrink-0">check_circle</span>{{ $pt }}
-                      </li>
-                    @endforeach
-                  </ul>
-                @endif
-              </div>
-            </div>
-          @endforeach
-        </div>
-      </div>
-    </section>
-  @endif
-
-  <!-- ═══════════════ HOW IT WORKS ═══════════════ -->
-  <section class="py-24 lg:py-32 bg-ink text-ivory relative grain overflow-hidden">
-    <div class="pointer-events-none absolute -bottom-52 -left-20 w-[42rem] h-[42rem] rounded-full bg-accent/15 blur-3xl"></div>
-    <div class="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="reveal max-w-2xl">
-        <div class="flex items-center gap-3 text-ivory/50">
-          <span class="w-9 h-px bg-ivory/25"></span><span class="eyebrow">How it works</span>
-        </div>
-        <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-          {{ $product['flow_heading'] ?? 'From start to finish,' }} <span class="serif-it font-normal text-[1.06em] text-accent">{{ $product['flow_accent'] ?? 'on the record.' }}</span>
-        </h2>
-      </div>
-      <ol class="mt-16 grid sm:grid-cols-2 lg:grid-cols-{{ min(count($product['flow']), 4) }} gap-x-10 gap-y-12">
-        @foreach ($product['flow'] as $i => $step)
-          <li class="reveal border-t border-ivory/15 pt-6" style="transition-delay:{{ $i * 0.07 }}s">
-            <span class="text-[2rem] leading-none font-bold tracking-tightest text-accent">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
-            <h3 class="mt-5 text-[17.5px] font-bold tracking-tight">{{ $step[0] }}</h3>
-            <p class="mt-2.5 text-[14.5px] leading-relaxed text-ivory/60">{{ $step[1] }}</p>
+    @if (!empty($product['proof']))
+      <ul class="mt-8 flex flex-wrap gap-2">
+        @foreach ($product['proof'] as $pf)
+          <li class="inline-flex items-center gap-2 border border-neutral-200 px-3 py-1.5 text-[13px] text-neutral-600">
+            <span class="material-symbols-outlined text-[16px] text-[var(--blue)]">check</span>{{ $pf }}
           </li>
         @endforeach
-      </ol>
-    </div>
-  </section>
+      </ul>
+    @endif
 
-  <!-- ═══════════════ WHO USES IT ═══════════════ -->
-  @if (!empty($product['roles']))
-    <section class="py-24 lg:py-32">
-      <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-        <div class="grid lg:grid-cols-12 gap-12 lg:gap-8">
-          <div class="lg:col-span-4 reveal">
-            <div class="flex items-center gap-3 text-graphite">
-              <span class="w-9 rule"></span><span class="eyebrow">Built for everyone involved</span>
-            </div>
-            <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-              One system, <span class="serif-it font-normal text-[1.06em] text-accent">every role.</span>
-            </h2>
-            <p class="mt-7 text-[16px] leading-relaxed text-graphite max-w-sm">
-              Each person sees exactly what their job needs, and nothing they should not. Access is
-              set by role, and every action is attributed to a name.
-            </p>
-          </div>
-          <div class="lg:col-span-8 grid sm:grid-cols-2 gap-4">
-            @foreach ($product['roles'] as $i => $r)
-              <div class="reveal flex items-start gap-5 rounded-[22px] border border-mist bg-paper p-7" style="transition-delay:{{ ($i % 2) * 0.06 }}s">
-                <span class="w-11 h-11 shrink-0 rounded-full bg-ivory border border-mist flex items-center justify-center text-ink">
-                  <span class="material-symbols-outlined text-[20px]">{{ $r[0] }}</span>
-                </span>
-                <div>
-                  <h3 class="text-[16.5px] font-bold tracking-tight">{{ $r[1] }}</h3>
-                  <p class="mt-2 text-[14px] leading-relaxed text-graphite">{{ $r[2] }}</p>
-                </div>
-              </div>
-            @endforeach
-          </div>
+    <div class="mt-10 flex flex-wrap items-center gap-3">
+      <a href="{{ $waDemo }}" target="_blank" rel="noopener" class="v3-btn v3-btn-dark">Request a demo {!! $arrow !!}</a>
+      <a href="#features" class="v3-btn v3-btn-line">See what it does <span class="material-symbols-outlined text-[16px]">arrow_downward</span></a>
+    </div>
+  </div>
+
+  @if ($hero)
+    <figure class="mt-16 lg:mt-20">
+      <div class="overflow-hidden border border-neutral-200 bg-white">
+        <div class="flex h-9 items-center gap-3 border-b border-neutral-200 bg-neutral-50 px-4">
+          <span class="flex shrink-0 gap-1.5" aria-hidden="true"><i class="h-2 w-2 bg-neutral-300"></i><i class="h-2 w-2 bg-neutral-300"></i><i class="h-2 w-2 bg-neutral-300"></i></span>
+          <span class="min-w-0 truncate text-[11.5px] text-neutral-500">{{ $product['address'] }}</span>
         </div>
+        <img src="{{ $shot($hero['file']) }}" alt="{{ $product['name'] }} — {{ $hero['title'] }}" loading="eager" decoding="async" width="2160" height="1350" class="aspect-[16/10] w-full object-cover object-top">
       </div>
-    </section>
+      <figcaption class="mt-4 text-[12.5px] text-neutral-400">Screens on this page show demonstration data.</figcaption>
+    </figure>
   @endif
+</section>
 
-  <!-- ═══════════════ DELIVERY ═══════════════ -->
-  <section class="py-24 lg:py-32 bg-paper border-y border-mist">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-5">
-        <div class="lg:col-span-7 reveal rounded-[22px] border border-mist bg-ivory p-8 lg:p-10">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Rolled out by Cloudence</span>
-          </div>
-          <h2 class="mt-6 text-[clamp(1.5rem,2.4vw,1.9rem)] leading-tight tracking-tightest font-bold">
-            Not just a licence. <span class="serif-it font-normal text-[1.06em] text-accent">A working system.</span>
-          </h2>
-          <div class="mt-8 grid sm:grid-cols-2 gap-x-8 gap-y-7">
-            @foreach ([
-              ['tune',          'Configured to you',     'Your structure, your approval chains, your branding, set up before anyone logs in.'],
-              ['move_up',       'Data brought across',   'Existing records migrated from spreadsheets, paper registers or the system you are leaving.'],
-              ['school',        'People trained',        'Hands-on sessions for users and administrators, with guides they can return to.'],
-              ['support_agent', 'Supported after launch','A named contact, a response time in writing, and updates as your needs change.'],
-            ] as $d)
-              <div class="flex items-start gap-4">
-                <span class="w-10 h-10 shrink-0 rounded-full bg-paper border border-mist flex items-center justify-center text-ink">
-                  <span class="material-symbols-outlined text-[19px]">{{ $d[0] }}</span>
-                </span>
-                <div>
-                  <h3 class="text-[15.5px] font-bold tracking-tight">{{ $d[1] }}</h3>
-                  <p class="mt-1.5 text-[13.5px] leading-relaxed text-graphite">{{ $d[2] }}</p>
-                </div>
-              </div>
-            @endforeach
-          </div>
-        </div>
-        <div class="lg:col-span-5 reveal rounded-[22px] bg-ink text-ivory p-8 lg:p-10 relative grain overflow-hidden" style="transition-delay:.08s">
-          <div class="relative">
-            <div class="flex items-center gap-3 text-ivory/50">
-              <span class="w-9 h-px bg-ivory/25"></span><span class="eyebrow">What you get</span>
+{{-- ── Stats ────────────────────────────────────────────── --}}
+@if (!empty($product['stats']))
+  <section class="border-t border-neutral-100">
+    <div class="v3-wrap py-14 lg:py-20">
+      <div class="grid gap-px border border-neutral-100 bg-neutral-100 sm:grid-cols-2 lg:grid-cols-4">
+        @foreach ($product['stats'] as $st)
+          @php $parts = $stat((string) $st[0]); @endphp
+          <div class="bg-white px-7 py-8 lg:px-8 lg:py-10">
+            <div class="text-[clamp(2.4rem,3.6vw,3.25rem)] font-black leading-none tracking-[-0.035em]">
+              @if ($parts)
+                {{ $parts['prefix'] }}<span class="counter" data-target="{{ $parts['number'] }}">0</span>{{ $parts['suffix'] }}
+              @else
+                {{ $st[0] }}
+              @endif
             </div>
-            <h2 class="mt-6 text-[clamp(1.5rem,2.4vw,1.9rem)] leading-tight tracking-tightest font-bold">
-              The <span class="serif-it font-normal text-[1.06em] text-accent">outcomes.</span>
-            </h2>
-            <ul class="mt-7 space-y-3.5">
-              @foreach ($product['outcomes'] as $o)
-                <li class="flex items-start gap-3 text-[15.5px] leading-relaxed text-ivory/75">
-                  <span class="material-symbols-outlined text-[20px] text-accent shrink-0">check_circle</span>{{ $o }}
-                </li>
-              @endforeach
-            </ul>
-            @if ($industry)
-              <a href="{{ url('/industries/' . $product['industry']) }}" class="group mt-8 inline-flex items-center gap-2 text-[14px] font-semibold text-ivory">
-                <span class="link-underline">More for {{ strtolower($industry['short']) }}</span>
-                <span class="material-symbols-outlined text-[18px] text-accent transition-transform group-hover:translate-x-1">arrow_forward</span>
-              </a>
-            @endif
+            <div class="mt-4 max-w-[15rem] text-[13.5px] leading-relaxed text-neutral-500">{{ $st[1] }}</div>
           </div>
-        </div>
+        @endforeach
       </div>
     </div>
   </section>
+@endif
 
-  <!-- ═══════════════ FAQ ═══════════════ -->
-  <section class="py-24 lg:py-32">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8">
-        <div class="lg:col-span-4 reveal">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Common questions</span>
+{{-- ── Why: before / after ──────────────────────────────── --}}
+<section class="border-t border-neutral-100">
+  <div class="v3-wrap py-20 lg:py-28">
+    <div class="max-w-3xl">
+      <p class="v3-eyebrow">Why {{ $product['name'] }}</p>
+      <h2 class="mt-3 text-4xl font-black leading-[1.05] tracking-[-0.03em] sm:text-5xl">{{ $product['why']['heading'] }} <span>{{ $product['why']['accent'] }}</span></h2>
+      <p class="mt-6 max-w-2xl text-base leading-relaxed text-neutral-500 sm:text-lg">{{ $product['why']['body'] }}</p>
+    </div>
+
+    <div class="mt-14 grid gap-px border border-neutral-200 bg-neutral-200 lg:grid-cols-2">
+      <div class="bg-white p-7 lg:p-10">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium uppercase tracking-wider text-neutral-400">Without it</span>
+          <span class="material-symbols-outlined text-[20px] text-neutral-400">inbox</span>
+        </div>
+        <ul class="mt-6 divide-y divide-neutral-100">
+          @foreach ($product['why']['before'] as $b)
+            <li class="flex items-start gap-4 py-4 text-[15px] leading-relaxed text-neutral-500">
+              <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center border border-neutral-200 text-neutral-400"><span class="material-symbols-outlined text-[15px]">close</span></span>{{ $b }}
+            </li>
+          @endforeach
+        </ul>
+      </div>
+      <div class="bg-white p-7 lg:p-10">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium uppercase tracking-wider text-neutral-500">With {{ $product['name'] }}</span>
+          <span class="material-symbols-outlined text-[20px] text-[var(--blue)]">{{ $product['icon'] }}</span>
+        </div>
+        <ul class="mt-6 divide-y divide-neutral-100">
+          @foreach ($product['why']['after'] as $a)
+            <li class="flex items-start gap-4 py-4 text-[15px] leading-relaxed text-[var(--ink)]">
+              <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center bg-[var(--blue)] text-white"><span class="material-symbols-outlined text-[15px]">check</span></span>{{ $a }}
+            </li>
+          @endforeach
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{-- ── Features ─────────────────────────────────────────── --}}
+<section id="features" class="scroll-mt-24 border-t border-neutral-100">
+  <div class="v3-wrap py-20 lg:py-28">
+    <div class="grid items-end gap-8 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-7">
+        <p class="v3-eyebrow">What it does</p>
+        <h2 class="mt-3 text-4xl font-black leading-[1.05] tracking-[-0.03em] sm:text-5xl">{{ $product['features_heading'] ?? 'Everything in one place,' }} <span>{{ $product['features_accent'] ?? 'nothing bolted on.' }}</span></h2>
+      </div>
+      @if (!empty($product['features_note']))
+        <p class="max-w-md text-[15px] leading-relaxed text-neutral-500 lg:col-span-5 lg:pb-1">{{ $product['features_note'] }}</p>
+      @endif
+    </div>
+
+    <div class="mt-14 grid gap-px border border-neutral-100 bg-neutral-100 md:grid-cols-2 lg:grid-cols-3">
+      @foreach ($product['features'] as $i => $f)
+        <div class="reveal group flex flex-col bg-white p-7 lg:p-8" style="--d:{{ ($i % 3) * 0.06 }}s">
+          <div class="flex items-start justify-between">
+            <span class="v3-icon transition-colors group-hover:bg-[var(--blue)] group-hover:text-white"><span class="material-symbols-outlined">{{ $f[0] }}</span></span>
+            <span class="text-xs font-medium tabular-nums text-neutral-400">{{ sprintf('%02d', $i + 1) }}</span>
           </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            Before you <span class="serif-it font-normal text-[1.06em] text-accent">ask.</span>
-          </h2>
-          <p class="mt-7 text-[15.5px] leading-relaxed text-graphite max-w-sm">
-            Want to see it with your own data? <a href="{{ $waDemo }}" target="_blank" rel="noopener" class="link-underline font-semibold text-ink">Ask for a demo</a> and we will walk you through it.
+          <h3 class="mt-8 text-lg font-bold leading-snug tracking-tight">{{ $f[1] }}</h3>
+          <p class="mt-2.5 flex-1 text-[14.5px] leading-relaxed text-neutral-500">{{ $f[2] }}</p>
+        </div>
+      @endforeach
+    </div>
+  </div>
+</section>
+
+{{-- ── Product tour ─────────────────────────────────────── --}}
+@if ($tour)
+  <section class="tour border-t border-neutral-100" data-carousel>
+    <div class="v3-wrap py-20 lg:py-28">
+      <div class="flex flex-wrap items-end justify-between gap-8">
+        <div class="max-w-2xl">
+          <p class="v3-eyebrow">Inside the product</p>
+          <h2 class="mt-3 text-4xl font-black leading-[1.05] tracking-[-0.03em] sm:text-5xl">See it <span>at work.</span></h2>
+          <p class="mt-5 text-sm text-neutral-400">{{ count($tour) }} screens, demonstration data only.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" data-prev aria-label="Previous screen" class="flex h-11 w-11 items-center justify-center border border-neutral-200 text-[var(--ink)] transition-colors hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-neutral-200 disabled:hover:bg-transparent disabled:hover:text-[var(--ink)]"><span class="material-symbols-outlined text-[20px]">arrow_back</span></button>
+          <button type="button" data-next aria-label="Next screen" class="flex h-11 w-11 items-center justify-center border border-neutral-200 text-[var(--ink)] transition-colors hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-white disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-neutral-200 disabled:hover:bg-transparent disabled:hover:text-[var(--ink)]"><span class="material-symbols-outlined text-[20px]">arrow_forward</span></button>
+        </div>
+      </div>
+
+      <div class="mt-14">
+        <div data-track class="no-scrollbar -mx-6 flex snap-x snap-mandatory items-start gap-5 overflow-x-auto scroll-smooth px-6 pb-1 lg:mx-0 lg:gap-6 lg:px-0">
+          @foreach ($tour as $i => $t)
+            @php
+              $frame = $t['frame'] ?? 'browser';
+              $r     = $ratio($t);
+              $alt   = $product['name'] . ' — ' . $t['title'];
+            @endphp
+            <article class="tour-slide shrink-0 snap-start" data-frame="{{ $frame }}" style="--r:{{ $r }}">
+              <div class="tour-stage flex items-end justify-start">
+                @if ($frame === 'browser')
+                  <div class="flex h-full w-full flex-col overflow-hidden border border-neutral-200 bg-white">
+                    <div class="flex h-9 shrink-0 items-center gap-3 border-b border-neutral-200 bg-neutral-50 px-4">
+                      <span class="flex shrink-0 gap-1.5" aria-hidden="true"><i class="h-2 w-2 bg-neutral-300"></i><i class="h-2 w-2 bg-neutral-300"></i><i class="h-2 w-2 bg-neutral-300"></i></span>
+                      <span class="min-w-0 truncate text-[11.5px] text-neutral-500">{{ $product['address'] }}{{ $t['path'] ?? '' }}</span>
+                    </div>
+                    <div class="relative min-h-0 flex-1">
+                      <img src="{{ $shot($t['file']) }}" alt="{{ $alt }}" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover object-top">
+                    </div>
+                  </div>
+                @elseif ($frame === 'phone')
+                  <div class="h-full rounded-[32px] border border-neutral-200 bg-neutral-100 p-1.5" style="aspect-ratio:{{ $r }}">
+                    <img src="{{ $shot($t['file']) }}" alt="{{ $alt }}" loading="lazy" decoding="async" class="h-full w-full rounded-[26px] object-cover object-top">
+                  </div>
+                @elseif ($frame === 'wide')
+                  <div class="flex h-full w-full items-center justify-center border border-neutral-200 bg-neutral-50 p-5 sm:p-8 lg:p-12">
+                    <img src="{{ $shot($t['file']) }}" alt="{{ $alt }}" loading="lazy" decoding="async" class="max-h-full w-full object-contain">
+                  </div>
+                @else
+                  <div class="flex h-full items-center justify-center border border-neutral-200 bg-white p-3" style="aspect-ratio:{{ $r }}">
+                    <img src="{{ $shot($t['file']) }}" alt="{{ $alt }}" loading="lazy" decoding="async" class="max-h-full w-full object-contain">
+                  </div>
+                @endif
+              </div>
+
+              <div class="mt-7 {{ $frame === 'wide' ? 'grid gap-6 lg:grid-cols-12 lg:gap-12' : '' }}">
+                <div class="{{ $frame === 'wide' ? 'lg:col-span-5' : '' }}">
+                  <span class="text-xs font-medium uppercase tracking-wider text-neutral-500">{{ sprintf('%02d', $i + 1) }} &nbsp;·&nbsp; {{ $t['label'] ?? 'Screen' }}</span>
+                  <h3 class="mt-3 max-w-md text-[19px] font-bold leading-snug tracking-tight lg:text-[21px]">{{ $t['title'] }}</h3>
+                </div>
+                <div class="{{ $frame === 'wide' ? 'lg:col-span-7' : '' }}">
+                  @if (!empty($t['body']))
+                    <p class="{{ $frame === 'wide' ? '' : 'mt-3' }} max-w-lg text-[14.5px] leading-relaxed text-neutral-500">{{ $t['body'] }}</p>
+                  @endif
+                  @if (!empty($t['points']))
+                    <ul class="mt-5 {{ $frame === 'wide' ? 'grid gap-x-8 gap-y-2.5 md:grid-cols-3' : 'space-y-2.5' }}">
+                      @foreach ($t['points'] as $pt)
+                        <li class="flex items-start gap-3 text-[14px] leading-relaxed text-[var(--ink)]">
+                          <span class="material-symbols-outlined mt-0.5 shrink-0 text-[18px] text-[var(--blue)]">check</span>{{ $pt }}
+                        </li>
+                      @endforeach
+                    </ul>
+                  @endif
+                </div>
+              </div>
+            </article>
+          @endforeach
+        </div>
+        <div class="relative mt-10 h-px overflow-hidden bg-neutral-200" aria-hidden="true"><span data-progress class="absolute left-0 top-0 h-px bg-[var(--ink)] transition-transform duration-300 ease-out"></span></div>
+      </div>
+    </div>
+  </section>
+@endif
+
+{{-- ── How it works ─────────────────────────────────────── --}}
+<section class="border-t border-neutral-100">
+  <div class="v3-wrap py-20 lg:py-28">
+    <div class="max-w-2xl">
+      <p class="v3-eyebrow">How it works</p>
+      <h2 class="mt-3 text-4xl font-black leading-[1.05] tracking-[-0.03em] sm:text-5xl">{{ $product['flow_heading'] ?? 'From start to finish,' }} <span>{{ $product['flow_accent'] ?? 'on the record.' }}</span></h2>
+    </div>
+    <ol class="mt-14 grid gap-x-8 gap-y-10 sm:grid-cols-2 {{ count($product['flow']) >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3' }}">
+      @foreach ($product['flow'] as $i => $step)
+        <li class="reveal border-t border-neutral-950 pt-6" style="--d:{{ $i * 0.07 }}s">
+          <div class="flex items-center justify-between gap-3">
+            <span class="text-[2.6rem] font-black leading-none tracking-[-0.035em] text-neutral-300">{{ sprintf('%02d', $i + 1) }}</span>
+            @if ($i < count($product['flow']) - 1)<span class="material-symbols-outlined hidden text-[20px] text-neutral-300 lg:inline">arrow_forward</span>@endif
+          </div>
+          <h3 class="mt-6 text-lg font-bold leading-tight tracking-tight">{{ $step[0] }}</h3>
+          <p class="mt-2.5 text-[14.5px] leading-relaxed text-neutral-500">{{ $step[1] }}</p>
+        </li>
+      @endforeach
+    </ol>
+  </div>
+</section>
+
+{{-- ── Who uses it ──────────────────────────────────────── --}}
+@if (!empty($product['roles']))
+  <section class="border-t border-neutral-100">
+    <div class="v3-wrap py-20 lg:py-28">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-4">
+          <p class="v3-eyebrow">Built for everyone involved</p>
+          <h2 class="mt-3 text-4xl font-black leading-[1.05] tracking-[-0.03em] sm:text-5xl">One system, <span>every role.</span></h2>
+          <p class="mt-7 max-w-sm text-base leading-relaxed text-neutral-500 sm:text-lg">
+            Each person sees exactly what their job needs, and nothing they should not. Access is
+            set by role, and every action is attributed to a name.
           </p>
         </div>
-        <div class="lg:col-span-8 reveal">
-          <div class="divide-y divide-mist border-y border-mist">
-            @foreach ($product['faqs'] as $f)
-              <details class="group py-5">
-                <summary class="flex items-center justify-between gap-6 cursor-pointer list-none text-[17px] font-bold tracking-tight">
-                  {{ $f[0] }}
-                  <span class="w-9 h-9 shrink-0 rounded-full border border-mist flex items-center justify-center text-ink transition-all group-open:bg-ink group-open:text-ivory group-open:rotate-45">
-                    <span class="material-symbols-outlined text-[18px]">add</span>
-                  </span>
-                </summary>
-                <p class="mt-4 max-w-2xl text-[15px] leading-relaxed text-graphite">{{ $f[1] }}</p>
-              </details>
-            @endforeach
-          </div>
-        </div>
+        <ul class="self-start border-t border-neutral-200 lg:col-span-8">
+          @foreach ($product['roles'] as $i => $r)
+            <li class="reveal grid gap-4 border-b border-neutral-100 py-6 sm:grid-cols-12 sm:gap-6" style="--d:{{ ($i % 2) * 0.06 }}s">
+              <span class="v3-icon sm:col-span-1"><span class="material-symbols-outlined">{{ $r[0] }}</span></span>
+              <h3 class="text-lg font-bold leading-tight tracking-tight sm:col-span-4 sm:pl-3 sm:pt-2.5">{{ $r[1] }}</h3>
+              <p class="text-[15px] leading-relaxed text-neutral-500 sm:col-span-7 sm:pt-2">{{ $r[2] }}</p>
+            </li>
+          @endforeach
+        </ul>
       </div>
     </div>
   </section>
+@endif
 
-  <!-- ═══════════════ OTHER PRODUCTS ═══════════════ -->
-  @if ($others)
-    <section class="py-24 lg:py-32 bg-paper border-y border-mist">
-      <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
-          <div class="max-w-2xl">
-            <div class="flex items-center gap-3 text-graphite">
-              <span class="w-9 rule"></span><span class="eyebrow">More from Cloudence</span>
-            </div>
-            <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-              Other <span class="serif-it font-normal text-[1.06em] text-accent">products.</span>
-            </h2>
-          </div>
-          <a href="{{ url('/products') }}" class="group shrink-0 inline-flex items-center gap-2 text-[15px] font-semibold text-ink">
-            <span class="link-underline">All products</span>
-            <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-x-1">arrow_forward</span>
-          </a>
-        </div>
-        <div class="mt-14 grid md:grid-cols-2 gap-5">
-          @foreach ($others as $k => $o)
-            <a href="{{ url('/products/' . $k) }}"
-               class="reveal group flex flex-col rounded-[22px] border border-mist bg-ivory overflow-hidden transition-all duration-500 hover:border-ink/25 hover:-translate-y-1 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
-               style="transition-delay:{{ $loop->index * 0.06 }}s">
-              @if (!empty($o['shots'][0]['file']))
-                <div class="relative aspect-[16/9] overflow-hidden border-b border-mist bg-paper">
-                  <img src="{{ asset('images/products/' . $k . '/' . $o['shots'][0]['file']) }}" alt="{{ $o['name'] }}" loading="lazy"
-                       class="absolute inset-0 w-full h-full object-cover object-left-top transition-transform duration-700 group-hover:scale-[1.03]">
-                </div>
-              @endif
-              <div class="p-7 lg:p-8 flex flex-col flex-1">
-                <span class="eyebrow text-accent">{{ $o['category'] }}</span>
-                <h3 class="mt-3 text-[22px] leading-snug tracking-tightest font-bold">{{ $o['name'] }}</h3>
-                <p class="mt-2 text-[14.5px] leading-relaxed text-graphite flex-1">{{ $o['tagline'] }}</p>
-                <span class="mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-ink">
-                  <span class="link-underline">Explore {{ $o['name'] }}</span>
-                  <span class="material-symbols-outlined text-[18px] text-accent transition-transform group-hover:translate-x-1">arrow_forward</span>
-                </span>
+{{-- ── Delivery + outcomes ──────────────────────────────── --}}
+<section class="border-t border-neutral-100">
+  <div class="v3-wrap py-20 lg:py-28">
+    <div class="grid gap-px border border-neutral-200 bg-neutral-200 lg:grid-cols-12">
+      <div class="bg-white p-7 lg:col-span-7 lg:p-10">
+        <p class="v3-eyebrow">Rolled out by Cloudence</p>
+        <h2 class="mt-3 text-[clamp(1.6rem,2.4vw,2.1rem)] font-black leading-[1.1] tracking-[-0.025em]">Not just a licence. <span>A working system.</span></h2>
+        <div class="mt-9 grid gap-x-8 gap-y-8 sm:grid-cols-2">
+          @foreach ($delivery as $d)
+            <div class="flex items-start gap-4">
+              <span class="v3-icon h-10 w-10"><span class="material-symbols-outlined !text-[19px]">{{ $d[0] }}</span></span>
+              <div>
+                <h3 class="text-[15.5px] font-bold tracking-tight">{{ $d[1] }}</h3>
+                <p class="mt-1.5 text-[13.5px] leading-relaxed text-neutral-500">{{ $d[2] }}</p>
               </div>
-            </a>
+            </div>
           @endforeach
         </div>
       </div>
-    </section>
-  @endif
+      <div class="flex flex-col bg-white p-7 lg:col-span-5 lg:p-10">
+        <p class="v3-eyebrow">What you get</p>
+        <h2 class="mt-3 text-[clamp(1.6rem,2.4vw,2.1rem)] font-black leading-[1.1] tracking-[-0.025em]">The <span>outcomes.</span></h2>
+        <ul class="mt-7 flex-1 divide-y divide-neutral-100">
+          @foreach ($product['outcomes'] as $o)
+            <li class="flex items-start gap-3.5 py-3.5 text-[15.5px] leading-relaxed text-[var(--ink)]">
+              <span class="material-symbols-outlined mt-0.5 shrink-0 text-[20px] text-[var(--blue)]">task_alt</span>{{ $o }}
+            </li>
+          @endforeach
+        </ul>
+        @if ($industry)
+          <a href="{{ url('/industries/' . $product['industry']) }}" class="mt-8 inline-flex items-center gap-2 self-start border-b border-neutral-950 pb-1 text-sm font-medium hover:border-neutral-500 hover:text-neutral-500">More for {{ strtolower($industry['short']) }} {!! $arrow !!}</a>
+        @endif
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- ═══════════════ DEMO CTA ═══════════════ -->
-  <section class="py-24 lg:py-32 bg-ink text-ivory relative grain overflow-hidden">
-    <div class="pointer-events-none absolute -top-40 right-0 w-[40rem] h-[40rem] rounded-full bg-accent/15 blur-3xl"></div>
-    <div class="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-10 items-center">
-        <div class="lg:col-span-8 reveal">
-          <div class="flex items-center gap-3 text-ivory/50">
-            <span class="w-9 h-px bg-ivory/25"></span><span class="eyebrow">See {{ $product['name'] }} for yourself</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            {{ $product['cta_heading'] ?? 'Thirty minutes is enough to' }} <span class="serif-it font-normal text-[1.06em] text-accent">{{ $product['cta_accent'] ?? 'see the difference.' }}</span>
-          </h2>
-          <p class="mt-6 max-w-xl text-[16px] leading-relaxed text-ivory/60">
-            {{ $product['cta_body'] ?? 'We will walk you through the product using a scenario from your own organisation, answer the hard questions, and tell you honestly whether it fits.' }}
-          </p>
-        </div>
-        <div class="lg:col-span-4 reveal flex flex-wrap lg:justify-end gap-3" style="transition-delay:.1s">
-          <a href="{{ $waDemo }}" target="_blank" rel="noopener"
-             class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ink bg-ivory hover:bg-white px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-            Request a demo
-            <span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-          </a>
-          <a href="{{ url('/contact') }}"
-             class="inline-flex items-center gap-2 text-[14.5px] font-semibold text-ivory border border-ivory/25 hover:border-ivory px-6 py-3.5 rounded-full transition-colors">
-            Contact us
-          </a>
+{{-- ── FAQ ──────────────────────────────────────────────── --}}
+<section class="border-t border-neutral-100">
+  <div class="v3-wrap py-20 lg:py-28">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-4">
+        <p class="v3-eyebrow">Common questions</p>
+        <h2 class="mt-3 text-4xl font-black leading-[1.05] tracking-[-0.03em] sm:text-5xl">Before you <span>ask.</span></h2>
+        <p class="mt-7 max-w-sm text-[15.5px] leading-relaxed text-neutral-500">
+          Want to see it with your own data? <a href="{{ $waDemo }}" target="_blank" rel="noopener" class="font-medium text-[var(--ink)] underline underline-offset-4 hover:text-neutral-500">Ask for a demo</a> and we will walk you through it.
+        </p>
+      </div>
+      <div class="lg:col-span-8">
+        <div class="border-t border-neutral-200">
+          @foreach ($product['faqs'] as $f)
+            <details class="faq-row group border-b border-neutral-100">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-[17px] font-bold tracking-tight transition-colors hover:text-neutral-500">
+                {{ $f[0] }}
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center border border-neutral-200 text-[var(--ink)] transition-colors duration-300 group-open:border-[var(--ink)] group-open:bg-[var(--ink)] group-open:text-white">
+                  <span class="material-symbols-outlined text-[20px] transition-transform duration-300 group-open:rotate-45">add</span>
+                </span>
+              </summary>
+              <p class="max-w-2xl pb-6 text-[15px] leading-relaxed text-neutral-500">{{ $f[1] }}</p>
+            </details>
+          @endforeach
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+{{-- ── Demo ─────────────────────────────────────────────── --}}
+<section class="border-t border-neutral-100">
+  <div class="v3-wrap py-16 lg:py-20">
+    <div class="grid items-end gap-10 bg-[var(--ink)] p-8 text-white sm:p-10 lg:grid-cols-12 lg:p-14">
+      <div class="lg:col-span-8">
+        <p class="text-xs font-medium uppercase tracking-wider text-neutral-500">See {{ $product['name'] }} for yourself</p>
+        <h2 class="mt-3 text-4xl font-black leading-[1.05] tracking-[-0.03em] sm:text-5xl">{{ $product['cta_heading'] ?? 'Thirty minutes is enough to' }} <span>{{ $product['cta_accent'] ?? 'see the difference.' }}</span></h2>
+        <p class="mt-6 max-w-xl text-base leading-relaxed text-neutral-400">
+          {{ $product['cta_body'] ?? 'We will walk you through the product using a scenario from your own organisation, answer the hard questions, and tell you honestly whether it fits.' }}
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
+        <a href="{{ $waDemo }}" target="_blank" rel="noopener" class="v3-btn v3-btn-blue">Request a demo {!! $arrow !!}</a>
+        <a href="{{ url('/contact') }}" class="v3-btn border border-neutral-700 text-white hover:border-white">Contact us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{-- ── More from Cloudence ──────────────────────────────── --}}
+@if ($others)
+  <section class="border-t border-neutral-100">
+    <div class="v3-wrap py-20 lg:py-28">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div class="max-w-2xl">
+          <p class="v3-eyebrow">More from Cloudence</p>
+          <h2 class="mt-3 text-4xl font-black leading-[1.05] tracking-[-0.03em] sm:text-5xl">Other <span>products.</span></h2>
+        </div>
+        <a href="{{ url('/products') }}" class="inline-flex shrink-0 items-center gap-2 border-b border-neutral-950 pb-1 text-sm font-medium hover:border-neutral-500 hover:text-neutral-500">All products {!! $arrow !!}</a>
+      </div>
+      <div class="mt-12 grid gap-x-8 gap-y-14 md:grid-cols-2">
+        @foreach ($others as $k => $o)
+          <a href="{{ url('/products/' . $k) }}" class="group flex flex-col">
+            @if (!empty($o['shots'][0]['file']))
+              <div class="overflow-hidden border border-neutral-200 bg-white transition-colors group-hover:border-[var(--ink)]">
+                <div class="flex h-9 items-center gap-3 border-b border-neutral-200 bg-neutral-50 px-4">
+                  <span class="flex shrink-0 gap-1.5" aria-hidden="true"><i class="h-2 w-2 bg-neutral-300"></i><i class="h-2 w-2 bg-neutral-300"></i><i class="h-2 w-2 bg-neutral-300"></i></span>
+                  <span class="min-w-0 truncate text-[11.5px] text-neutral-500">{{ $o['address'] }}</span>
+                </div>
+                <div class="overflow-hidden">
+                  <img src="{{ asset('images/products/' . $k . '/' . $o['shots'][0]['file']) }}" alt="{{ $o['name'] }} — {{ $o['shots'][0]['title'] }}" loading="lazy" decoding="async" class="aspect-[16/10] w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]">
+                </div>
+              </div>
+            @endif
+            <div class="mt-6 flex items-start justify-between gap-4">
+              <div>
+                <p class="text-xs font-medium uppercase tracking-wider text-neutral-500">{{ $o['category'] }}</p>
+                <h3 class="mt-2 text-2xl font-black leading-tight tracking-[-0.02em] group-hover:text-neutral-500">{{ $o['name'] }}</h3>
+                <p class="mt-2 text-[14.5px] leading-relaxed text-neutral-500">{{ $o['tagline'] }}</p>
+              </div>
+              <span class="mt-1 flex h-9 w-9 shrink-0 items-center justify-center border border-neutral-200 transition-colors group-hover:border-[var(--ink)] group-hover:bg-[var(--ink)] group-hover:text-white">{!! $arrow !!}</span>
+            </div>
+          </a>
+        @endforeach
+      </div>
+    </div>
   </section>
+@endif
 
 @endsection

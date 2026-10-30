@@ -52,7 +52,6 @@ return [
         ['url' => '/about', 'label' => 'Company', 'children' => [
             ['url' => '/about',        'label' => 'About us',   'icon' => 'apartment', 'blurb' => 'Who we are and how we work'],
             ['url' => '/products',     'label' => 'Products',   'icon' => 'deployed_code', 'blurb' => 'Platforms we build and run'],
-            ['url' => '/team',         'label' => 'Team',       'icon' => 'groups',        'blurb' => 'The people behind the work'],
         ]],
         ['url' => '/services', 'label' => 'Services', 'children' => array_map(fn ($s) => [
             'url' => '/services/' . $s['slug'], 'label' => $s['short'], 'icon' => $s['icon'], 'blurb' => $s['blurb'],
@@ -76,7 +75,6 @@ return [
             ['url' => '/about',            'label' => 'About us'],
             ['url' => '/products',         'label' => 'Products'],
             ['url' => '/about#values',     'label' => 'Our values'],
-            ['url' => '/insights',         'label' => 'Insights'],
             ['url' => '/contact',          'label' => 'Contact'],
         ],
         'Services' => array_map(fn ($s) => ['url' => '/services/' . $s['slug'], 'label' => $s['short']], $services),
@@ -87,11 +85,6 @@ return [
             ['url' => '/industries/financial-services', 'label' => 'Financial services'],
             ['url' => '/industries/hospitality', 'label' => 'Hospitality'],
             ['url' => '/industries/media',      'label' => 'Media'],
-        ],
-        'Legal' => [
-            ['url' => '/privacy-policy',   'label' => 'Privacy policy'],
-            ['url' => '/terms-of-service', 'label' => 'Terms of service'],
-            ['url' => '/data-protection',  'label' => 'Data protection'],
         ],
     ],
 

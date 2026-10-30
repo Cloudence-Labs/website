@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.v3')
 
 @section('title', $industry['label'] . ' — Industries — Cloudence')
 @section('description', $industry['description'])
@@ -10,289 +10,221 @@
 @endpush
 
 @php
-  $all      = config('industries');
-  $services = collect(config('site.services'))->keyBy('slug');
-  $others   = array_filter($all, fn ($k) => $k !== $slug, ARRAY_FILTER_USE_KEY);
-  $n        = str_pad(array_search($slug, array_keys($all)) + 1, 2, '0', STR_PAD_LEFT);
+  $all            = config('industries');
+  $services       = collect(config('site.services'))->keyBy('slug');
+  $others         = array_filter($all, fn ($k) => $k !== $slug, ARRAY_FILTER_USE_KEY);
+  $n              = sprintf('%02d', array_search($slug, array_keys($all)) + 1);
   $sectorProducts = array_filter(config('products', []), fn ($p) => ($p['industry'] ?? null) === $slug);
-  $waAsk    = config('site.whatsapp') . '?text=' . rawurlencode("Hello Cloudence, I'd like to talk about ICT solutions for " . strtolower($industry['label']) . ".");
+  $sectorServices = array_values(array_filter(array_map(fn ($s) => $services[$s] ?? null, $industry['services'])));
+  $waAsk          = config('site.whatsapp') . '?text=' . rawurlencode("Hello Cloudence, I'd like to talk about ICT solutions for " . strtolower($industry['label']) . ".");
+  $arrow          = '<svg class="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>';
+  $textLink       = 'inline-flex items-center gap-2 border-b border-neutral-950 pb-1 text-sm font-medium hover:border-neutral-500 hover:text-neutral-500';
 @endphp
 
-@section('content')
+@section('page')
 
-  <!-- ═══════════════ HERO ═══════════════ -->
-  <section class="relative grain overflow-hidden pt-32 pb-20 lg:pt-36 lg:pb-24">
-    <div class="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-      <nav class="reveal flex items-center gap-2 text-[13px] text-graphite" aria-label="Breadcrumb">
-        <a href="{{ url('/industries') }}" class="link-underline hover:text-ink transition-colors">Industries</a>
-        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-        <span class="text-ink font-medium">{{ $industry['short'] }}</span>
-      </nav>
+{{-- ── Hero ─────────────────────────────────────────────── --}}
+<section class="v3-hero v3-wrap pb-16 pt-14 lg:pb-24 lg:pt-24">
+  <nav aria-label="Breadcrumb" class="reveal flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-wider text-neutral-400">
+    <a href="{{ url('/industries') }}" class="text-[var(--blue)] hover:text-[var(--ink)]">Industries</a>
+    <span aria-hidden="true">/</span>
+    <span>Industry {{ $n }}</span>
+  </nav>
+  <div class="reveal mt-8 flex items-center gap-4" style="--d:.05s">
+    <span class="v3-icon !h-12 !w-12 !bg-[var(--blue)] !text-white"><span class="material-symbols-outlined">{{ $industry['icon'] }}</span></span>
+    <span class="text-[15px] font-medium text-neutral-600">{{ $industry['label'] }}</span>
+  </div>
+  <h1 class="v3-h1 reveal mt-6 max-w-5xl" style="--d:.1s">{{ $industry['heading'] }} <span class="v3-accent">{{ $industry['accent'] }}</span></h1>
+  <p class="v3-lead reveal mt-8 max-w-2xl" style="--d:.15s">{{ $industry['lead'] }}</p>
+  <div class="reveal mt-10 flex flex-wrap gap-3" style="--d:.2s">
+    <a href="{{ $waAsk }}" target="_blank" rel="noopener" class="v3-btn v3-btn-dark">Talk to us about your sector {!! $arrow !!}</a>
+    <a href="{{ url('/contact') }}" class="v3-btn v3-btn-line">Contact us</a>
+  </div>
+</section>
 
-      <div class="mt-10 grid lg:grid-cols-12 gap-12 lg:gap-8 items-end">
-        <div class="lg:col-span-8 reveal">
-          <div class="flex items-center gap-4">
-            <span class="w-12 h-12 rounded-xl bg-accent flex items-center justify-center text-ivory">
-              <span class="material-symbols-outlined text-[22px]">{{ $industry['icon'] }}</span>
-            </span>
-            <span class="eyebrow text-graphite">Industry {{ $n }} &nbsp;·&nbsp; {{ $industry['label'] }}</span>
-          </div>
-          <h1 class="mt-7 text-[clamp(2.2rem,5.2vw,4.1rem)] leading-[1.04] tracking-tightest font-bold">
-            {{ $industry['heading'] }}<br>
-            <span class="serif-it font-normal text-[1.06em] text-accent">{{ $industry['accent'] }}</span>
-          </h1>
-          <p class="mt-7 max-w-2xl text-[17px] leading-relaxed text-graphite">{{ $industry['lead'] }}</p>
-          <div class="mt-9 flex flex-wrap items-center gap-3">
-            <a href="{{ $waAsk }}" target="_blank" rel="noopener"
-               class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ivory bg-ink hover:bg-black px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-              Talk to us about your sector
-              <span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-            </a>
-            <a href="#solutions"
-               class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ink border border-mist bg-paper hover:border-ink/40 px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-              What we build
-              <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-y-0.5">arrow_downward</span>
-            </a>
+{{-- ── Challenges ───────────────────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-5">
+        <p class="v3-eyebrow">What's different here</p>
+        <h2 class="v3-h2 mt-3">The constraints we design around.</h2>
+      </div>
+      <ol class="border-t border-neutral-200 lg:col-span-7">
+        @foreach ($industry['challenges'] as $i => $c)
+          <li class="reveal flex items-start gap-5 border-b border-neutral-100 py-7" style="--d:{{ $i * 0.06 }}s">
+            <span class="v3-icon"><span class="material-symbols-outlined">{{ $c[0] }}</span></span>
+            <div class="min-w-0">
+              <h3 class="text-lg font-bold leading-tight tracking-tight">{{ $c[1] }}</h3>
+              <p class="mt-2 text-[15px] leading-relaxed text-neutral-500">{{ $c[2] }}</p>
+            </div>
+          </li>
+        @endforeach
+      </ol>
+    </div>
+  </div>
+</section>
+
+{{-- ── Solutions ────────────────────────────────────────── --}}
+<section id="solutions" class="v3-rule scroll-mt-24">
+  <div class="v3-wrap v3-section">
+    <div class="reveal flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-2xl">
+        <p class="v3-eyebrow">What we build for {{ strtolower($industry['short']) }}</p>
+        <h2 class="v3-h2 mt-3">Systems and apps we provide, or can.</h2>
+      </div>
+      <p class="max-w-sm text-[15px] leading-relaxed text-neutral-500">
+        Some of these are live with clients today. Others we have the team and the track record
+        to build. Each links to the service line behind it.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-px border border-neutral-100 bg-neutral-100 md:grid-cols-2 lg:mt-16">
+      @foreach ($industry['solutions'] as $i => $sol)
+        @php $svc = $services[$sol[3]] ?? null; @endphp
+        <div class="reveal group flex items-start gap-5 bg-white p-7 lg:p-8" style="--d:{{ ($i % 2) * 0.06 }}s">
+          <span class="v3-icon transition-colors group-hover:!bg-[var(--blue)] group-hover:!text-white"><span class="material-symbols-outlined">{{ $sol[0] }}</span></span>
+          <div class="min-w-0 flex-1">
+            <h3 class="text-lg font-bold leading-snug tracking-tight">{{ $sol[1] }}</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-neutral-500">{{ $sol[2] }}</p>
+            @if ($svc)
+              <a href="{{ url('/services/' . $svc['slug']) }}" class="mt-5 inline-flex items-center gap-2 text-[13px] font-medium text-neutral-600 hover:text-neutral-500">
+                <span class="material-symbols-outlined text-[16px] text-neutral-400">{{ $svc['icon'] }}</span>
+                {{ $svc['short'] }} {!! $arrow !!}
+              </a>
+            @endif
           </div>
         </div>
+      @endforeach
+    </div>
+  </div>
+</section>
+
+{{-- ── Ready-made products ──────────────────────────────── --}}
+@if ($sectorProducts)
+  <section class="v3-rule">
+    <div class="v3-wrap v3-section">
+      <div class="reveal flex flex-wrap items-end justify-between gap-6">
+        <div class="max-w-2xl">
+          <p class="v3-eyebrow">Ready-made for {{ strtolower($industry['short']) }}</p>
+          <h2 class="v3-h2 mt-3">Products you can run this quarter.</h2>
+        </div>
+        <a href="{{ url('/products') }}" class="{{ $textLink }}">All products {!! $arrow !!}</a>
+      </div>
+      <div class="mt-12 grid gap-x-8 gap-y-14 md:grid-cols-2 lg:mt-16">
+        @foreach ($sectorProducts as $k => $p)
+          <a href="{{ url('/products/' . $k) }}" class="reveal group flex flex-col" style="--d:{{ $loop->index * 0.08 }}s">
+            @if (!empty($p['shots'][0]['file']))
+              <div class="overflow-hidden border border-neutral-200 bg-neutral-50">
+                <div class="flex items-center gap-1.5 border-b border-neutral-200 bg-white px-4 py-2.5">
+                  <i class="block h-2 w-2 rounded-full bg-neutral-200"></i><i class="block h-2 w-2 rounded-full bg-neutral-200"></i><i class="block h-2 w-2 rounded-full bg-neutral-200"></i>
+                  <span class="ml-3 truncate text-[11px] text-neutral-400">{{ $p['address'] }}</span>
+                </div>
+                <img src="{{ asset('images/products/' . $k . '/' . $p['shots'][0]['file']) }}" alt="{{ $p['name'] }} — {{ $p['shots'][0]['title'] ?? $p['blurb'] }}" loading="lazy" decoding="async" class="v3-photo aspect-[16/10] w-full object-cover object-top">
+              </div>
+            @endif
+            <div class="mt-6 flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <p class="text-xs font-medium uppercase tracking-wider text-neutral-500">{{ $p['category'] }}</p>
+                <h3 class="mt-2 text-2xl font-black tracking-[-0.02em] group-hover:text-neutral-500">{{ $p['name'] }}</h3>
+                <p class="mt-2 text-[15px] leading-relaxed text-neutral-500">{{ $p['summary'] }}</p>
+                <span class="mt-5 inline-flex items-center gap-2 text-sm font-medium">Explore {{ $p['name'] }} {!! $arrow !!}</span>
+              </div>
+            </div>
+          </a>
+        @endforeach
       </div>
     </div>
   </section>
+@endif
 
-  <!-- ═══════════════ CHALLENGES ═══════════════ -->
-  <section class="py-24 lg:py-32 bg-paper border-y border-mist">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8">
-        <div class="lg:col-span-4 reveal">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">What's different here</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            The constraints we <span class="serif-it font-normal text-[1.06em] text-accent">design around.</span>
-          </h2>
+{{-- ── Service lines / outcomes ─────────────────────────── --}}
+<section class="v3-rule bg-neutral-50">
+  <div class="v3-wrap v3-section">
+    <div class="grid gap-16 lg:grid-cols-12">
+      <div class="reveal lg:col-span-5">
+        <p class="v3-eyebrow">Service lines involved</p>
+        <h2 class="v3-h2 mt-3">Delivered by one team.</h2>
+        <div class="mt-10 border-t border-neutral-200">
+          @foreach ($sectorServices as $svc)
+            <a href="{{ url('/services/' . $svc['slug']) }}" class="group flex items-center gap-4 border-b border-neutral-200 py-4 transition-colors hover:text-neutral-500">
+              <span class="v3-icon !h-10 !w-10 transition-colors group-hover:!bg-[var(--blue)] group-hover:!text-white"><span class="material-symbols-outlined">{{ $svc['icon'] }}</span></span>
+              <span class="min-w-0 text-[15.5px] font-semibold leading-snug tracking-tight">{{ $svc['label'] }}</span>
+              <span class="ml-auto text-neutral-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-neutral-500">{!! $arrow !!}</span>
+            </a>
+          @endforeach
         </div>
-        <div class="lg:col-span-8 grid sm:grid-cols-2 gap-4">
-          @foreach ($industry['challenges'] as $i => $c)
-            <div class="reveal flex items-start gap-5 rounded-[22px] border border-mist bg-ivory p-7" style="transition-delay:{{ $i * 0.06 }}s">
-              <span class="w-11 h-11 shrink-0 rounded-full bg-paper border border-mist flex items-center justify-center text-ink">
-                <span class="material-symbols-outlined text-[20px]">{{ $c[0] }}</span>
-              </span>
-              <div>
-                <h3 class="text-[16.5px] font-bold tracking-tight">{{ $c[1] }}</h3>
-                <p class="mt-2 text-[14px] leading-relaxed text-graphite">{{ $c[2] }}</p>
-              </div>
+      </div>
+      <div class="reveal lg:col-span-7" style="--d:.1s">
+        <p class="v3-eyebrow">What you walk away with</p>
+        <h2 class="v3-h2 mt-3">The outcomes.</h2>
+        <div class="mt-10 grid gap-px border border-neutral-200 bg-neutral-200 sm:grid-cols-2">
+          @foreach ($industry['outcomes'] as $o)
+            <div class="flex items-start gap-4 bg-white p-6 lg:p-7">
+              <span class="material-symbols-outlined shrink-0 text-[22px] text-[var(--blue)]">task_alt</span>
+              <p class="text-base font-semibold leading-snug tracking-tight">{{ $o }}</p>
             </div>
           @endforeach
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══════════════ SOLUTIONS ═══════════════ -->
-  <section id="solutions" class="py-24 lg:py-32 scroll-mt-24">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
-        <div class="max-w-2xl">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">What we build for {{ strtolower($industry['short']) }}</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            Systems and apps we provide, <span class="serif-it font-normal text-[1.06em] text-accent">or can.</span>
-          </h2>
-        </div>
-        <p class="lg:max-w-sm text-[15px] leading-relaxed text-graphite">
-          Some of these are live with clients today. Others we have the team and the track record
-          to build. Each links to the service line behind it.
+{{-- ── FAQ ──────────────────────────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-5">
+        <p class="v3-eyebrow">Common questions</p>
+        <h2 class="v3-h2 mt-3">Before you ask.</h2>
+        <p class="mt-7 max-w-sm text-[15.5px] leading-relaxed text-neutral-500">
+          Anything else, <a href="{{ $waAsk }}" target="_blank" rel="noopener" class="font-semibold text-[var(--ink)] underline underline-offset-4 hover:text-neutral-500">message us on WhatsApp</a> and a person will reply.
         </p>
       </div>
-
-      <div class="mt-16 grid md:grid-cols-2 gap-4">
-        @foreach ($industry['solutions'] as $i => $sol)
-          @php $svc = $services[$sol[3]] ?? null; @endphp
-          <div class="reveal group flex items-start gap-5 rounded-[22px] border border-mist bg-paper p-7 transition-all duration-500 hover:border-ink/25 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
-               style="transition-delay:{{ ($i % 2) * 0.06 }}s">
-            <span class="w-12 h-12 shrink-0 rounded-xl bg-accent/10 flex items-center justify-center text-accent transition-colors group-hover:bg-accent group-hover:text-ivory">
-              <span class="material-symbols-outlined text-[22px]">{{ $sol[0] }}</span>
-            </span>
-            <div class="min-w-0 flex-1">
-              <h3 class="text-[17px] font-bold tracking-tight">{{ $sol[1] }}</h3>
-              <p class="mt-2 text-[14.5px] leading-relaxed text-graphite">{{ $sol[2] }}</p>
-              @if ($svc)
-                <a href="{{ url('/services/' . $svc['slug']) }}" class="group/svc mt-4 inline-flex items-center gap-2 text-[12.5px] font-semibold text-ink">
-                  <span class="material-symbols-outlined text-[16px] text-graphite">{{ $svc['icon'] }}</span>
-                  <span class="link-underline">{{ $svc['short'] }}</span>
-                  <span class="material-symbols-outlined text-[15px] text-accent transition-transform group-hover/svc:translate-x-0.5">arrow_forward</span>
-                </a>
-              @endif
-            </div>
-          </div>
-        @endforeach
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ READY-MADE PRODUCTS ═══════════════ -->
-  @if ($sectorProducts)
-    <section class="pb-24 lg:pb-32">
-      <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
-          <div class="max-w-2xl">
-            <div class="flex items-center gap-3 text-graphite">
-              <span class="w-9 rule"></span><span class="eyebrow">Ready-made for {{ strtolower($industry['short']) }}</span>
-            </div>
-            <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-              Products you can <span class="serif-it font-normal text-[1.06em] text-accent">run this quarter.</span>
-            </h2>
-          </div>
-          <a href="{{ url('/products') }}" class="group shrink-0 inline-flex items-center gap-2 text-[15px] font-semibold text-ink">
-            <span class="link-underline">All products</span>
-            <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-x-1">arrow_forward</span>
-          </a>
-        </div>
-        <div class="mt-14 grid md:grid-cols-2 gap-5">
-          @foreach ($sectorProducts as $k => $p)
-            <a href="{{ url('/products/' . $k) }}"
-               class="reveal group flex flex-col rounded-[22px] border border-mist bg-paper overflow-hidden transition-all duration-500 hover:border-ink/25 hover:-translate-y-1 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
-               style="transition-delay:{{ $loop->index * 0.06 }}s">
-              @if (!empty($p['shots'][0]['file']))
-                <div class="relative aspect-[16/9] overflow-hidden border-b border-mist bg-ivory">
-                  <img src="{{ asset('images/products/' . $k . '/' . $p['shots'][0]['file']) }}" alt="{{ $p['name'] }}" loading="lazy"
-                       class="absolute inset-0 w-full h-full object-cover object-left-top transition-transform duration-700 group-hover:scale-[1.03]">
-                </div>
-              @endif
-              <div class="p-7 lg:p-8 flex flex-col flex-1">
-                <div class="flex items-center gap-3">
-                  <span class="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent">
-                    <span class="material-symbols-outlined text-[20px]">{{ $p['icon'] }}</span>
-                  </span>
-                  <h3 class="text-[22px] leading-snug tracking-tightest font-bold">{{ $p['name'] }}</h3>
-                </div>
-                <p class="mt-4 text-[14.5px] leading-relaxed text-graphite flex-1">{{ $p['summary'] }}</p>
-                <span class="mt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-ink">
-                  <span class="link-underline">Explore {{ $p['name'] }}</span>
-                  <span class="material-symbols-outlined text-[18px] text-accent transition-transform group-hover:translate-x-1">arrow_forward</span>
-                </span>
-              </div>
-            </a>
+      <div class="reveal lg:col-span-7" style="--d:.1s">
+        <div class="border-t border-neutral-200">
+          @foreach ($industry['faqs'] as $f)
+            <details class="group border-b border-neutral-100">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-[17px] font-bold tracking-tight hover:text-neutral-500 [&::-webkit-details-marker]:hidden">
+                {{ $f[0] }}
+                <span class="material-symbols-outlined shrink-0 text-[22px] text-neutral-400 transition-transform duration-300 group-open:rotate-45">add</span>
+              </summary>
+              <p class="max-w-2xl pb-6 text-[15px] leading-relaxed text-neutral-500">{{ $f[1] }}</p>
+            </details>
           @endforeach
         </div>
       </div>
-    </section>
-  @endif
-
-  <!-- ═══════════════ SERVICE LINES / OUTCOMES ═══════════════ -->
-  <section class="py-24 lg:py-32 bg-paper border-y border-mist">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-5">
-        <div class="lg:col-span-7 reveal rounded-[22px] border border-mist bg-ivory p-8 lg:p-10">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Service lines involved</span>
-          </div>
-          <h2 class="mt-6 text-[clamp(1.5rem,2.4vw,1.9rem)] leading-tight tracking-tightest font-bold">
-            Delivered by <span class="serif-it font-normal text-[1.06em] text-accent">one team.</span>
-          </h2>
-          <div class="mt-7 grid sm:grid-cols-2 gap-2.5">
-            @foreach ($industry['services'] as $slugRef)
-              @php $svc = $services[$slugRef] ?? null; @endphp
-              @if ($svc)
-                <a href="{{ url('/services/' . $svc['slug']) }}" class="group flex items-center gap-3.5 rounded-[14px] bg-paper border border-mist px-4 py-3.5 transition-colors hover:border-ink/30">
-                  <span class="w-9 h-9 shrink-0 rounded-full bg-ivory border border-mist flex items-center justify-center text-ink transition-colors group-hover:bg-ink group-hover:text-ivory group-hover:border-ink">
-                    <span class="material-symbols-outlined text-[18px]">{{ $svc['icon'] }}</span>
-                  </span>
-                  <span class="text-[14px] font-semibold text-ink leading-snug">{{ $svc['label'] }}</span>
-                  <span class="material-symbols-outlined text-[16px] text-graphite ml-auto transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-                </a>
-              @endif
-            @endforeach
-          </div>
-        </div>
-        <div class="lg:col-span-5 reveal rounded-[22px] bg-ink text-ivory p-8 lg:p-10 relative grain overflow-hidden" style="transition-delay:.08s">
-          <div class="relative">
-            <div class="flex items-center gap-3 text-ivory/50">
-              <span class="w-9 h-px bg-ivory/25"></span><span class="eyebrow">What you walk away with</span>
-            </div>
-            <h2 class="mt-6 text-[clamp(1.5rem,2.4vw,1.9rem)] leading-tight tracking-tightest font-bold">
-              The <span class="serif-it font-normal text-[1.06em] text-accent">outcomes.</span>
-            </h2>
-            <ul class="mt-7 space-y-3.5">
-              @foreach ($industry['outcomes'] as $o)
-                <li class="flex items-start gap-3 text-[15.5px] leading-relaxed text-ivory/75">
-                  <span class="material-symbols-outlined text-[20px] text-accent shrink-0">check_circle</span>{{ $o }}
-                </li>
-              @endforeach
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══════════════ FAQ ═══════════════ -->
-  <section class="py-24 lg:py-32">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8">
-        <div class="lg:col-span-4 reveal">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Common questions</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            Before you <span class="serif-it font-normal text-[1.06em] text-accent">ask.</span>
-          </h2>
-          <p class="mt-7 text-[15.5px] leading-relaxed text-graphite max-w-sm">
-            Anything else, <a href="{{ $waAsk }}" target="_blank" rel="noopener" class="link-underline font-semibold text-ink">message us on WhatsApp</a> and a person will reply.
-          </p>
-        </div>
-        <div class="lg:col-span-8 reveal">
-          <div class="divide-y divide-mist border-y border-mist">
-            @foreach ($industry['faqs'] as $f)
-              <details class="group py-5">
-                <summary class="flex items-center justify-between gap-6 cursor-pointer list-none text-[17px] font-bold tracking-tight">
-                  {{ $f[0] }}
-                  <span class="w-9 h-9 shrink-0 rounded-full border border-mist flex items-center justify-center text-ink transition-all group-open:bg-ink group-open:text-ivory group-open:rotate-45">
-                    <span class="material-symbols-outlined text-[18px]">add</span>
-                  </span>
-                </summary>
-                <p class="mt-4 max-w-2xl text-[15px] leading-relaxed text-graphite">{{ $f[1] }}</p>
-              </details>
-            @endforeach
-          </div>
-        </div>
+{{-- ── Other industries ─────────────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="reveal flex flex-wrap items-end justify-between gap-6">
+      <div class="max-w-2xl">
+        <p class="v3-eyebrow">Other industries</p>
+        <h2 class="v3-h2 mt-3">Also working in.</h2>
       </div>
+      <a href="{{ url('/industries') }}" class="{{ $textLink }}">All industries {!! $arrow !!}</a>
     </div>
-  </section>
-
-  <!-- ═══════════════ OTHER INDUSTRIES ═══════════════ -->
-  <section class="py-24 lg:py-32 bg-paper border-y border-mist">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
-        <div class="max-w-2xl">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Other industries</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            Also <span class="serif-it font-normal text-[1.06em] text-accent">working in.</span>
-          </h2>
-        </div>
-        <a href="{{ url('/industries') }}" class="group shrink-0 inline-flex items-center gap-2 text-[15px] font-semibold text-ink">
-          <span class="link-underline">All industries</span>
-          <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-x-1">arrow_forward</span>
-        </a>
-      </div>
-      <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        @foreach ($others as $k => $o)
-          <a href="{{ url('/industries/' . $k) }}"
-             class="reveal group flex flex-col rounded-[22px] border border-mist bg-ivory p-6 transition-all duration-500 hover:border-ink/25 hover:-translate-y-1 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
-             style="transition-delay:{{ $loop->index * 0.05 }}s">
-            <span class="material-symbols-outlined text-[24px] text-accent">{{ $o['icon'] }}</span>
-            <h3 class="mt-5 text-[16px] leading-snug tracking-tight font-bold">{{ $o['label'] }}</h3>
-            <p class="mt-2 text-[13px] leading-relaxed text-graphite flex-1">{{ $o['blurb'] }}</p>
-            <span class="mt-5 material-symbols-outlined text-[18px] text-graphite transition-all group-hover:text-accent group-hover:translate-x-1">arrow_forward</span>
+    <ol class="reveal mt-12 border-t border-neutral-200" style="--d:.1s">
+      @foreach ($others as $k => $o)
+        <li>
+          <a href="{{ url('/industries/' . $k) }}" class="group grid grid-cols-[auto_1fr_auto] items-center gap-5 border-b border-neutral-100 py-5 transition-colors hover:bg-neutral-50 sm:grid-cols-[3rem_auto_1fr_auto] sm:gap-6">
+            <span class="hidden text-xs font-medium tabular-nums text-neutral-400 sm:block">{{ sprintf('%02d', $loop->iteration) }}</span>
+            <span class="v3-icon !h-10 !w-10"><span class="material-symbols-outlined">{{ $o['icon'] }}</span></span>
+            <span class="min-w-0">
+              <span class="block text-[17px] font-bold leading-snug tracking-tight group-hover:text-neutral-500 sm:text-[19px]">{{ $o['label'] }}</span>
+              <span class="mt-0.5 hidden text-[13.5px] leading-snug text-neutral-500 sm:block">{{ $o['blurb'] }}</span>
+            </span>
+            <span class="text-neutral-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--ink)]">{!! $arrow !!}</span>
           </a>
-        @endforeach
-      </div>
-    </div>
-  </section>
-
-  @include('partials.cta')
+        </li>
+      @endforeach
+    </ol>
+  </div>
+</section>
 
 @endsection

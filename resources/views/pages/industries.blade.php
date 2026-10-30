@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.v3')
 
 @section('title', 'Industries — Cloudence')
 @section('description', 'ICT solutions for government, education, healthcare, financial services, hospitality and media across Nigeria — software, networks and infrastructure shaped by the rules of each sector.')
@@ -11,125 +11,96 @@
 
 @php
   $industries = config('industries');
-  $services   = collect(config('site.services'))->keyBy('slug');
   $waBook     = config('site.whatsapp') . '?text=' . rawurlencode("Hello Cloudence, I'd like to book a consultation.");
+  $why = [
+    ['gavel',       'Procurement fit',  'Fixed scope, fixed price and the documentation your procurement unit needs.'],
+    ['fact_check',  'Audit-ready',      'Reports and trails that satisfy oversight bodies, regulators and boards.'],
+    ['schedule',    'Uptime by design', 'Redundancy, power protection and response times matched to how you operate.'],
+    ['device_hub',  'Whole stack',      'Software and the network, servers and security it runs on, from one team.'],
+  ];
+  $arrow = '<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>';
 @endphp
 
-@section('content')
+@section('page')
 
-  <!-- ═══════════════ HERO ═══════════════ -->
-  <section class="relative grain overflow-hidden pt-32 pb-20 lg:pt-36 lg:pb-24">
-    <div class="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-end">
-        <div class="lg:col-span-8 reveal">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span>
-            <span class="eyebrow">Industries</span>
-          </div>
-          <h1 class="mt-7 text-[clamp(2.4rem,5.9vw,4.5rem)] leading-[1.02] tracking-tightest font-bold">
-            We know the sector<br>
-            <span class="serif-it font-normal text-[1.06em] text-accent">you work in.</span>
-          </h1>
-          <p class="mt-7 max-w-xl text-[17px] leading-relaxed text-graphite">
-            Procurement rules, audit requirements, uptime obligations — the constraints differ by
-            sector, and they shape the solution more than the technology does. Pick your sector to
-            see the systems and apps we build for it.
-          </p>
-          <div class="mt-9 flex flex-wrap items-center gap-3">
-            <a href="{{ $waBook }}" target="_blank" rel="noopener"
-               class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ivory bg-ink hover:bg-black px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-              Book a consultation
-              <span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-            </a>
-            <a href="{{ url('/services') }}"
-               class="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-ink border border-mist bg-paper hover:border-ink/40 px-6 py-3.5 rounded-full transition-all active:scale-[.98]">
-              Browse by service instead
-              <span class="material-symbols-outlined text-[18px] text-graphite transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-            </a>
-          </div>
-        </div>
+{{-- ── Hero ─────────────────────────────────────────────── --}}
+<section class="v3-hero v3-wrap pb-16 pt-14 lg:pb-24 lg:pt-24">
+  <p class="v3-eyebrow reveal">Industries</p>
+  <h1 class="v3-h1 reveal mt-4 max-w-4xl">We know the sector <span class="v3-accent">you work in.</span></h1>
+  <p class="v3-lead reveal mt-8 max-w-xl" style="--d:.1s">
+    Procurement rules, audit requirements, uptime obligations — the constraints differ by
+    sector, and they shape the solution more than the technology does. Pick your sector to
+    see the systems and apps we build for it.
+  </p>
+  <div class="reveal mt-10 flex flex-wrap gap-3" style="--d:.2s">
+    <a href="{{ $waBook }}" target="_blank" rel="noopener" class="v3-btn v3-btn-dark">Book a consultation {!! $arrow !!}</a>
+    <a href="{{ url('/contact') }}" class="v3-btn v3-btn-line">Contact us</a>
+  </div>
+</section>
+
+{{-- ── Industry list ────────────────────────────────────── --}}
+<section class="v3-rule">
+  <div class="v3-wrap v3-section">
+    <div class="reveal flex flex-wrap items-end justify-between gap-6">
+      <div class="max-w-2xl">
+        <p class="v3-eyebrow">{{ count($industries) }} sectors</p>
+        <h2 class="v3-h2 mt-3">Pick your sector.</h2>
       </div>
+      <a href="{{ url('/services') }}" class="inline-flex items-center gap-2 border-b border-neutral-950 pb-1 text-sm font-medium hover:border-neutral-500 hover:text-neutral-500">
+        Browse by service instead {!! $arrow !!}
+      </a>
     </div>
-  </section>
 
-  <!-- ═══════════════ INDUSTRY LIST ═══════════════ -->
-  <section class="py-24 lg:py-32 bg-paper border-y border-mist">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid md:grid-cols-2 gap-5">
-        @foreach ($industries as $slug => $ind)
-          <a href="{{ url('/industries/' . $slug) }}"
-             class="reveal group flex flex-col rounded-[22px] border border-mist bg-ivory p-8 lg:p-9 transition-all duration-500 hover:border-ink/25 hover:-translate-y-1 hover:shadow-[0_30px_70px_-45px_rgba(20,20,20,.45)]"
-             style="transition-delay:{{ ($loop->index % 2) * 0.06 }}s">
-            <div class="flex items-start justify-between">
-              <span class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent transition-colors group-hover:bg-accent group-hover:text-ivory">
-                <span class="material-symbols-outlined text-[22px]">{{ $ind['icon'] }}</span>
+    <ol class="mt-12 border-t border-neutral-200 lg:mt-16">
+      @foreach ($industries as $slug => $ind)
+        <li class="reveal" style="--d:{{ ($loop->index % 2) * 0.06 }}s">
+          <a href="{{ url('/industries/' . $slug) }}" class="group grid grid-cols-[auto_1fr_auto] gap-x-5 gap-y-5 border-b border-neutral-100 py-8 transition-colors hover:bg-neutral-50 sm:gap-x-6 lg:grid-cols-12 lg:gap-x-8 lg:py-10">
+            <span class="pt-1 text-xs font-medium tabular-nums text-neutral-400 lg:col-span-1">{{ sprintf('%02d', $loop->iteration) }}</span>
+            <span class="min-w-0 lg:col-span-4">
+              <span class="v3-icon"><span class="material-symbols-outlined">{{ $ind['icon'] }}</span></span>
+              <span class="mt-5 block text-2xl font-black leading-[1.08] tracking-[-0.02em] transition-colors group-hover:text-neutral-500 sm:text-3xl">{{ $ind['label'] }}</span>
+              <span class="mt-2 block text-sm text-neutral-400">{{ $ind['blurb'] }}</span>
+            </span>
+            <span class="flex h-9 w-9 items-center justify-center border border-neutral-200 transition-colors group-hover:border-[var(--ink)] group-hover:bg-[var(--ink)] group-hover:text-white lg:order-last lg:col-span-1 lg:justify-self-end">{!! $arrow !!}</span>
+            <span class="col-span-full min-w-0 lg:col-span-6 lg:pt-1">
+              <span class="block max-w-xl text-[15px] leading-relaxed text-neutral-500">{{ $ind['description'] }}</span>
+              <span class="mt-5 flex flex-wrap gap-2">
+                @foreach (array_slice($ind['solutions'], 0, 4) as $sol)<span class="border border-neutral-200 px-2.5 py-1 text-xs font-medium text-neutral-600">{{ $sol[1] }}</span>@endforeach
+                @if (count($ind['solutions']) > 4)<span class="inline-flex items-center px-1 text-xs font-medium text-neutral-400">+{{ count($ind['solutions']) - 4 }} more</span>@endif
               </span>
-              <span class="eyebrow text-graphite/50">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
-            </div>
-            <h2 class="mt-7 text-[clamp(1.35rem,2vw,1.6rem)] leading-tight tracking-tightest font-bold">{{ $ind['label'] }}</h2>
-            <p class="mt-3 text-[15px] leading-relaxed text-graphite">{{ $ind['description'] }}</p>
-
-            <div class="mt-6 pt-6 border-t border-mist">
-              <div class="eyebrow text-graphite/60">What we build</div>
-              <div class="mt-3 flex flex-wrap gap-2">
-                @foreach (array_slice($ind['solutions'], 0, 4) as $sol)
-                  <span class="text-[12px] font-semibold tracking-wide border border-mist bg-paper rounded-full px-3 py-1.5 text-ink/75">{{ $sol[1] }}</span>
-                @endforeach
-                @if (count($ind['solutions']) > 4)
-                  <span class="text-[12px] font-semibold tracking-wide rounded-full px-3 py-1.5 text-graphite">+{{ count($ind['solutions']) - 4 }} more</span>
-                @endif
-              </div>
-            </div>
-
-            <span class="mt-7 inline-flex items-center gap-2 text-[14px] font-semibold text-ink">
-              <span class="link-underline">See how we work in {{ strtolower($ind['short']) }}</span>
-              <span class="material-symbols-outlined text-[18px] text-accent transition-transform group-hover:translate-x-1">arrow_forward</span>
+              <span class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[var(--ink)] group-hover:text-neutral-500">See how we work in {{ strtolower($ind['short']) }} {!! $arrow !!}</span>
             </span>
           </a>
+        </li>
+      @endforeach
+    </ol>
+  </div>
+</section>
+
+{{-- ── Why sector matters ───────────────────────────────── --}}
+<section class="v3-rule bg-neutral-50">
+  <div class="v3-wrap v3-section">
+    <div class="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-5">
+        <p class="v3-eyebrow">Why sector matters</p>
+        <h2 class="v3-h2 mt-3">Same team, different rules.</h2>
+        <p class="mt-7 max-w-md text-base leading-relaxed text-neutral-500 sm:text-lg">
+          A payment platform for a bank and a fee portal for a university share most of their
+          code. What differs is who signs off, what the auditor asks for, and what happens when
+          it goes down at 2am. We plan for those differences before we build.
+        </p>
+      </div>
+      <div class="grid gap-px border border-neutral-200 bg-neutral-200 sm:grid-cols-2 lg:col-span-7">
+        @foreach ($why as $i => $c)
+          <div class="reveal bg-white p-7 lg:p-8" style="--d:{{ $i * 0.06 }}s">
+            <span class="v3-icon"><span class="material-symbols-outlined">{{ $c[0] }}</span></span>
+            <h3 class="mt-6 text-lg font-bold leading-tight tracking-tight">{{ $c[1] }}</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-neutral-500">{{ $c[2] }}</p>
+          </div>
         @endforeach
       </div>
     </div>
-  </section>
-
-  <!-- ═══════════════ WHY IT MATTERS ═══════════════ -->
-  <section class="py-24 lg:py-32">
-    <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-start">
-        <div class="lg:col-span-5 reveal">
-          <div class="flex items-center gap-3 text-graphite">
-            <span class="w-9 rule"></span><span class="eyebrow">Why sector matters</span>
-          </div>
-          <h2 class="mt-7 text-[clamp(1.9rem,3.6vw,3rem)] leading-[1.1] tracking-tightest font-bold">
-            Same team, <span class="serif-it font-normal text-[1.06em] text-accent">different rules.</span>
-          </h2>
-          <p class="mt-7 text-[16px] leading-relaxed text-graphite max-w-md">
-            A payment platform for a bank and a fee portal for a university share most of their
-            code. What differs is who signs off, what the auditor asks for, and what happens when
-            it goes down at 2am. We plan for those differences before we build.
-          </p>
-        </div>
-        <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-          @foreach ([
-            ['gavel',       'Procurement fit',      'Fixed scope, fixed price and the documentation your procurement unit needs.'],
-            ['fact_check',  'Audit-ready',          'Reports and trails that satisfy oversight bodies, regulators and boards.'],
-            ['schedule',    'Uptime by design',     'Redundancy, power protection and response times matched to how you operate.'],
-            ['device_hub',  'Whole stack',          'Software and the network, servers and security it runs on, from one team.'],
-          ] as $i => $c)
-            <div class="reveal flex items-start gap-5 rounded-[22px] border border-mist bg-paper p-7" style="transition-delay:{{ $i * 0.06 }}s">
-              <span class="w-11 h-11 shrink-0 rounded-full bg-ivory border border-mist flex items-center justify-center text-ink">
-                <span class="material-symbols-outlined text-[20px]">{{ $c[0] }}</span>
-              </span>
-              <div>
-                <h3 class="text-[16.5px] font-bold tracking-tight">{{ $c[1] }}</h3>
-                <p class="mt-2 text-[14px] leading-relaxed text-graphite">{{ $c[2] }}</p>
-              </div>
-            </div>
-          @endforeach
-        </div>
-      </div>
-    </div>
-  </section>
-
-  @include('partials.cta')
+  </div>
+</section>
 
 @endsection

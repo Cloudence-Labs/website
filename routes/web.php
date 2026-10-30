@@ -7,6 +7,26 @@ Route::get('/', function () {
     return view('pages.home');
 })->name('home');
 
+// Alternate landing page — Apple-style scroll choreography. Not indexed while under review.
+Route::get('/v2', function () {
+    return view('pages.home-v2');
+})->name('home.v2');
+
+// The rebrand preview lived here before it became the home page.
+Route::redirect('/v3', '/', 301);
+
+Route::get('/news', function () {
+    return view('pages.news', ['posts' => \App\Support\News::all()]);
+})->name('news');
+
+Route::get('/news/{slug}', function (string $slug) {
+    $posts = \App\Support\News::all();
+    $post  = $posts->get($slug);
+    abort_unless($post, 404);
+
+    return view('pages.news-post', ['post' => $post, 'more' => $posts->except($slug)->take(3)]);
+})->name('news.post');
+
 Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
@@ -61,6 +81,10 @@ Route::get('/sitemap.xml', function () {
     }
     foreach (array_keys(config('industries')) as $slug) {
         $urls[] = ['loc' => url('/industries/' . $slug), 'priority' => '0.7', 'changefreq' => 'monthly'];
+    }
+    $urls[] = ['loc' => url('/news'), 'priority' => '0.7', 'changefreq' => 'weekly'];
+    foreach (\App\Support\News::all() as $post) {
+        $urls[] = ['loc' => $post['url'], 'priority' => '0.6', 'changefreq' => 'yearly'];
     }
     $urls[] = ['loc' => url('/products'), 'priority' => '0.9', 'changefreq' => 'monthly'];
     foreach (array_keys(config('products', [])) as $slug) {
