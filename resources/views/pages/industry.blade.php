@@ -1,6 +1,6 @@
 @extends('layouts.v3')
 
-@section('title', $industry['label'] . ' — Industries — Cloudence')
+@section('title', $industry['label'] . ' ICT Solutions in Nigeria | Cloudence')
 @section('description', $industry['description'])
 
 @push('head')

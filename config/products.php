@@ -16,6 +16,7 @@
 | flow         — [title, body] steps
 | roles        — [icon, title, body]
 | faqs         — [question, answer]
+| meta_description — search-result snippet, under 155 characters
 |
 | Screens show demonstration data only. Never publish client data here.
 */
@@ -32,6 +33,7 @@ return [
         'address'         => 'memo.yourorganisation.gov.ng',
         'schema_category' => 'BusinessApplication',
         'description'     => 'E-Memo replaces paper memos in ministries, agencies and institutions. Draft on your letterhead, route through the proper chain of offices, and keep every minute, forward and read on the record.',
+        'meta_description' => 'E-Memo is an electronic memo registry for ministries and agencies: memos on your letterhead, routed in order, numbered and traceable to every reader.',
         'summary'         => 'Paper memos are slow, and once one leaves a desk nobody can say where it is. E-Memo puts the whole registry online: drafted on your letterhead, routed through the proper offices in order, numbered at dispatch and traceable to every reader.',
         'heading'         => 'Every memo numbered, routed',
         'accent'          => 'and accounted for.',
@@ -136,6 +138,7 @@ return [
         'address'         => 'accounts.yourorganisation.gov.ng',
         'schema_category' => 'FinanceApplication',
         'description'     => 'Accountra keeps the books of a ministry, agency, tertiary institution or local government council: Treasury vouchers, votebook, cashbook, budget control, approvals and IPSAS cash-basis statements in one system.',
+        'meta_description' => 'Accountra is public-sector accounting for Nigeria: Treasury vouchers, votebook, cashbook, budget control and IPSAS cash-basis statements in one system.',
         'summary'         => 'The votebook, the cashbook and the advance ledger were designed for paper, and paper cannot refuse an overspend. Accountra runs the whole Treasury payment cycle in one system, enforces the budget on every voucher and produces the statements auditors ask for.',
         'heading'         => 'The Treasury books,',
         'accent'          => 'kept by the system.',
@@ -232,9 +235,11 @@ return [
         'icon'            => 'chat',
         'blurb'           => 'WhatsApp marketing',
         'tagline'         => 'WhatsApp marketing from the number you already have',
+        'url'             => 'https://chatlify.xyz',
         'address'         => 'Chatlify',
         'schema_category' => 'BusinessApplication',
         'description'     => 'Chatlify is WhatsApp marketing for businesses that sell on WhatsApp. Post HD statuses to every contact, broadcast to groups and people at a pace that keeps the number safe, and let automations answer customers day and night.',
+        'meta_description' => 'Chatlify is WhatsApp marketing for businesses: HD statuses to every contact, safe broadcasts and automations that answer customers day and night.',
         'summary'         => 'A status posted from a phone reaches a few hundred contacts at best, and a customer who messages at 2am waits until morning. Chatlify links to the WhatsApp number a business already has and posts, broadcasts and replies for it, paced so the number stays safe.',
         'heading'         => 'Your WhatsApp,',
         'accent'          => 'selling while you sleep.',

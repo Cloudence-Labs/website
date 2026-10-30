@@ -1,7 +1,8 @@
 @extends('layouts.v3')
 
-@section('title', $product['name'] . ' — ' . $product['tagline'] . ' — Cloudence')
-@section('description', $product['description'])
+@section('title', $product['name'] . ' — ' . $product['blurb'] . ' | Cloudence')
+@section('og_image_alt', $product['name'] . ' — ' . $product['tagline'])
+@section('description', $product['meta_description'] ?? \Illuminate\Support\Str::limit($product['description'], 155))
 @if (!empty($product['shots'][0]['file']))
   @section('og_image', asset('images/products/' . $slug . '/' . $product['shots'][0]['file']))
 @endif
@@ -37,6 +38,8 @@
     ['support_agent', 'Supported after launch', 'A named contact, a response time in writing, and updates as your needs change.'],
   ];
 
+  $siteUrl  = $product['url'] ?? null;
+  $siteHost = $siteUrl ? preg_replace('#^https?://(www\.)?#', '', rtrim($siteUrl, '/')) : null;
   $arrow = '<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>';
 @endphp
 
@@ -51,6 +54,7 @@
         'applicationCategory' => $product['schema_category'] ?? 'BusinessApplication',
         'operatingSystem'     => 'Web',
         'image'               => $hero ? $shot($hero['file']) : null,
+        'sameAs'              => $siteUrl,
         'provider'            => ['@id' => url('/') . '#organization'],
         'featureList'         => array_map(fn ($f) => $f[1], $product['features']),
       ])) !!}
@@ -103,8 +107,13 @@
     @endif
 
     <div class="mt-10 flex flex-wrap items-center gap-3">
-      <a href="{{ $waDemo }}" target="_blank" rel="noopener" class="v3-btn v3-btn-dark">Request a demo {!! $arrow !!}</a>
-      <a href="#features" class="v3-btn v3-btn-line">See what it does <span class="material-symbols-outlined text-[16px]">arrow_downward</span></a>
+      @if ($siteUrl)
+        <a href="{{ $siteUrl }}" target="_blank" rel="noopener" class="v3-btn v3-btn-dark">Visit {{ $siteHost }} {!! $arrow !!}</a>
+        <a href="{{ $waDemo }}" target="_blank" rel="noopener" class="v3-btn v3-btn-line">Request a demo {!! $arrow !!}</a>
+      @else
+        <a href="{{ $waDemo }}" target="_blank" rel="noopener" class="v3-btn v3-btn-dark">Request a demo {!! $arrow !!}</a>
+        <a href="#features" class="v3-btn v3-btn-line">See what it does <span class="material-symbols-outlined text-[16px]">arrow_downward</span></a>
+      @endif
     </div>
   </div>
 
@@ -421,8 +430,13 @@
         </p>
       </div>
       <div class="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
-        <a href="{{ $waDemo }}" target="_blank" rel="noopener" class="v3-btn v3-btn-blue">Request a demo {!! $arrow !!}</a>
-        <a href="{{ url('/contact') }}" class="v3-btn border border-neutral-700 text-white hover:border-white">Contact us</a>
+        @if ($siteUrl)
+          <a href="{{ $siteUrl }}" target="_blank" rel="noopener" class="v3-btn v3-btn-blue">Visit {{ $siteHost }} {!! $arrow !!}</a>
+          <a href="{{ $waDemo }}" target="_blank" rel="noopener" class="v3-btn border border-neutral-700 text-white hover:border-white">Request a demo</a>
+        @else
+          <a href="{{ $waDemo }}" target="_blank" rel="noopener" class="v3-btn v3-btn-blue">Request a demo {!! $arrow !!}</a>
+          <a href="{{ url('/contact') }}" class="v3-btn border border-neutral-700 text-white hover:border-white">Contact us</a>
+        @endif
       </div>
     </div>
   </div>

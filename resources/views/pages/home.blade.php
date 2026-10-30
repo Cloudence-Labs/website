@@ -1,8 +1,11 @@
 @extends('layouts.v3')
 
-@section('title', 'Cloudence — Empowering growth through smart technology')
+@section('title', 'Cloudence | Software, Networks & ICT Solutions in Nigeria')
 @section('description', 'Cloudence builds enterprise software, networks and ICT infrastructure for businesses and government institutions across Nigeria. Offices in Abuja and Calabar.')
 
+@push('head')
+  {!! \App\Support\Seo::offices() !!}
+@endpush
 
 @php
   $services = config('site.services');

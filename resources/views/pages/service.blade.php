@@ -1,6 +1,8 @@
 @extends('layouts.v3')
 
-@section('title', $service['label'] . ' — Cloudence')
+@section('title', $service['label'] . ' in Nigeria | Cloudence')
+@section('og_image', asset('images/services/' . $service['slug'] . '.jpg'))
+@section('og_image_alt', $service['label'] . ' by Cloudence')
 @section('description', $service['description'])
 
 @push('head')

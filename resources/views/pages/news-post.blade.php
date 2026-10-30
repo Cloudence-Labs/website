@@ -1,21 +1,18 @@
 @extends('layouts.v3')
 
-@section('title', $post['title'] . ' — Cloudence News')
-@section('description', $post['excerpt'])
+@section('title', $post['seo_title'] . ' | Cloudence News')
+@section('description', $post['seo_description'])
+@section('og_type', 'article')
+@section('og_image_alt', $post['title'])
 @if (!empty($post['image']))
   @section('og_image', asset($post['image']))
 @endif
 
 @push('head')
-  {!! \App\Support\Seo::jsonLd([
-    '@context' => 'https://schema.org',
-    '@type' => 'NewsArticle',
-    'headline' => $post['title'],
-    'description' => $post['excerpt'],
-    'datePublished' => $post['at']->toDateString(),
-    'publisher' => ['@type' => 'Organization', 'name' => config('site.legal')],
-    'mainEntityOfPage' => $post['url'],
-  ] + (!empty($post['image']) ? ['image' => asset($post['image'])] : [])) !!}
+  <meta property="article:published_time" content="{{ $post['at']->toAtomString() }}">
+  <meta property="article:section" content="{{ $post['category'] }}">
+  {!! \App\Support\Seo::article($post) !!}
+  {!! \App\Support\Seo::breadcrumbs([['Home', '/'], ['News', '/news'], [$post['title'], '/news/' . $post['slug']]]) !!}
 @endpush
 
 @section('page')

@@ -84,7 +84,7 @@ Route::get('/sitemap.xml', function () {
     }
     $urls[] = ['loc' => url('/news'), 'priority' => '0.7', 'changefreq' => 'weekly'];
     foreach (\App\Support\News::all() as $post) {
-        $urls[] = ['loc' => $post['url'], 'priority' => '0.6', 'changefreq' => 'yearly'];
+        $urls[] = ['loc' => $post['url'], 'priority' => '0.6', 'changefreq' => 'yearly', 'lastmod' => $post['at']->toDateString()];
     }
     $urls[] = ['loc' => url('/products'), 'priority' => '0.9', 'changefreq' => 'monthly'];
     foreach (array_keys(config('products', [])) as $slug) {
@@ -94,7 +94,8 @@ Route::get('/sitemap.xml', function () {
     $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
          . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
     foreach ($urls as $u) {
-        $xml .= "  <url><loc>" . e($u['loc']) . "</loc><changefreq>{$u['changefreq']}</changefreq><priority>{$u['priority']}</priority></url>\n";
+        $lastmod = isset($u['lastmod']) ? "<lastmod>{$u['lastmod']}</lastmod>" : '';
+        $xml .= "  <url><loc>" . e($u['loc']) . "</loc>{$lastmod}<changefreq>{$u['changefreq']}</changefreq><priority>{$u['priority']}</priority></url>\n";
     }
     $xml .= '</urlset>';
 

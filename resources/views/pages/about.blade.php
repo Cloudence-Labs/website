@@ -1,7 +1,7 @@
 @extends('layouts.v3')
 
-@section('title', 'About Cloudence — Your digital partner to business growth')
-@section('description', 'Cloudence is an ICT company with offices in Abuja and Calabar, delivering enterprise software, networks and infrastructure for businesses and government institutions across Nigeria.')
+@section('title', 'About Cloudence | ICT Company in Abuja & Calabar')
+@section('description', 'Cloudence is an ICT company in Abuja and Calabar delivering enterprise software, networks and infrastructure for businesses and government across Nigeria.')
 
 @push('head')
   {!! \App\Support\Seo::breadcrumbs([['Home', '/'], ['About', '/about']]) !!}

@@ -1,9 +1,10 @@
 @extends('layouts.v3')
 
-@section('title', 'Contact — Cloudence')
-@section('description', 'Talk to Cloudence about software, networks or infrastructure. Offices in Abuja and Calabar. Call, email, message us on WhatsApp or send a brief through the form.')
+@section('title', 'Contact Cloudence | Abuja & Calabar Offices')
+@section('description', 'Talk to Cloudence about software, networks or infrastructure. Offices in Abuja and Calabar. Call, email, WhatsApp us or send a brief through the form.')
 
 @push('head')
+  {!! \App\Support\Seo::offices() !!}
   {!! \App\Support\Seo::breadcrumbs([['Home', '/'], ['Contact', '/contact']]) !!}
   {!! \App\Support\Seo::page('ContactPage', 'Contact Cloudence', '/contact', 'Call, email, WhatsApp or send a brief to Cloudence.') !!}
   <style>

@@ -1,7 +1,13 @@
 @extends('layouts.v3')
 
-@section('title', 'News — Cloudence')
-@section('description', 'News and updates from Cloudence: projects, products, training and company announcements.')
+@section('title', 'News & updates | Cloudence')
+@section('description', 'News from Cloudence: projects delivered, products launched, training run and company announcements from our Abuja and Calabar teams.')
+
+@push('head')
+  {!! \App\Support\Seo::page('CollectionPage', 'Cloudence News', '/news', 'Projects, products, training and company announcements from Cloudence.') !!}
+  {!! \App\Support\Seo::breadcrumbs([['Home', '/'], ['News', '/news']]) !!}
+  {!! \App\Support\Seo::itemList($posts->map(fn ($p) => [$p['title'], '/news/' . $p['slug']])->values()->all()) !!}
+@endpush
 
 
 @section('page')

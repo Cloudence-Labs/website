@@ -10,28 +10,35 @@
   $seoImage       = trim($__env->yieldContent('og_image', asset('images/og-default.png')));
   $seoCanonical   = trim($__env->yieldContent('canonical', url()->current()));
   $seoRobots      = trim($__env->yieldContent('robots', 'index, follow, max-image-preview:large'));
+  $seoType        = trim($__env->yieldContent('og_type', 'website'));
+  $seoImageAlt    = html_entity_decode(trim($__env->yieldContent('og_image_alt', config('site.name') . ' — ' . config('site.tagline'))), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+  // The default card is drawn at 1200x630; page images have their own sizes, so only state them for the default.
+  $seoImageIsDefault = $seoImage === asset('images/og-default.png');
 @endphp
 <title>{{ $seoTitle }}</title>
 <meta name="description" content="{{ $seoDescription }}">
 <meta name="robots" content="{{ $seoRobots }}">
 <link rel="canonical" href="{{ $seoCanonical }}">
-<meta name="theme-color" content="#fbfaf7">
+<meta name="theme-color" content="#ffffff">
 <meta name="author" content="{{ config('site.legal') }}">
 
-<meta property="og:type" content="website">
+<meta property="og:type" content="{{ $seoType }}">
 <meta property="og:site_name" content="{{ config('site.name') }}">
 <meta property="og:locale" content="en_NG">
 <meta property="og:url" content="{{ $seoCanonical }}">
 <meta property="og:title" content="{{ $seoTitle }}">
 <meta property="og:description" content="{{ $seoDescription }}">
 <meta property="og:image" content="{{ $seoImage }}">
+@if ($seoImageIsDefault)
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="{{ config('site.name') }} — {{ config('site.tagline') }}">
+@endif
+<meta property="og:image:alt" content="{{ $seoImageAlt }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ $seoTitle }}">
 <meta name="twitter:description" content="{{ $seoDescription }}">
 <meta name="twitter:image" content="{{ $seoImage }}">
+<meta name="twitter:image:alt" content="{{ $seoImageAlt }}">
 
 <link rel="icon" href="{{ asset('favicon-32.png') }}" sizes="32x32" type="image/png">
 <link rel="icon" href="{{ asset('icon-192.png') }}" sizes="192x192" type="image/png">

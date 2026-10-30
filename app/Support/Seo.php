@@ -129,6 +129,54 @@ class Seo
         ]);
     }
 
+    /**
+     * One ProfessionalService per office, so each city can appear in local results.
+     * Linked to the Organization as departments/branches of the same company.
+     */
+    public static function offices(): string
+    {
+        $site = config('site');
+
+        return static::jsonLd(array_map(fn ($o) => [
+            '@context'           => 'https://schema.org',
+            '@type'              => 'ProfessionalService',
+            '@id'                => url('/') . '#office-' . \Illuminate\Support\Str::slug($o['city']),
+            'name'               => $site['name'] . ' ' . $o['city'],
+            'parentOrganization' => ['@id' => url('/') . '#organization'],
+            'url'                => url('/'),
+            'image'              => asset('images/og-default.png'),
+            'logo'               => asset('images/main/logo.png'),
+            'telephone'          => $o['phone'],
+            'email'              => $site['mail'],
+            'areaServed'         => ['@type' => 'Country', 'name' => 'Nigeria'],
+            'address'            => [
+                '@type'           => 'PostalAddress',
+                'streetAddress'   => $o['address'],
+                'addressLocality' => $o['city'],
+                'addressCountry'  => 'NG',
+            ],
+        ], $site['offices']));
+    }
+
+    /** NewsArticle for a post from App\Support\News::all(). */
+    public static function article(array $post): string
+    {
+        return static::jsonLd(array_filter([
+            '@context'         => 'https://schema.org',
+            '@type'            => 'NewsArticle',
+            'headline'         => \Illuminate\Support\Str::limit($post['title'], 110, ''),
+            'description'      => $post['excerpt'],
+            'image'            => [asset($post['image'] ?? 'images/og-default.png')],
+            'datePublished'    => $post['at']->toAtomString(),
+            'dateModified'     => $post['at']->toAtomString(),
+            'articleSection'   => $post['category'],
+            'author'           => ['@type' => 'Organization', 'name' => config('site.name'), 'url' => url('/')],
+            'publisher'        => ['@id' => url('/') . '#organization'],
+            'mainEntityOfPage' => $post['url'],
+            'isPartOf'         => ['@id' => url('/') . '#website'],
+        ]));
+    }
+
     public static function page(string $type, string $name, string $url, ?string $description = null): string
     {
         return static::jsonLd(array_filter([

@@ -1,7 +1,7 @@
 @extends('layouts.v3')
 
-@section('title', 'Products — Cloudence')
-@section('description', 'Software products built and run by Cloudence: ready-made platforms for government, finance and revenue collection, configured to your organisation and supported after launch.')
+@section('title', 'Software Products for Government & Business | Cloudence')
+@section('description', 'Ready-made platforms built and run by Cloudence: ' . collect(config('products'))->pluck('name')->join(', ', ' and ') . '. Configured to your organisation and supported after launch.')
 
 @php
   $products = config('products');

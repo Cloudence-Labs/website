@@ -12,6 +12,8 @@
 |   'image'    Path under public/ (optional; posts without one get a branded panel)
 |   'excerpt'  One or two sentences for cards and search results
 |   'body'     Markdown
+|   'seo_title' / 'seo_description'  Optional shorter versions for search results
+|              (aim for under 60 and 155 characters)
 */
 
 return [
@@ -21,6 +23,8 @@ return [
         'date'     => '2025-08-18',
         'category' => 'Projects',
         'image'    => 'images/news/uee-cbt-lab.jpg',
+        'seo_title'       => 'UEE Akamkpa moves exams to CBT with Cloudence',
+        'seo_description' => 'Cloudence has deployed computer-based testing (CBT) for student examinations at the University of Education and Entrepreneurship, Akamkpa.',
         'excerpt'  => 'Students of the University of Education and Entrepreneurship, Akamkpa, now sit their examinations on computer, using a computer-based testing (CBT) system deployed by Cloudence in the university\'s ICT centre.',
         'body'     => <<<'MD'
 Cloudence has deployed computer-based testing (CBT) software for student examinations at the University of Education and Entrepreneurship (UEE), Akamkpa, Cross River State. Students now sit their examinations at workstations in the university's computer laboratory instead of on paper.
@@ -42,6 +46,8 @@ MD,
         'date'     => '2025-06-14',
         'category' => 'Projects',
         'image'    => 'images/news/uee-portal.jpg',
+        'seo_title'       => 'New UEE Akamkpa school portal by Cloudence',
+        'seo_description' => 'Cloudence and UEE\'s ICT Directorate deployed a school portal for admissions, course registration, fees and results at uee-akamkpa.edu.ng.',
         'excerpt'  => 'Working with the ICT Directorate of the University of Education and Entrepreneurship, Akamkpa, Cloudence has deployed a new school portal for admissions, registration, fees and results at uee-akamkpa.edu.ng.',
         'body'     => <<<'MD'
 Cloudence has partnered with the ICT Directorate of the University of Education and Entrepreneurship (UEE), Akamkpa, Cross River State, to design and deploy a new school portal for the institution. The portal is live at [www.uee-akamkpa.edu.ng](https://www.uee-akamkpa.edu.ng).
@@ -78,6 +84,8 @@ MD,
         'date'     => '2026-10-03',
         'category' => 'Products',
         'image'    => 'images/products/accountra/dashboard.webp',
+        'seo_title'       => 'Introducing Accountra: public-sector accounting',
+        'seo_description' => 'Accountra runs Treasury vouchers, votebook, cashbook, budget control and IPSAS cash-basis statements for ministries, agencies and councils.',
         'excerpt'  => 'Accountra keeps the books of a ministry, agency, tertiary institution or council: Treasury vouchers, votebook, cashbook, budget control, approvals and IPSAS cash-basis statements in one system.',
         'body'     => <<<'MD'
 Accountra, our public-sector accounting platform, now has its own page on this site. It keeps the books of a ministry, agency, tertiary institution or local government council, following the Treasury payment cycle from the moment a voucher is raised to the moment cash leaves the bank.
@@ -97,6 +105,7 @@ MD,
         'date'     => '2026-10-01',
         'category' => 'Products',
         'image'    => 'images/products/e-memo/dashboard.webp',
+        'seo_description' => 'E-Memo replaces paper memos in ministries and agencies: drafted on your letterhead, routed in order, numbered and traceable to every reader.',
         'excerpt'  => 'E-Memo replaces paper memos in ministries, agencies and institutions. Memos are drafted on your letterhead, routed through the proper offices in order, numbered at dispatch and traceable to every reader.',
         'body'     => <<<'MD'
 E-Memo, our electronic memo registry, now has its own page on this site. It replaces paper memos inside ministries, agencies and institutions while keeping the formality of the registry intact.

@@ -1,7 +1,7 @@
 @extends('layouts.v3')
 
-@section('title', 'Industries — Cloudence')
-@section('description', 'ICT solutions for government, education, healthcare, financial services, hospitality and media across Nigeria — software, networks and infrastructure shaped by the rules of each sector.')
+@section('title', 'ICT Solutions by Industry in Nigeria | Cloudence')
+@section('description', 'ICT solutions for government, education, healthcare, finance, hospitality and media in Nigeria, shaped by the rules of each sector.')
 
 @push('head')
   {!! \App\Support\Seo::breadcrumbs([['Home', '/'], ['Industries', '/industries']]) !!}
