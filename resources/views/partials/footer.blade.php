@@ -1,7 +1,6 @@
 @php
   $mail   = config('site.mail');
   $phone1 = config('site.phone1');
-  $phone2 = config('site.phone2');
   $socialPaths = [
     'linkedin'  => 'M4.98 3.5a2.5 2.5 0 1 1-.02 5 2.5 2.5 0 0 1 .02-5zM3 8.98h4v12.02H3V8.98zM9.5 8.98h3.83v1.64h.05c.53-.95 1.83-1.96 3.77-1.96 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.72c0-1.36-.03-3.12-1.9-3.12-1.9 0-2.19 1.49-2.19 3.02V21h-4V8.98z',
     'x'         => 'M17.53 3H20.5l-6.49 7.42L21.5 21h-5.98l-4.68-6.12L5.48 21H2.5l6.94-7.93L2.5 3h6.13l4.23 5.6L17.53 3zm-1.05 16.2h1.65L7.6 4.7H5.83l10.65 14.5z',
@@ -70,7 +69,7 @@
         <ul class="mt-2 space-y-1.5 text-[13.5px] text-fg-2">
           <li><a href="mailto:{{ $mail }}" class="link-underline hover:text-fg">{{ $mail }}</a></li>
           @if (config('site.mail2'))<li><a href="mailto:{{ config('site.mail2') }}" class="link-underline hover:text-fg">{{ config('site.mail2') }}</a></li>@endif
-          <li><a href="tel:{{ str_replace(' ', '', $phone1) }}" class="link-underline hover:text-fg">{{ $phone1 }}</a>, <a href="tel:{{ str_replace(' ', '', $phone2) }}" class="link-underline hover:text-fg">{{ $phone2 }}</a></li>
+          <li><a href="tel:{{ str_replace(' ', '', $phone1) }}" class="link-underline hover:text-fg">{{ $phone1 }}</a></li>
         </ul>
       </div>
     </div>

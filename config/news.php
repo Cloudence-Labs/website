@@ -69,6 +69,7 @@ MD,
         'date'     => '2026-10-30',
         'category' => 'Company',
         'image'    => null,
+        'seo_description' => 'Cloudence has refreshed its brand with a redrawn wordmark, a new star mark, a single blue replacing the old orange and a lighter, clearer website.',
         'excerpt'  => 'We have refreshed our brand: a new wordmark, a new star mark and a lighter, clearer website.',
         'body'     => <<<'MD'
 Cloudence has a new identity. The wordmark has been redrawn and is joined by a new star mark, and both now carry a single blue that replaces our old orange.
@@ -105,6 +106,7 @@ MD,
         'date'     => '2026-10-01',
         'category' => 'Products',
         'image'    => 'images/products/e-memo/dashboard.webp',
+        'seo_title'       => 'Introducing E-Memo: electronic memo registry',
         'seo_description' => 'E-Memo replaces paper memos in ministries and agencies: drafted on your letterhead, routed in order, numbered and traceable to every reader.',
         'excerpt'  => 'E-Memo replaces paper memos in ministries, agencies and institutions. Memos are drafted on your letterhead, routed through the proper offices in order, numbered at dispatch and traceable to every reader.',
         'body'     => <<<'MD'

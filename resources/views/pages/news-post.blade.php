@@ -1,6 +1,6 @@
 @extends('layouts.v3')
 
-@section('title', $post['seo_title'] . ' | Cloudence News')
+@section('title', $post['seo_title'] . ' | Cloudence')
 @section('description', $post['seo_description'])
 @section('og_type', 'article')
 @section('og_image_alt', $post['title'])
@@ -32,7 +32,7 @@
 
   @if (!empty($post['image']))
     <div class="v3-wrap">
-      <img src="{{ asset($post['image']) }}" alt="" class="aspect-[21/9] w-full object-cover">
+      <img src="{{ asset($post['image']) }}" alt="{{ $post['title'] }}" fetchpriority="high" class="aspect-[21/9] w-full object-cover">
     </div>
   @endif
 

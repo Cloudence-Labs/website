@@ -1,7 +1,7 @@
 @extends('layouts.v3')
 
-@section('title', $industry['label'] . ' ICT Solutions in Nigeria | Cloudence')
-@section('description', $industry['description'])
+@section('title', ($industry['short'] ?? $industry['label']) . ' ICT Solutions in Nigeria | Cloudence')
+@section('description', $industry['meta_description'] ?? $industry['description'])
 
 @push('head')
   {!! \App\Support\Seo::breadcrumbs([['Home', '/'], ['Industries', '/industries'], [$industry['label'], '/industries/' . $slug]]) !!}

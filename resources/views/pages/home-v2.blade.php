@@ -288,8 +288,7 @@
             <div class="v2-contact-row">
               <span class="v2-contact-icon"><span class="material-symbols-outlined text-[20px]">call</span></span>
               <span><span class="v2-contact-label">Phone</span>
-                <a href="tel:{{ str_replace(' ', '', config('site.phone1')) }}" class="block font-bold">{{ config('site.phone1') }}</a>
-                <a href="tel:{{ str_replace(' ', '', config('site.phone2')) }}" class="block font-bold">{{ config('site.phone2') }}</a></span>
+                <a href="tel:{{ str_replace(' ', '', config('site.phone1')) }}" class="block font-bold">{{ config('site.phone1') }}</a></span>
             </div>
             <div class="v2-contact-row">
               <span class="v2-contact-icon"><span class="material-symbols-outlined text-[20px]">mail</span></span>

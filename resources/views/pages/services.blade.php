@@ -1,6 +1,6 @@
 @extends('layouts.v3')
 
-@section('title', 'ICT Services in Nigeria: Software, Networks & CCTV | Cloudence')
+@section('title', 'ICT Services in Nigeria: Software, Networks, CCTV | Cloudence')
 @section('description', 'Enterprise software, web and mobile development, networks, CCTV, hardware supply and training — delivered in-house by one accountable team across Nigeria.')
 
 @push('head')

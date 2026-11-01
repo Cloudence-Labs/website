@@ -18,7 +18,6 @@
 @php
   $mail     = config('site.mail');
   $phone1   = config('site.phone1');
-  $phone2   = config('site.phone2');
   $wa       = config('site.whatsapp');
   $offices  = config('site.offices');
   $services = config('site.services');
@@ -68,7 +67,6 @@
             <span class="min-w-0 flex-1">
               <span class="block text-xs font-medium uppercase tracking-wider text-neutral-400">Call us</span>
               <span class="mt-1 block text-base font-bold tracking-tight transition-colors group-hover:text-neutral-500">{{ $phone1 }}</span>
-              <span class="block text-sm text-neutral-500">or {{ $phone2 }}</span>
             </span>
           </a>
           <a href="mailto:{{ $mail }}" class="group flex items-start gap-4 border-b border-[#f0f0f2] py-6">

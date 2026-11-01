@@ -3,7 +3,7 @@
 @section('title', $service['label'] . ' in Nigeria | Cloudence')
 @section('og_image', asset('images/services/' . $service['slug'] . '.jpg'))
 @section('og_image_alt', $service['label'] . ' by Cloudence')
-@section('description', $service['description'])
+@section('description', $service['meta_description'] ?? $service['description'])
 
 @push('head')
   {!! \App\Support\Seo::breadcrumbs([['Home', '/'], ['Services', '/services'], [$service['label'], '/services/' . $service['slug']]]) !!}

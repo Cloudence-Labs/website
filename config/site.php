@@ -15,15 +15,15 @@
 $products = require __DIR__ . '/products.php';
 
 $services = [
-    ['slug' => 'enterprise-software',    'icon' => 'terminal',           'short' => 'Enterprise software',    'label' => 'Enterprise software development', 'blurb' => 'Custom platforms for institutions', 'description' => 'Custom platforms for institutions that have outgrown off-the-shelf software — payments, records, billing, reporting, and integration with what you already run.'],
-    ['slug' => 'web-development',        'icon' => 'language',           'short' => 'Web development',        'label' => 'Web development',                 'blurb' => 'Sites, portals and web apps', 'description' => 'Corporate sites, portals and web applications, built to be fast, accessible and maintainable by your own team.'],
-    ['slug' => 'mobile-development',     'icon' => 'smartphone',         'short' => 'Mobile development',     'label' => 'Mobile development',              'blurb' => 'Android and iOS applications', 'description' => 'Android and iOS applications for customers and field staff, released and supported properly.'],
-    ['slug' => 'cctv-installation',      'icon' => 'videocam',           'short' => 'CCTV & surveillance',    'label' => 'CCTV installation',               'blurb' => 'Surveillance design and install', 'description' => 'Surveillance design and installation for offices, estates and public facilities, with recording and remote access configured.'],
-    ['slug' => 'network-implementation', 'icon' => 'lan',                'short' => 'Network implementation', 'label' => 'Network implementation',          'blurb' => 'Cabling, wireless and routing', 'description' => 'Structured cabling, wireless coverage, switching and routing — specified, installed and documented.'],
+    ['slug' => 'enterprise-software',    'icon' => 'terminal',           'short' => 'Enterprise software',    'label' => 'Enterprise software development', 'blurb' => 'Custom platforms for institutions', 'description' => 'Custom platforms for institutions that have outgrown off-the-shelf software — payments, records, billing, reporting, and integration with what you already run.', 'meta_description' => 'Custom enterprise platforms for Nigerian institutions that have outgrown off-the-shelf software: payments, records, billing, reporting and integration.'],
+    ['slug' => 'web-development',        'icon' => 'language',           'short' => 'Web development',        'label' => 'Web development',                 'blurb' => 'Sites, portals and web apps', 'description' => 'Corporate sites, portals and web applications, built to be fast, accessible and maintainable by your own team.', 'meta_description' => 'Cloudence builds corporate websites, portals and web applications in Nigeria that are fast, accessible and maintainable by your own team.'],
+    ['slug' => 'mobile-development',     'icon' => 'smartphone',         'short' => 'Mobile development',     'label' => 'Mobile development',              'blurb' => 'Android and iOS applications', 'description' => 'Android and iOS applications for customers and field staff, released and supported properly.', 'meta_description' => 'Android and iOS app development in Nigeria: applications for customers and field staff, built by Cloudence, released and supported properly.'],
+    ['slug' => 'cctv-installation',      'icon' => 'videocam',           'short' => 'CCTV & surveillance',    'label' => 'CCTV installation',               'blurb' => 'Surveillance design and install', 'description' => 'Surveillance design and installation for offices, estates and public facilities, with recording and remote access configured.', 'meta_description' => 'CCTV design and installation in Nigeria for offices, estates and public facilities, with recording and remote access configured by Cloudence.'],
+    ['slug' => 'network-implementation', 'icon' => 'lan',                'short' => 'Network implementation', 'label' => 'Network implementation',          'blurb' => 'Cabling, wireless and routing', 'description' => 'Structured cabling, wireless coverage, switching and routing — specified, installed and documented.', 'meta_description' => 'Structured cabling, wireless coverage, switching and routing for Nigerian organisations, specified, installed and documented by Cloudence.'],
     // Temporarily hidden — remove the leading // on the next line to bring IT consulting back.
     // ['slug' => 'it-consulting',          'icon' => 'insights',           'short' => 'IT consulting',          'label' => 'IT consulting',                   'blurb' => 'Assessment, strategy and procurement', 'description' => 'Assessment, strategy and procurement advice for organisations deciding what to build, buy or replace.'],
-    ['slug' => 'installation-supplies',  'icon' => 'inventory_2',        'short' => 'Installation & supplies','label' => 'Installation & supplies',         'blurb' => 'Hardware from a single vendor', 'description' => 'Sourcing and installing the hardware behind all of the above, from one vendor with a single point of contact.'],
-    ['slug' => 'training',               'icon' => 'cast_for_education', 'short' => 'Training',               'label' => 'Training & capacity building',    'blurb' => 'Courses and skills for your team', 'description' => 'Hands-on training for your people — end-user onboarding, administrator courses and ICT skills programmes, delivered on site or online.'],
+    ['slug' => 'installation-supplies',  'icon' => 'inventory_2',        'short' => 'Installation & supplies','label' => 'Installation & supplies',         'blurb' => 'Hardware from a single vendor', 'description' => 'Sourcing and installing the hardware behind all of the above, from one vendor with a single point of contact.', 'meta_description' => 'ICT hardware sourcing and installation in Nigeria from Cloudence: one vendor and a single point of contact for the equipment your systems run on.'],
+    ['slug' => 'training',               'icon' => 'cast_for_education', 'short' => 'Training',               'label' => 'Training & capacity building',    'blurb' => 'Courses and skills for your team', 'description' => 'Hands-on training for your people — end-user onboarding, administrator courses and ICT skills programmes, delivered on site or online.', 'meta_description' => 'Hands-on ICT training in Nigeria: end-user onboarding, administrator courses and skills programmes from Cloudence, delivered on site or online.'],
 ];
 
 return [
@@ -34,14 +34,13 @@ return [
     'tagline' => 'Empowering growth through smart technology.',
 
     'phone1'  => '+234 911 836 4438',
-    'phone2'  => '+234 903 714 5361',
     'mail'    => 'hello@cloudence.com.ng',
     'mail2'   => 'cloudenceltd@gmail.com',
     'whatsapp' => 'https://wa.me/2349118364438',
 
     'offices' => [
         ['city' => 'Abuja',   'address' => 'FHA Apo-Guzape Estate, Guzape Hills, Abuja', 'phone' => '+234 911 836 4438'],
-        ['city' => 'Calabar', 'address' => '1, Elder Chief Effiom Edem Orok, Off Jehovah Witness Road, Calabar, Cross River State, Nigeria', 'phone' => '+234 903 714 5361'],
+        ['city' => 'Calabar', 'address' => '1, Elder Chief Effiom Edem Orok, Off Jehovah Witness Road, Calabar, Cross River State, Nigeria', 'phone' => '+234 911 836 4438'],
     ],
 
     // Primary navigation — every page now lives at its own URL.

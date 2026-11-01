@@ -12,7 +12,6 @@
         <div class="mt-8 flex flex-col gap-1 text-[15px] font-medium">
           <a href="mailto:{{ config('site.mail') }}" class="v2-flink">{{ config('site.mail') }}</a>
           <a href="tel:{{ str_replace(' ', '', config('site.phone1')) }}" class="v2-flink">{{ config('site.phone1') }}</a>
-          <a href="tel:{{ str_replace(' ', '', config('site.phone2')) }}" class="v2-flink">{{ config('site.phone2') }}</a>
         </div>
       </div>
       <div class="lg:col-span-3">
