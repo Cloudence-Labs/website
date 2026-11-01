@@ -33,14 +33,14 @@ return [
     'legal'   => 'Cloudence Limited',
     'tagline' => 'Empowering growth through smart technology.',
 
-    'phone1'  => '+234 806 229 5588',
+    'phone1'  => '+234 911 836 4438',
     'phone2'  => '+234 903 714 5361',
     'mail'    => 'hello@cloudence.com.ng',
     'mail2'   => 'cloudenceltd@gmail.com',
-    'whatsapp' => 'https://wa.me/2348062295588',
+    'whatsapp' => 'https://wa.me/2349118364438',
 
     'offices' => [
-        ['city' => 'Abuja',   'address' => 'FHA Apo-Guzape Estate, Guzape Hills, Abuja', 'phone' => '+234 806 229 5588'],
+        ['city' => 'Abuja',   'address' => 'FHA Apo-Guzape Estate, Guzape Hills, Abuja', 'phone' => '+234 911 836 4438'],
         ['city' => 'Calabar', 'address' => '1, Elder Chief Effiom Edem Orok, Off Jehovah Witness Road, Calabar, Cross River State, Nigeria', 'phone' => '+234 903 714 5361'],
     ],
 

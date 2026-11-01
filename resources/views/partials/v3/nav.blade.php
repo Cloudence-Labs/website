@@ -90,8 +90,8 @@
     <nav class="mt-10 flex flex-col" aria-label="Mobile">
       @foreach ($navItems as $i => $item)
         <div class="border-t border-neutral-100">
-          <div class="flex items-center justify-between py-4">
-            <a href="{{ url($item['url']) }}" class="mobile-link flex items-baseline gap-4 text-[26px] font-black tracking-[-0.03em]">
+          <div class="flex items-center justify-between py-3.5">
+            <a href="{{ url($item['url']) }}" class="mobile-link flex items-baseline gap-4 text-[18px] font-normal">
               <span class="text-[11px] font-medium tracking-wider text-neutral-500">0{{ $i + 1 }}</span>{{ $item['label'] }}
             </a>
             @if (!empty($item['children']))
@@ -109,7 +109,7 @@
                   @php $lastGroup = $sub['group']; @endphp
                   <div class="pt-3 text-[11px] font-medium uppercase tracking-wider text-neutral-400 first:pt-0">{{ $lastGroup }}</div>
                 @endif
-                <a href="{{ url($sub['url']) }}" class="mobile-link flex items-center gap-3 py-1.5 text-[16px] font-medium text-neutral-600 hover:text-neutral-950">
+                <a href="{{ url($sub['url']) }}" class="mobile-link flex items-center gap-3 py-1.5 text-[15px] font-normal text-neutral-600 hover:text-neutral-950">
                   <span class="material-symbols-outlined text-[19px] text-[var(--blue)]">{{ $sub['icon'] }}</span>{{ $sub['label'] }}
                 </a>
               @endforeach
