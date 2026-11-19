@@ -249,7 +249,7 @@ return [
             ['50k',    'contacts a single status can reach'],
             ['15',     'WhatsApp numbers on one account'],
             ['150',    'DMs and 60 group posts per number each day, paced like a person'],
-            ['3-day',  'free trial, no card needed'],
+            ['7-day',  'free trial, no card needed'],
         ],
         'why' => [
             'heading' => 'A status from your phone',

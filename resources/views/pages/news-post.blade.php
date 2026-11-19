@@ -32,12 +32,24 @@
 
   @if (!empty($post['image']))
     <div class="v3-wrap">
-      <img src="{{ asset($post['image']) }}" alt="{{ $post['title'] }}" fetchpriority="high" class="aspect-[21/9] w-full object-cover">
+      <img src="{{ asset($post['image']) }}" alt="{{ $post['title'] }}" fetchpriority="high" class="aspect-[21/9] w-full object-cover" @if (!empty($post['image_position'])) style="object-position: {{ $post['image_position'] }}" @endif>
     </div>
   @endif
 
   <div class="v3-wrap pb-20 pt-6 lg:pb-28">
     <div class="v3-prose max-w-2xl text-[17px]">{!! $post['html'] !!}</div>
+
+    @if (!empty($post['gallery']))
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 {{ count($post['gallery']) === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3' }}">
+        @foreach ($post['gallery'] as [$src, $caption])
+          @php [$w, $h] = @getimagesize(public_path($src)) ?: [4, 3]; @endphp
+          <figure>
+            <img src="{{ asset($src) }}" alt="{{ $caption }}" loading="lazy" decoding="async" width="{{ $w }}" height="{{ $h }}" class="{{ $h > $w ? 'aspect-[3/4]' : 'aspect-[4/3]' }} w-full object-cover">
+            <figcaption class="mt-3 text-sm text-neutral-500">{{ $caption }}</figcaption>
+          </figure>
+        @endforeach
+      </div>
+    @endif
   </div>
 </article>
 

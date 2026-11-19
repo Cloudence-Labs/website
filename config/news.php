@@ -10,6 +10,8 @@
 |   'date'     YYYY-MM-DD
 |   'category' Short label: Company, Products, Projects, Training, Events…
 |   'image'    Path under public/ (optional; posts without one get a branded panel)
+|   'image_position'  Optional CSS object-position for the wide article header crop
+|   'gallery'  Optional [[path, caption], …] shown as a photo grid after the body
 |   'excerpt'  One or two sentences for cards and search results
 |   'body'     Markdown
 |   'seo_title' / 'seo_description'  Optional shorter versions for search results
@@ -17,6 +19,107 @@
 */
 
 return [
+
+    'bakassi-deep-seaport-groundbreaking-stream' => [
+        'title'    => 'Cloudence streams the groundbreaking ceremony of the Bakassi Deep Seaport',
+        'date'     => '2026-11-19',
+        'category' => 'Projects',
+        'image'    => 'images/news/bakassi-seaport-team-jetty.webp',
+        'image_position' => 'center 65%',
+        'gallery'  => [
+            ['images/news/bakassi-seaport-stage.webp',  'The stage for the Presidential Groundbreaking Ceremony'],
+            ['images/news/bakassi-seaport-camera.webp', 'A Cloudence camera position at the ceremony grounds'],
+            ['images/news/bakassi-seaport-crew.webp',   'Cameras on the floor during the ceremony'],
+            ['images/news/bakassi-seaport-team.webp',   'A member of the Cloudence crew at the venue'],
+        ],
+        'seo_title'       => 'Bakassi Deep Seaport groundbreaking, streamed live',
+        'seo_description' => 'Cloudence streamed the Bakassi Deep Seaport groundbreaking live for the Cross River Special Agro-Industrial Processing Zone (SAPZ).',
+        'excerpt'  => 'The Cross River Special Agro-Industrial Processing Zone (SAPZ) awarded Cloudence the live streaming of the Presidential Groundbreaking Ceremony of the Bakassi Deep Seaport. Our crew covered the ceremony and streamed it live.',
+        'body'     => <<<'MD'
+Cloudence has delivered the live stream of the Presidential Groundbreaking Ceremony of the Bakassi Deep Seaport in Cross River State. The job was awarded to Cloudence by the Cross River Special Agro-Industrial Processing Zone (SAPZ).
+
+The groundbreaking marks the start of work on the deep seaport at Bakassi, a project presented at the ceremony as "Africa's next maritime frontier". With guests, officials and the public following from far beyond the venue, the stream had to run reliably for the whole ceremony.
+
+**On the ground.** Our crew set up camera positions across the ceremony grounds, covered proceedings from the stage and the floor, and streamed the event live from start to finish so that people who could not be there could follow it as it happened.
+
+**Why it matters.** Large public ceremonies are often held at sites without the infrastructure of a studio or a city venue. Streaming them well depends on careful planning, dependable equipment and connectivity, and a crew that can work alongside the organisers and other media on the day.
+
+The project adds to Cloudence's work for government and institutions across Cross River State, from [Starlink connectivity for SUBEB schools](/news/subeb-starlink-computer-hubs) to [CBT examinations](/news/uee-cbt-examinations) at the University of Education and Entrepreneurship, Akamkpa.
+
+Organisers planning a ceremony, conference or event that needs to reach an audience online can [contact us](/contact) to discuss their requirements.
+MD,
+    ],
+
+    'introducing-chatlify' => [
+        'title'    => 'Introducing Chatlify: track sales and win repeat customers on WhatsApp',
+        'date'     => '2026-11-10',
+        'category' => 'Products',
+        'image'    => 'images/news/chatlify-launch.webp',
+        'seo_title'       => 'Introducing Chatlify: WhatsApp sales and retention',
+        'seo_description' => 'Chatlify records the sales you confirm on WhatsApp, shows who buys and who has gone quiet, and follows up for you. Free 7-day trial, no card needed.',
+        'excerpt'  => 'Chatlify, our new product for businesses that sell on WhatsApp, records every sale you confirm in chat, shows who buys and who has gone quiet, and follows up for you, from the number you already have.',
+        'body'     => <<<'MD'
+Cloudence has launched [Chatlify](https://chatlify.xyz), a product for businesses that sell on WhatsApp. It records every sale a business confirms in chat, shows who buys and who has gone quiet, and follows up with customers automatically. It also posts HD statuses, sends broadcasts and replies to customers day and night.
+
+Chatlify links to the WhatsApp number a business already has, the same way WhatsApp Web does, as a linked device. There is no API approval, no template review and no fee per message, and the owner keeps chatting from their phone as normal.
+
+**Sales tracking from the messages you already send.** Vendors already tell customers when a payment lands: "Payment of ₦18,500 received, thank you!" Chatlify learns each business's own wording and records every confirmation as a sale against the right customer, with no extra typing and no spreadsheet. The same amount confirmed twice within a few minutes is flagged rather than counted twice, anything unclear waits for the owner to check, and sales already in the chat history are picked up when the number is linked. The dashboard shows the month's revenue, buyers and repeat buyers. The figures come from the owner's messages, not their bank, and Chatlify keeps only the confirmation message for each sale, not an archive of chats.
+
+**Turning first-time buyers into regulars.** Because every sale lands on a customer, Chatlify can group buyers with one tap: first-time, repeat, recent, lapsed and VIP. Automations can start the moment a payment is confirmed: send a thank-you, tag the customer, then wait up to 30 days for the next order and send a nudge if it does not come.
+
+**Statuses seen by thousands.** A status posted from a phone reaches a few hundred contacts at best. Chatlify posts photos, videos, text and voice statuses in full quality to everyone who has saved the number, in batches, up to 50,000 contacts on the largest plan. Long videos are split into parts, statuses can be scheduled and repeated, and the owner sees who viewed and reacted.
+
+**Automations, broadcasts and contacts.** Flows are built as connected steps on a canvas, started from a template, or described in plain words for the AI builder to draft. Broadcasts go to many groups or people one message at a time with random pauses, and anyone who replies STOP is opted out of everything. Every chat, saved contact and group member lands in one list, ready to tag, segment and export, and new chats can be saved to Google Contacts automatically.
+
+**Built to keep the number safe.** Every number has daily limits of 150 DMs and 60 group posts, the same on every plan. New numbers warm up over two weeks, a ban-risk badge warns before sending gets risky, and a business whose number is banned within 7 days of its first payment can ask for that payment back.
+
+**Pricing.** Every plan has every feature. Starter, Growth and Pro differ only in how many numbers can be linked, how far statuses reach and how many automations run at once. Payment is in naira, by card or bank transfer, monthly or yearly, with two months free on a yearly plan. The first 200 subscribers get launch prices, from ₦20,000 a month, kept for as long as they stay subscribed. Every account starts with a 7-day free trial, and no card is needed.
+
+Chatlify is built for online vendors, food businesses, churches and communities, schools, wholesalers, salons and anyone else whose customers already message them on WhatsApp. Start a free trial at [chatlify.xyz](https://chatlify.xyz), read more on the [Chatlify product page](/products/chatlify), or [contact us](/contact) for help setting up automations for your business.
+
+Chatlify is not affiliated with WhatsApp or Meta.
+MD,
+    ],
+
+    'subeb-starlink-computer-hubs' => [
+        'title'    => 'Cloudence completes Starlink installation in 10 Cross River schools for SUBEB',
+        'date'     => '2026-10-31',
+        'category' => 'Projects',
+        'image'    => 'images/news/subeb-starlink-dish.jpg',
+        'image_position' => 'center 15%',
+        'gallery'  => [
+            ['images/news/subeb-starlink-mount.jpg',   'Fixing a dish mount to the roof edge'],
+            ['images/news/subeb-starlink-cabling.jpg', 'Running cable into a computer hub'],
+            ['images/news/subeb-starlink-wiring.jpg',  'Connecting the line through the hub window'],
+        ],
+        'seo_title'       => 'Starlink installed in 10 Cross River schools',
+        'seo_description' => 'Cloudence has installed Starlink internet in 10 Cross River schools for SUBEB under the 2025 UBEC/SUBEB Computer Hubs Intervention.',
+        'excerpt'  => 'Cloudence has completed the installation of Starlink satellite internet in 10 schools across Cross River State, under a contract from the State Universal Basic Education Board (SUBEB) for the 2025 UBEC/SUBEB Computer Hubs Intervention.',
+        'body'     => <<<'MD'
+Cloudence has completed the installation of Starlink satellite internet in 10 schools across Cross River State, under a contract awarded by the Cross River State Universal Basic Education Board (SUBEB). The project is part of the 2025 UBEC/SUBEB Computer Hubs Intervention, under which selected schools receive computer hubs.
+
+**Why Starlink.** A computer hub needs a dependable internet connection to be useful, and many schools outside the major towns are beyond the reach of fibre and reliable mobile data. Starlink connects over satellite, so a school in Obanliku or Bekwarra now gets the same service as one in Calabar.
+
+**The work.** At each school, Cloudence engineers mounted the Starlink dish, ran cable into the computer hub and connected the hub to the internet.
+
+**The schools.** The 10 schools span nine local government areas, from Calabar in the south to Obanliku in the north:
+
+1. Army Day Secondary School, Eburutu Barracks (Calabar Municipal)
+2. PCN Primary School, Eyamba Street, Duke Town (Calabar South)
+3. Government Secondary School, Adiabo (Odukpani)
+4. Creek Town Secondary School (Odukpani)
+5. RCM Primary School, Begiagba, Bendi II (Obanliku)
+6. St Paul's Primary School, Ovunum, Obubra (Obubra)
+7. PCN Primary School, Nde II, Ikom (Ikom)
+8. Federal Model Primary School, Anyikang, Alilan, Bekwarra (Bekwarra)
+9. Lutheran Primary School, Ekumtak-Mbube (Ogoja)
+10. PCN Primary School, Obioko Ijiman, Ugep (Yakurr)
+
+The project adds to Cloudence's work with SUBEB and with schools and institutions across Cross River State, including our [CBT](/news/uee-cbt-examinations) and [school portal](/news/uee-akamkpa-school-portal) projects at the University of Education and Entrepreneurship, Akamkpa.
+
+Schools and agencies planning connectivity or computer labs can [contact us](/contact) to discuss their requirements.
+MD,
+    ],
 
     'uee-cbt-examinations' => [
         'title'    => 'Cloudence deploys CBT software for student examinations at the University of Education and Entrepreneurship',

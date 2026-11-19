@@ -84,6 +84,7 @@
   .v3-prose a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
   .v3-prose h2 { margin-top: 2em; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
   .v3-prose ul { margin-top: 1.25em; padding-left: 1.2em; list-style: disc; }
+  .v3-prose ol { margin-top: 1.25em; padding-left: 1.6em; list-style: decimal; }
   .v3-prose li { margin-top: .4em; line-height: 1.7; color: #3a3b40; }
 
   /* Header dropdowns: opened by app.js adding .is-open */
